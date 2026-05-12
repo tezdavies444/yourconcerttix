@@ -4,379 +4,249 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YourConcertTix - Find Live Shows & Get Tickets</title>
-<meta name="description" content="Find live concerts, tribute shows, and tickets near you. Browse 82+ upcoming shows across the US.">
+<meta name="description" content="Find live concerts, tribute shows, and entertainment events near you. Browse upcoming shows by city or state and get tickets fast.">
 <meta property="og:title" content="YourConcertTix - Find Live Shows & Get Tickets">
-<meta property="og:description" content="Find live concerts, tribute shows, and tickets near you.">
+<meta property="og:description" content="Find live concerts, tribute shows, and entertainment events near you. Browse upcoming shows and get tickets fast.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yourconcerttix.com">
+<meta property="og:url" content="https://yourconcerttix.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="YourConcertTix">
+<meta name="twitter:description" content="Find live shows near you.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-    --primary: #1a1a2e;
-    --accent: #e94560;
-    --accent2: #f5a623;
-    --bg: #0f0f23;
-    --card-bg: #16213e;
-    --card-border: #1a1a3e;
-    --text: #e8e8f0;
-    --text-muted: #8888aa;
+:root{
+  --primary:#1a1a2e;
+  --accent:#e94560;
+  --accent2:#f5a623;
+  --bg:#0f0f23;
+  --card-bg:#16213e;
+  --card-border:#1a1a3e;
+  --text:#e8e8f0;
+  --text-muted:#8888aa;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.5; min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
-.fangenie-banner {
-    background: linear-gradient(90deg, #1f2a4f 0%, #2a3a6b 100%);
-    padding: 10px 16px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.fangenie-banner a {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--text);
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.fangenie-banner .powered-by { color: var(--text-muted); font-size: 13px; font-weight: 500; }
-.fangenie-banner .fg-logo { height: 22px; width: auto; vertical-align: middle; }
-.fangenie-banner .fg-tagline { color: var(--text); font-size: 13px; font-weight: 500; }
+/* FanGenie banner */
+.fangenie-banner{background:linear-gradient(90deg,#0a0a1e 0%,#13133a 100%);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;text-align:center;font-size:13px}
+.fangenie-banner a{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;color:var(--text-muted);transition:color .2s}
+.fangenie-banner a:hover{color:var(--text)}
+.fangenie-banner .powered-by{font-weight:500;letter-spacing:.02em}
+.fangenie-banner .fg-logo{height:22px;width:auto;vertical-align:middle;filter:brightness(1.15)}
+.fangenie-banner .fg-tagline{color:var(--accent2);font-weight:500}
 
-header {
-    background: linear-gradient(180deg, var(--primary) 0%, rgba(26,26,46,0) 100%);
-    padding: 28px 24px 24px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.logo {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-    font-size: 28px;
-    letter-spacing: -0.02em;
-    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.event-count { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+/* Header */
+.site-header{padding:24px 20px 12px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;background:linear-gradient(90deg,#fff 0%,var(--accent2) 60%,var(--accent) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.event-count{margin-top:6px;color:var(--text-muted);font-size:14px;font-weight:500}
 
-.hero {
-    text-align: center;
-    padding: 36px 24px 24px;
-    max-width: 920px;
-    margin: 0 auto;
-}
-.hero h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(28px, 5vw, 44px);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 12px;
-}
-.hero p { color: var(--text-muted); font-size: 16px; }
+/* Hero */
+.hero{padding:40px 20px 24px;text-align:center}
+.hero h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(28px,5vw,46px);line-height:1.1;letter-spacing:-.02em;background:linear-gradient(180deg,#fff 0%,#c8c8e0 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:12px;color:var(--text-muted);font-size:16px;max-width:540px;margin-left:auto;margin-right:auto}
 
-.controls {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px 24px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-}
-.controls input, .controls select {
-    background: var(--card-bg);
-    color: var(--text);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 15px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color .15s;
-    min-width: 220px;
-}
-.controls input:focus, .controls select:focus { border-color: var(--accent); }
-.controls input { flex: 1 1 280px; max-width: 480px; }
-.controls select { flex: 0 0 auto; cursor: pointer; }
-.btn-clear {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    padding: 12px 18px;
-    font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all .15s;
-}
-.btn-clear:hover { color: var(--text); border-color: var(--accent); }
+/* Filter controls */
+.filters{display:flex;gap:10px;flex-wrap:wrap;max-width:1200px;margin:24px auto 0;padding:0 20px;align-items:center;justify-content:center}
+.filters input,.filters select,.filters button{font-family:inherit;font-size:14px;padding:11px 14px;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+.filters input{flex:1 1 280px;min-width:200px}
+.filters select{cursor:pointer;flex:0 1 160px}
+.filters input:focus,.filters select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(233,69,96,.15)}
+.filters button{cursor:pointer;background:transparent;color:var(--text-muted);border-color:var(--card-border);transition:background .15s,color .15s,border-color .15s}
+.filters button:hover{background:var(--card-bg);color:var(--text);border-color:var(--accent)}
 
-.events {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px 64px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-.empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-}
+.result-meta{max-width:1200px;margin:18px auto 0;padding:0 20px;color:var(--text-muted);font-size:13px;text-align:center;min-height:1.4em}
 
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform .18s, box-shadow .18s, border-color .18s;
-}
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.35);
-    border-color: rgba(233,69,96,0.4);
-}
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;max-width:1200px;margin:18px auto 60px;padding:0 20px}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);border-color:rgba(233,69,96,.35)}
+.card-photo-wrap{aspect-ratio:16/9;overflow:hidden;position:relative;background:#0a0a1e}
+.card-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.card-photo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.45);line-height:1.2;letter-spacing:.01em}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-artist{font-family:'Montserrat',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.005em;color:var(--text)}
+.card-meta{font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;gap:3px;flex:1}
+.card-meta .row{display:flex;gap:6px;align-items:flex-start}
+.card-meta .label{flex:0 0 auto;color:var(--text-muted);opacity:.7;width:54px}
+.card-meta .val{flex:1}
+.card-cta{margin-top:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent) 0%,#ff6f7d 100%);color:#fff;font-weight:600;font-size:14px;padding:10px 14px;border-radius:8px;transition:filter .15s,transform .15s}
+.card-cta:hover{filter:brightness(1.08);transform:scale(1.01)}
+.card-platform{margin-top:4px;font-size:11px;color:var(--text-muted);opacity:.6;text-transform:uppercase;letter-spacing:.05em;text-align:center}
 
-.card-photo-wrap {
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    position: relative;
-    background: var(--primary);
-}
-.card-photo-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-.card-photo-fallback {
-    position: absolute;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 16px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    color: #fff;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    line-height: 1.2;
-}
+.empty{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:15px;max-width:600px;margin:0 auto}
 
-.card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
-.card-artist {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.25;
-    margin-bottom: 8px;
-    color: var(--text);
-}
-.card-date {
-    color: var(--accent2);
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-.card-time { color: var(--text-muted); font-size: 13px; margin-bottom: 10px; }
-.card-venue {
-    color: var(--text);
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-.card-loc {
-    color: var(--text-muted);
-    font-size: 13px;
-    margin-bottom: 16px;
-    flex: 1;
-}
-.card-cta {
-    display: block;
-    text-align: center;
-    background: linear-gradient(90deg, var(--accent) 0%, #ff5f7e 100%);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px;
-    border-radius: 10px;
-    transition: transform .12s, box-shadow .12s;
-}
-.card-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(233,69,96,0.35);
-}
+/* Footer */
+.site-footer{padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,.04);color:var(--text-muted);font-size:13px}
+.site-footer a{color:var(--accent2)}
 
-footer {
-    text-align: center;
-    padding: 24px;
-    color: var(--text-muted);
-    font-size: 13px;
-    border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-@media (max-width: 600px) {
-    .controls input, .controls select { min-width: 0; width: 100%; }
-    .controls { flex-direction: column; align-items: stretch; }
-    .btn-clear { width: 100%; }
+@media (max-width:520px){
+  .filters input{flex:1 1 100%}
+  .filters select{flex:1 1 calc(50% - 5px)}
+  .filters button{flex:1 1 calc(50% - 5px)}
+  .hero{padding:28px 16px 16px}
+  .grid{padding:0 14px;gap:14px}
 }
 </style>
 </head>
 <body>
 
 <div class="fangenie-banner">
-    <a href="https://fangenie.com" target="_blank">
-        <span class="powered-by">Powered by</span>
-        <img src="https://app.fangenie.com/assets/images/newlogo.png" alt="FanGenie" class="fg-logo">
-        <span class="fg-tagline">The Ticketing Platform That Sells Your Tickets For You!</span>
-    </a>
+  <a href="https://fangenie.com" target="_blank" rel="noopener">
+    <span class="powered-by">Powered by</span>
+    <img src="https://app.fangenie.com/assets/images/newlogo.png" alt="FanGenie" class="fg-logo">
+    <span class="fg-tagline">The Ticketing Platform That Sells Your Tickets For You!</span>
+  </a>
 </div>
 
-<header>
-    <div class="logo">YourConcertTix</div>
-    <div class="event-count" id="eventCount">82 upcoming shows</div>
+<header class="site-header">
+  <div class="logo">YourConcertTix</div>
+  <div class="event-count" id="eventCount">82 upcoming shows</div>
 </header>
 
 <section class="hero">
-    <h1>Find Live Shows Near You</h1>
-    <p>Browse upcoming concerts and tribute shows. Get your tickets in seconds.</p>
+  <h1>Find Live Shows Near You</h1>
+  <p>Browse tribute shows, concerts, and live entertainment. Tickets are just a click away.</p>
 </section>
 
-<div class="controls">
-    <input type="text" id="searchInput" placeholder="Search artists, venues, cities..." autocomplete="off">
-    <select id="stateFilter">
-        <option value="">All States</option>
-                    <option value="AZ">AZ</option>
-                    <option value="CA">CA</option>
-                    <option value="FL">FL</option>
-                    <option value="IL">IL</option>
-                    <option value="MN">MN</option>
-                    <option value="NV">NV</option>
-                    <option value="PA">PA</option>
-    </select>
-    <button class="btn-clear" id="btnClear">Clear Filters</button>
+<div class="filters" role="search">
+  <input id="searchInput" type="text" placeholder="Search artist, city, or venue..." aria-label="Search events">
+  <select id="stateSelect" aria-label="Filter by state">
+    <option value="">All states</option>
+  </select>
+  <button id="clearBtn" type="button">Clear Filters</button>
 </div>
 
-<div class="events" id="eventsGrid"></div>
+<div class="result-meta" id="resultMeta"></div>
 
-<footer>
-    &copy; 2026 YourConcertTix &middot; All shows subject to availability
+<main class="grid" id="grid"></main>
+
+<footer class="site-footer">
+  <div>&copy; <span id="year"></span> YourConcertTix. All rights reserved.</div>
 </footer>
 
 <script>
 const PHOTO_BASE = '/artist-photos/';
-const events = [{"artist":"Hearts Desire","ticket":"https://app.fangenie.com/sun-village-community/hearts-desire/Boh1j5NCga","date":"2026-05-14","showInfo":"May 14, 2026","showtime":"7:00PM","city":"Surprise","state":"AZ","location":"17300 N Sun Village Pkwy, Surprise, AZ 85374","platform":"Purple Pass","slug":"hearts-desire"},{"artist":"Voyager","ticket":"https://tixees.com/tc-events/voyager-tribute-to-journey-5-14-2026/","date":"2026-05-14","showInfo":"May 14, 2026","showtime":"7:00 PM","city":"Peoria","state":"AZ","location":"12101 W Blackstone Dr, Peoria, AZ 85383","platform":"","slug":"voyager"},{"artist":"FlashPants","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/flashpants---80s-party-band/hmFblXGEJq","date":"2026-05-16","showInfo":"May 16, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"flashpants"},{"artist":"The Big Easy Live","ticket":"https://saddlebrooketwo.showare.com/orderticketsvenue.asp?p=2292","date":"2026-05-16","showInfo":"May 16, 2026","showtime":"7:00 pm","city":"Tucson","state":"AZ","location":"39900 S Clubhouse Dr, Tucson, AZ 85739","platform":"","slug":"the-big-easy-live"},{"artist":"One More Night","ticket":"https://app.arts-people.com/?show=318157","date":"2026-05-23","showInfo":"May 23, 2026","showtime":"6:00 PM","city":"Las Vegas","state":"NV","location":"2215 Thomas W Ryan Blvd, Las Vegas, NV 89134","platform":"","slug":"one-more-night"},{"artist":"Ultimate Chicago","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1046","date":"2026-06-04","showInfo":"June 4, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"ultimate-chicago"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/one-of-these-nights---eagles-tribute/SduVZaDxlL","date":"2026-06-06","showInfo":"June 6, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"one-of-these-nights"},{"artist":"AbbaFab","ticket":"https://dutchapple.com/shows/abbafab-2/","date":"2026-06-08","showInfo":"June 8, 2026","showtime":"1:00 PM and 7:30 PM","city":"Lancaster","state":"PA","location":"510 Centerville Rd,, Lancaster, PA 17601","platform":"","slug":"abbafab"},{"artist":"AbbaFab","ticket":"https://dutchapple.com/shows/abbafab-2/","date":"2026-06-09","showInfo":"June 9, 2026","showtime":"1:00 PM and 7:30 PM","city":"Lancaster","state":"PA","location":"510 Centerville Rd,, Lancaster, PA 17601","platform":"","slug":"abbafab"},{"artist":"Yachtzilla","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5071","date":"2026-06-11","showInfo":"June 11, 2026","showtime":" 8 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"yachtzilla"},{"artist":"TOBY","ticket":"https://tixees.com/tc-events/toby-4-4-2026/","date":"2026-06-13","showInfo":"June 13, 2026","showtime":"7:30 PM","city":"Cave Creek","state":"AZ","location":"6895 E Cave Creek Rd, Cave Creek, AZ 85331","platform":"","slug":"toby"},{"artist":"Yachtzilla","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-06-13","showInfo":"June 13, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"yachtzilla"},{"artist":"Almost Folsom","ticket":"https://purchase.azbroadway.org/EventAvailability?EventId=16001","date":"2026-06-15","showInfo":"June 15, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"almost-folsom"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/venture-in-rv-resort/one-of-these-nights/IZRsFdlJGY","date":"2026-06-18","showInfo":"June 18, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"one-of-these-nights"},{"artist":"American Highwaymen","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1054","date":"2026-06-21","showInfo":"June 21, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"american-highwaymen"},{"artist":"December '63","ticket":"https://app.arts-people.com/?show=323309","date":"2026-06-21","showInfo":"June 21, 2026","showtime":"3:00 PM","city":"Las Vegas","state":"NV","location":"2215 Thomas W Ryan Blvd, Las Vegas, NV 89134","platform":"","slug":"december-63"},{"artist":"AbbaFab","ticket":"https://onthestage.tickets/show/dawson-boyd-arts-association/68a766621dc29d10f43043c5/tickets#/productions-view","date":"2026-06-27","showInfo":"June 27, 2026","showtime":"7:00pm","city":"Dawson","state":"MN","location":"601 9th Street, Dawson, MN 56232","platform":"","slug":"abbafab"},{"artist":"Almost Folsom","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-06-27","showInfo":"June 27, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"almost-folsom"},{"artist":"TOBY","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/toby/cdqN3QtWON","date":"2026-06-27","showInfo":"June 27, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"toby"},{"artist":"Almost Folsom","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5073","date":"2026-06-28","showInfo":"June 28, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"almost-folsom"},{"artist":"America The Beautiful","ticket":"https://app.fangenie.com/sun-village-community/america-the-beautiful/jR63S1FH0P","date":"2026-07-03","showInfo":"July 3, 2026","showtime":"7:00pm","city":"Surprise","state":"AZ","location":"17300 N Sun Village Pkwy, Surprise, AZ 85374","platform":"Purple Pass","slug":"america-the-beautiful"},{"artist":"The Big Easy Live","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/the-big-easy-live---boots-bourbon-tour-special-guest-nevada-landing/tTXfxrFkHE","date":"2026-07-04","showInfo":"July 4, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"the-big-easy-live"},{"artist":"Garth Live","ticket":"https://purchase.azbroadway.org/EventAvailability?EventId=16201","date":"2026-07-13","showInfo":"July 13, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"garth-live"},{"artist":"TOBY","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1063","date":"2026-07-16","showInfo":"July 16, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"toby"},{"artist":"The Bad Co. Experience","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1066","date":"2026-07-23","showInfo":"July 23, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"the-bad-co-experience"},{"artist":"Disco Inferno","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1080","date":"2026-07-30","showInfo":"July 30, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"disco-inferno"},{"artist":"Springsteen: Born To Run","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1068","date":"2026-08-01","showInfo":"August 1, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"springsteen-born-to-run"},{"artist":"Yachtzilla","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/yachtzilla---monsters-of-soft-rock/Byk2aZyFxY","date":"2026-08-08","showInfo":"August 8, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"yachtzilla"},{"artist":"Matt Johnson","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-08-15","showInfo":"August 15, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"matt-johnson"},{"artist":"Garth Live","ticket":"https://app.fangenie.com/venture-in-rv-resort/garth-live/Q2n7QjymvA","date":"2026-08-20","showInfo":"August 20, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"garth-live"},{"artist":"FlashPants","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/flashpants---80s-party-band/R0gRzxIHk8","date":"2026-08-22","showInfo":"August 22, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"flashpants"},{"artist":"Gloria! Turn The Beat","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/viva-las-divas---celebrating-latin-legends/mQgAAhS5qn","date":"2026-08-29","showInfo":"August 29, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"gloria-turn-the-beat"},{"artist":"Voyager","ticket":"https://app.fangenie.com/venture-in-rv-resort/voyager---the-1-tribute-to-journey/wlK0aFMw7a","date":"2026-09-03","showInfo":"September 3, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"voyager"},{"artist":"Honky Tonk Man","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1090","date":"2026-09-05","showInfo":"September 5, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"honky-tonk-man"},{"artist":"Locked Out Of Heaven","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/locked-out-of-heaven---bruno-mars-tribute/D42KgBTlFX","date":"2026-09-05","showInfo":"September 5, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"locked-out-of-heaven"},{"artist":"The Kings of Queen","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5090","date":"2026-09-10","showInfo":"September 10, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"the-kings-of-queen"},{"artist":"Disco Inferno","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/disco-inferno---ultimate-disco-party/0gAKZ1FZ1U","date":"2026-09-11","showInfo":"September 11, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"disco-inferno"},{"artist":"The Kings of Queen","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-09-11","showInfo":"September 11, 2026","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-kings-of-queen"},{"artist":"Piano Men: Generations","ticket":"https://www.ticketweb.com/event/piano-men-generations-the-coach-house-tickets/14112024?pl=coach","date":"2026-09-12","showInfo":"September 12, 2026","showtime":"8:00pm","city":"San Juan Capistrano","state":"CA","location":"33157 Camino Capistrano, San Juan Capistrano, CA 92675","platform":"","slug":"piano-men-generations"},{"artist":"The Kings of Queen","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-09-12","showInfo":"September 12, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-kings-of-queen"},{"artist":"Piano Men: Generations","ticket":"https://vpat.showare.com/eventperformances.asp?evt=104","date":"2026-09-13","showInfo":"September 13, 2026","showtime":"7:00 pm","city":"Vacaville","state":"CA","location":"\u00a01010 Ulatis Dr, Vacaville, CA \u00a095687","platform":"","slug":"piano-men-generations"},{"artist":"The Big Easy Live","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1092","date":"2026-09-13","showInfo":"September 13, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"the-big-easy-live"},{"artist":"The Big Easy Live","ticket":"https://purchase.azbroadway.org/ChooseSeats/40601","date":"2026-09-14","showInfo":"September 14, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"the-big-easy-live"},{"artist":"Sharon Owens","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5096","date":"2026-09-19","showInfo":"September 19, 2026","showtime":"6.30 pm","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"sharon-owens"},{"artist":"56tees","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1100","date":"2026-10-03","showInfo":"October 3, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"56tees"},{"artist":"Voyager","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/voyager---journey-tribute/59z3UqNa1y","date":"2026-10-03","showInfo":"October 3, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"voyager"},{"artist":"Almost Folsom","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1102","date":"2026-10-08","showInfo":"October 8, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"almost-folsom"},{"artist":"Margaritas In Paradise","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/margaritas-in-paradise---jimmy-buffett-tribute/Xebiu4ItZV","date":"2026-10-09","showInfo":"October 9, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"margaritas-in-paradise"},{"artist":"Piano Men: Generations","ticket":"https://www.bocablackbox.com/events/oct26-Piano-Men-Generations-The-Music-of-Two-Legends-Billy-Joel--Elton-John","date":"2026-10-20","showInfo":"October 20, 2026","showtime":"6.30 pm (possible 8 pm show) ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"piano-men-generations"},{"artist":"Piano Men: Generations","ticket":"https://www.bocablackbox.com/events/oct26-Piano-Men-Generations-The-Music-of-Two-Legends-Billy-Joel--Elton-John","date":"2026-10-21","showInfo":"October 21, 2026","showtime":"6.30 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"piano-men-generations"},{"artist":"Magic Of Manilow","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5097","date":"2026-10-22","showInfo":"October 22, 2026","showtime":"6.30 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"magic-of-manilow"},{"artist":"The K-Tel All Stars","ticket":"https://app.fangenie.com/pueblo-el-mirage/the-k-tel-all-stars/Og8HlPNSSD","date":"2026-10-22","showInfo":"October 22, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"the-k-tel-all-stars"},{"artist":"One More Night","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1108","date":"2026-10-24","showInfo":"October 24, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"one-more-night"},{"artist":"Piano Men: Generations","ticket":"https://egyptiantheatre.showare.com/eventperformances.asp?evt=337","date":"2026-10-24","showInfo":"October 24, 2026","showtime":"7:30pm","city":"DeKalb","state":"IL","location":"135 N 2nd St, DeKalb, IL 60115","platform":"","slug":"piano-men-generations"},{"artist":"Members Only","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1111","date":"2026-10-31","showInfo":"October 31, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"members-only"},{"artist":"A Lennon Legacy","ticket":"https://app.fangenie.com/pueblo-el-mirage/a-lennon-legacy/bcCgGOCxUT","date":"2026-11-06","showInfo":"November 6, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"a-lennon-legacy"},{"artist":"Voyager","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1120","date":"2026-11-08","showInfo":"November 8, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"voyager"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5070","date":"2026-11-19","showInfo":"November 19, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-11-20","showInfo":"November 20, 2026","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Rock Revisited","ticket":"https://app.fangenie.com/pueblo-el-mirage/rock-revisited---classic-rock-tribute/Wb2xLtWzxc","date":"2026-11-20","showInfo":"November 20, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"rock-revisited"},{"artist":"Go Now","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5072","date":"2026-11-21","showInfo":"November 21, 2026","showtime":"7.00 pm & 9 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"go-now"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp ","date":"2026-11-21","showInfo":"November 21, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Sleigh Bells Swing","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1129","date":"2026-12-09","showInfo":"December 9, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"sleigh-bells-swing"},{"artist":"Rocky Mountain Christmas","ticket":"https://app.fangenie.com/pueblo-el-mirage/rocky-mountain-christmas---the-john-denver-tribute-holiday-show/i8aXfG06pa","date":"2026-12-11","showInfo":"December 11, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"rocky-mountain-christmas"},{"artist":"3 International Tenors","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1130","date":"2026-12-12","showInfo":"December 12, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"3-international-tenors"},{"artist":"Ivan Pecel","ticket":"https://app.fangenie.com/pueblo-el-mirage/ivan-pecel---comedic-juggling/6H2xOEnmWR","date":"2026-12-18","showInfo":"December 18, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"ivan-pecel"},{"artist":"Country Christmas","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1131","date":"2026-12-19","showInfo":"December 19, 2026","showtime":"2:00PM & 6:00PM","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"country-christmas"},{"artist":"A Lennon Legacy","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1133","date":"2026-12-27","showInfo":"December 27, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"a-lennon-legacy"},{"artist":"The Lionel Richie Songbook","ticket":"https://bocablackbox.showare.com/eventperformances.asp?evt=1687","date":"2027-01-07","showInfo":"January 7, 2027","showtime":"8 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"The Lionel Richie Songbook","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-01-08","showInfo":"January 8, 2027","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"The Lionel Richie Songbook","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-01-09","showInfo":"January 9, 2027","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"Yachtzilla","ticket":"https://app.fangenie.com/pueblo-el-mirage/yachtzilla---the-monsters-of-soft-rock/mzZFBSiLDK","date":"2027-01-15","showInfo":"January 15, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"yachtzilla"},{"artist":"Almost Folsom","ticket":"https://app.fangenie.com/pueblo-el-mirage/almost-folsom---johnny-cash-june-carter/7wkC8I4S8b","date":"2027-01-29","showInfo":"January 29, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"almost-folsom"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/pueblo-el-mirage/one-of-these-nights---tribute-to-eagles/NYGkV76X7K","date":"2027-02-05","showInfo":"February 5, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"one-of-these-nights"},{"artist":"Honky Tonk Man","ticket":"https://app.fangenie.com/pueblo-el-mirage/honky-tonk-man-a-tribute-to-dwight-yoakam/qRhHAEipk0","date":"2027-02-12","showInfo":"February 12, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"honky-tonk-man"},{"artist":"Springsteen: Born To Run","ticket":"https://app.fangenie.com/pueblo-el-mirage/springsteen-born-to-run/1fwmi3umQi","date":"2027-02-26","showInfo":"February 26, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"springsteen-born-to-run"},{"artist":"Voyager","ticket":"https://app.fangenie.com/pueblo-el-mirage/voyager/w9GhyCj76Y","date":"2027-03-05","showInfo":"March 5, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"voyager"},{"artist":"Go Now","ticket":"https://app.fangenie.com/riverview-performing-arts-center/go-now---the-legacy-tribute-to-the-moody-blues/SX4uNTfpZV","date":"2027-03-11","showInfo":"March 11, 2027","showtime":"7 pm ","city":"Sarasota ","state":"FL","location":"1 Ram Way, Sarasota , FL 34231","platform":"FanGenie","slug":"go-now"},{"artist":"Fly Like An Eagle","ticket":"https://app.fangenie.com/pueblo-el-mirage/fly-like-an-eagle---tribute-to-steve-miller/BUz5koOV8m","date":"2027-03-19","showInfo":"March 19, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"fly-like-an-eagle"},{"artist":"Million Dollar McGraw","ticket":"https://app.fangenie.com/pueblo-el-mirage/million-dollar-mcgraw/gfdRsdrIxK","date":"2027-04-02","showInfo":"April 2, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"million-dollar-mcgraw"},{"artist":"AbbaFab","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-04-16","showInfo":"April 16, 2027","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"abbafab"},{"artist":"AbbaFab","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-04-17","showInfo":"April 17, 2027","showtime":"12:00pm & 6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"abbafab"}];
 
-const GRADIENTS = [
-    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
-    'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)',
-    'linear-gradient(135deg, #e65c00 0%, #f9d423 100%)',
-    'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)'
+const events = [{"artist":"Voyager","ticket":"https://tixees.com/tc-events/voyager-tribute-to-journey-5-14-2026/","date":"2026-05-14","displayDate":"May 14, 2026","showtime":"7:00 PM","city":"Peoria","state":"AZ","location":"12101 W Blackstone Dr, Peoria, AZ 85383","platform":"","slug":"voyager"},{"artist":"Hearts Desire","ticket":"https://app.fangenie.com/sun-village-community/hearts-desire/Boh1j5NCga","date":"2026-05-14","displayDate":"May 14, 2026","showtime":"7:00PM","city":"Surprise","state":"AZ","location":"17300 N Sun Village Pkwy, Surprise, AZ 85374","platform":"Purple Pass","slug":"hearts-desire"},{"artist":"The Big Easy Live","ticket":"https://saddlebrooketwo.showare.com/orderticketsvenue.asp?p=2292","date":"2026-05-16","displayDate":"May 16, 2026","showtime":"7:00 pm","city":"Tucson","state":"AZ","location":"39900 S Clubhouse Dr, Tucson, AZ 85739","platform":"","slug":"the-big-easy-live"},{"artist":"FlashPants","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/flashpants---80s-party-band/hmFblXGEJq","date":"2026-05-16","displayDate":"May 16, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"flashpants"},{"artist":"One More Night","ticket":"https://app.arts-people.com/?show=318157","date":"2026-05-23","displayDate":"May 23, 2026","showtime":"6:00 PM","city":"Las Vegas","state":"NV","location":"2215 Thomas W Ryan Blvd, Las Vegas, NV 89134","platform":"","slug":"one-more-night"},{"artist":"Ultimate Chicago","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1046","date":"2026-06-04","displayDate":"June 4, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"ultimate-chicago"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/one-of-these-nights---eagles-tribute/SduVZaDxlL","date":"2026-06-06","displayDate":"June 6, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"one-of-these-nights"},{"artist":"AbbaFab","ticket":"https://dutchapple.com/shows/abbafab-2/","date":"2026-06-08","displayDate":"June 8, 2026","showtime":"1:00 PM and 7:30 PM","city":"Lancaster","state":"PA","location":"510 Centerville Rd,, Lancaster, PA 17601","platform":"","slug":"abbafab"},{"artist":"AbbaFab","ticket":"https://dutchapple.com/shows/abbafab-2/","date":"2026-06-09","displayDate":"June 9, 2026","showtime":"1:00 PM and 7:30 PM","city":"Lancaster","state":"PA","location":"510 Centerville Rd,, Lancaster, PA 17601","platform":"","slug":"abbafab"},{"artist":"Yachtzilla","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5071","date":"2026-06-11","displayDate":"June 11, 2026","showtime":" 8 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"yachtzilla"},{"artist":"Yachtzilla","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-06-13","displayDate":"June 13, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"yachtzilla"},{"artist":"TOBY","ticket":"https://tixees.com/tc-events/toby-4-4-2026/","date":"2026-06-13","displayDate":"June 13, 2026","showtime":"7:30 PM","city":"Cave Creek","state":"AZ","location":"6895 E Cave Creek Rd, Cave Creek, AZ 85331","platform":"","slug":"toby"},{"artist":"Almost Folsom","ticket":"https://purchase.azbroadway.org/EventAvailability?EventId=16001","date":"2026-06-15","displayDate":"June 15, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"almost-folsom"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/venture-in-rv-resort/one-of-these-nights/IZRsFdlJGY","date":"2026-06-18","displayDate":"June 18, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"one-of-these-nights"},{"artist":"December '63","ticket":"https://app.arts-people.com/?show=323309","date":"2026-06-21","displayDate":"June 21, 2026","showtime":"3:00 PM","city":"Las Vegas","state":"NV","location":"2215 Thomas W Ryan Blvd, Las Vegas, NV 89134","platform":"","slug":"december-63"},{"artist":"American Highwaymen","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1054","date":"2026-06-21","displayDate":"June 21, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"american-highwaymen"},{"artist":"Almost Folsom","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-06-27","displayDate":"June 27, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"almost-folsom"},{"artist":"AbbaFab","ticket":"https://onthestage.tickets/show/dawson-boyd-arts-association/68a766621dc29d10f43043c5/tickets#/productions-view","date":"2026-06-27","displayDate":"June 27, 2026","showtime":"7:00pm","city":"Dawson","state":"MN","location":"601 9th Street, Dawson, MN 56232","platform":"","slug":"abbafab"},{"artist":"TOBY","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/toby/cdqN3QtWON","date":"2026-06-27","displayDate":"June 27, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"toby"},{"artist":"Almost Folsom","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5073","date":"2026-06-28","displayDate":"June 28, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"almost-folsom"},{"artist":"America The Beautiful","ticket":"https://app.fangenie.com/sun-village-community/america-the-beautiful/jR63S1FH0P","date":"2026-07-03","displayDate":"July 3, 2026","showtime":"7:00pm","city":"Surprise","state":"AZ","location":"17300 N Sun Village Pkwy, Surprise, AZ 85374","platform":"Purple Pass","slug":"america-the-beautiful"},{"artist":"The Big Easy Live","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/the-big-easy-live---boots-bourbon-tour-special-guest-nevada-landing/tTXfxrFkHE","date":"2026-07-04","displayDate":"July 4, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"the-big-easy-live"},{"artist":"Garth Live","ticket":"https://purchase.azbroadway.org/EventAvailability?EventId=16201","date":"2026-07-13","displayDate":"July 13, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"garth-live"},{"artist":"TOBY","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1063","date":"2026-07-16","displayDate":"July 16, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"toby"},{"artist":"The Bad Co. Experience","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1066","date":"2026-07-23","displayDate":"July 23, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"the-bad-co-experience"},{"artist":"Disco Inferno","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1080","date":"2026-07-30","displayDate":"July 30, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"disco-inferno"},{"artist":"Springsteen: Born To Run","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1068","date":"2026-08-01","displayDate":"August 1, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"springsteen-born-to-run"},{"artist":"Yachtzilla","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/yachtzilla---monsters-of-soft-rock/Byk2aZyFxY","date":"2026-08-08","displayDate":"August 8, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"yachtzilla"},{"artist":"Matt Johnson","ticket":"https://suncoastbroadway.com/Online/default.asp","date":"2026-08-15","displayDate":"August 15, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"matt-johnson"},{"artist":"Garth Live","ticket":"https://app.fangenie.com/venture-in-rv-resort/garth-live/Q2n7QjymvA","date":"2026-08-20","displayDate":"August 20, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"garth-live"},{"artist":"FlashPants","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/flashpants---80s-party-band/R0gRzxIHk8","date":"2026-08-22","displayDate":"August 22, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"flashpants"},{"artist":"Gloria! Turn The Beat","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/viva-las-divas---celebrating-latin-legends/mQgAAhS5qn","date":"2026-08-29","displayDate":"August 29, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"gloria-turn-the-beat"},{"artist":"Voyager","ticket":"https://app.fangenie.com/venture-in-rv-resort/voyager---the-1-tribute-to-journey/wlK0aFMw7a","date":"2026-09-03","displayDate":"September 3, 2026","showtime":"6:30 PM","city":"Show Low","state":"AZ","location":"270 N Clark Rd, Show Low, AZ 85901","platform":"FanGenie","slug":"voyager"},{"artist":"Honky Tonk Man","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1090","date":"2026-09-05","displayDate":"September 5, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"honky-tonk-man"},{"artist":"Locked Out Of Heaven","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/locked-out-of-heaven---bruno-mars-tribute/D42KgBTlFX","date":"2026-09-05","displayDate":"September 5, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"locked-out-of-heaven"},{"artist":"The Kings of Queen","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5090","date":"2026-09-10","displayDate":"September 10, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"the-kings-of-queen"},{"artist":"The Kings of Queen","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-09-11","displayDate":"September 11, 2026","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-kings-of-queen"},{"artist":"Disco Inferno","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/disco-inferno---ultimate-disco-party/0gAKZ1FZ1U","date":"2026-09-11","displayDate":"September 11, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"disco-inferno"},{"artist":"The Kings of Queen","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-09-12","displayDate":"September 12, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-kings-of-queen"},{"artist":"Piano Men: Generations","ticket":"https://www.ticketweb.com/event/piano-men-generations-the-coach-house-tickets/14112024?pl=coach","date":"2026-09-12","displayDate":"September 12, 2026","showtime":"8:00pm","city":"San Juan Capistrano","state":"CA","location":"33157 Camino Capistrano, San Juan Capistrano, CA 92675","platform":"","slug":"piano-men-generations"},{"artist":"The Big Easy Live","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1092","date":"2026-09-13","displayDate":"September 13, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"the-big-easy-live"},{"artist":"Piano Men: Generations","ticket":"https://vpat.showare.com/eventperformances.asp?evt=104","date":"2026-09-13","displayDate":"September 13, 2026","showtime":"7:00 pm","city":"Vacaville","state":"CA","location":"1010 Ulatis Dr, Vacaville, CA  95687","platform":"","slug":"piano-men-generations"},{"artist":"The Big Easy Live","ticket":"https://purchase.azbroadway.org/ChooseSeats/40601","date":"2026-09-14","displayDate":"September 14, 2026","showtime":"7:30 PM","city":"Peoria","state":"AZ","location":"7701 W Paradise Ln, Peoria, AZ 85382","platform":"","slug":"the-big-easy-live"},{"artist":"Sharon Owens","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5096","date":"2026-09-19","displayDate":"September 19, 2026","showtime":"6.30 pm","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"sharon-owens"},{"artist":"56tees","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1100","date":"2026-10-03","displayDate":"October 3, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"56tees"},{"artist":"Voyager","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/voyager---journey-tribute/59z3UqNa1y","date":"2026-10-03","displayDate":"October 3, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"voyager"},{"artist":"Almost Folsom","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1102","date":"2026-10-08","displayDate":"October 8, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"almost-folsom"},{"artist":"Margaritas In Paradise","ticket":"https://app.fangenie.com/downtown-grand-hotel-casino/margaritas-in-paradise---jimmy-buffett-tribute/Xebiu4ItZV","date":"2026-10-09","displayDate":"October 9, 2026","showtime":"8:00 PM","city":"Las Vegas","state":"NV","location":"206 N. 3rd St., Las Vegas, NV 89101","platform":"FanGenie","slug":"margaritas-in-paradise"},{"artist":"Piano Men: Generations","ticket":"https://www.bocablackbox.com/events/oct26-Piano-Men-Generations-The-Music-of-Two-Legends-Billy-Joel--Elton-John","date":"2026-10-20","displayDate":"October 20, 2026","showtime":"6.30 pm (possible 8 pm show) ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"piano-men-generations"},{"artist":"Piano Men: Generations","ticket":"https://www.bocablackbox.com/events/oct26-Piano-Men-Generations-The-Music-of-Two-Legends-Billy-Joel--Elton-John","date":"2026-10-21","displayDate":"October 21, 2026","showtime":"6.30 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"piano-men-generations"},{"artist":"Magic Of Manilow","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5097","date":"2026-10-22","displayDate":"October 22, 2026","showtime":"6.30 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"magic-of-manilow"},{"artist":"The K-Tel All Stars","ticket":"https://app.fangenie.com/pueblo-el-mirage/the-k-tel-all-stars/Og8HlPNSSD","date":"2026-10-22","displayDate":"October 22, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"the-k-tel-all-stars"},{"artist":"One More Night","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1108","date":"2026-10-24","displayDate":"October 24, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"one-more-night"},{"artist":"Piano Men: Generations","ticket":"https://egyptiantheatre.showare.com/eventperformances.asp?evt=337","date":"2026-10-24","displayDate":"October 24, 2026","showtime":"7:30pm","city":"DeKalb","state":"IL","location":"135 N 2nd St, DeKalb, IL 60115","platform":"","slug":"piano-men-generations"},{"artist":"Members Only","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1111","date":"2026-10-31","displayDate":"October 31, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"members-only"},{"artist":"A Lennon Legacy","ticket":"https://app.fangenie.com/pueblo-el-mirage/a-lennon-legacy/bcCgGOCxUT","date":"2026-11-06","displayDate":"November 6, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"a-lennon-legacy"},{"artist":"Voyager","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1120","date":"2026-11-08","displayDate":"November 8, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"voyager"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5070","date":"2026-11-19","displayDate":"November 19, 2026","showtime":"8.00 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2026-11-20","displayDate":"November 20, 2026","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Rock Revisited","ticket":"https://app.fangenie.com/pueblo-el-mirage/rock-revisited---classic-rock-tribute/Wb2xLtWzxc","date":"2026-11-20","displayDate":"November 20, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"rock-revisited"},{"artist":"Karen Hester as Dolly Parton","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp ","date":"2026-11-21","displayDate":"November 21, 2026","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"karen-hester-as-dolly-parton"},{"artist":"Go Now","ticket":"https://bocablackbox.showare.com/orderticketsvenue.asp?p=5072","date":"2026-11-21","displayDate":"November 21, 2026","showtime":"7.00 pm & 9 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"go-now"},{"artist":"Sleigh Bells Swing","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1129","date":"2026-12-09","displayDate":"December 9, 2026","showtime":"6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"sleigh-bells-swing"},{"artist":"Rocky Mountain Christmas","ticket":"https://app.fangenie.com/pueblo-el-mirage/rocky-mountain-christmas---the-john-denver-tribute-holiday-show/i8aXfG06pa","date":"2026-12-11","displayDate":"December 11, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"rocky-mountain-christmas"},{"artist":"3 International Tenors","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1130","date":"2026-12-12","displayDate":"December 12, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"3-international-tenors"},{"artist":"Ivan Pecel","ticket":"https://app.fangenie.com/pueblo-el-mirage/ivan-pecel---comedic-juggling/6H2xOEnmWR","date":"2026-12-18","displayDate":"December 18, 2026","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"ivan-pecel"},{"artist":"Country Christmas","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1131","date":"2026-12-19","displayDate":"December 19, 2026","showtime":"2:00PM & 6:00PM","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"country-christmas"},{"artist":"A Lennon Legacy","ticket":"https://gaslightmusichall.csstix.com/event-details.php?e=1133","date":"2026-12-27","displayDate":"December 27, 2026","showtime":"2:00pm & 6:00pm","city":"Tucson","state":"AZ","location":"13005 N Oracle Rd #165, Tucson, AZ 85739","platform":"","slug":"a-lennon-legacy"},{"artist":"The Lionel Richie Songbook","ticket":"https://bocablackbox.showare.com/eventperformances.asp?evt=1687","date":"2027-01-07","displayDate":"January 7, 2027","showtime":"8 pm ","city":"Boca Raton ","state":"FL","location":"8221 Glades Road Suite #10, Boca Raton , FL 33434","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"The Lionel Richie Songbook","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-01-08","displayDate":"January 8, 2027","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"The Lionel Richie Songbook","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-01-09","displayDate":"January 9, 2027","showtime":"1:30pm & 7:30pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"the-lionel-richie-songbook"},{"artist":"Yachtzilla","ticket":"https://app.fangenie.com/pueblo-el-mirage/yachtzilla---the-monsters-of-soft-rock/mzZFBSiLDK","date":"2027-01-15","displayDate":"January 15, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"yachtzilla"},{"artist":"Almost Folsom","ticket":"https://app.fangenie.com/pueblo-el-mirage/almost-folsom---johnny-cash-june-carter/7wkC8I4S8b","date":"2027-01-29","displayDate":"January 29, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"almost-folsom"},{"artist":"One Of These Nights","ticket":"https://app.fangenie.com/pueblo-el-mirage/one-of-these-nights---tribute-to-eagles/NYGkV76X7K","date":"2027-02-05","displayDate":"February 5, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"one-of-these-nights"},{"artist":"Honky Tonk Man","ticket":"https://app.fangenie.com/pueblo-el-mirage/honky-tonk-man-a-tribute-to-dwight-yoakam/qRhHAEipk0","date":"2027-02-12","displayDate":"February 12, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"honky-tonk-man"},{"artist":"Springsteen: Born To Run","ticket":"https://app.fangenie.com/pueblo-el-mirage/springsteen-born-to-run/1fwmi3umQi","date":"2027-02-26","displayDate":"February 26, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"springsteen-born-to-run"},{"artist":"Voyager","ticket":"https://app.fangenie.com/pueblo-el-mirage/voyager/w9GhyCj76Y","date":"2027-03-05","displayDate":"March 5, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"voyager"},{"artist":"Go Now","ticket":"https://app.fangenie.com/riverview-performing-arts-center/go-now---the-legacy-tribute-to-the-moody-blues/SX4uNTfpZV","date":"2027-03-11","displayDate":"March 11, 2027","showtime":"7 pm ","city":"Sarasota ","state":"FL","location":"1 Ram Way, Sarasota , FL 34231","platform":"FanGenie","slug":"go-now"},{"artist":"Fly Like An Eagle","ticket":"https://app.fangenie.com/pueblo-el-mirage/fly-like-an-eagle---tribute-to-steve-miller/BUz5koOV8m","date":"2027-03-19","displayDate":"March 19, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"fly-like-an-eagle"},{"artist":"Million Dollar McGraw","ticket":"https://app.fangenie.com/pueblo-el-mirage/million-dollar-mcgraw/gfdRsdrIxK","date":"2027-04-02","displayDate":"April 2, 2027","showtime":"7:00 PM","city":"El Mirage","state":"AZ","location":"11201 N El Mirage Rd, El Mirage, AZ 85335","platform":"Purple Pass","slug":"million-dollar-mcgraw"},{"artist":"AbbaFab","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-04-16","displayDate":"April 16, 2027","showtime":"6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"abbafab"},{"artist":"AbbaFab","ticket":"https://suncoastbroadway.com/Online/mapSelect.asp","date":"2027-04-17","displayDate":"April 17, 2027","showtime":"12:00pm & 6:00pm","city":"Hudson","state":"FL","location":"16128 US 19, Hudson, FL 34667","platform":"","slug":"abbafab"}];
+const STATES = ["AZ", "CA", "FL", "IL", "MN", "NV", "PA"];
+
+// 10-color gradient palette
+const PALETTE = [
+  ['#e94560','#f5a623'],
+  ['#7c3aed','#ec4899'],
+  ['#06b6d4','#3b82f6'],
+  ['#10b981','#06b6d4'],
+  ['#f59e0b','#ef4444'],
+  ['#8b5cf6','#3b82f6'],
+  ['#ec4899','#f5a623'],
+  ['#22d3ee','#a855f7'],
+  ['#fb7185','#7c3aed'],
+  ['#facc15','#e94560'],
 ];
 
-function gradientFor(slug) {
-    let h = 0;
-    for (let i = 0; i < slug.length; i++) {
-        h = ((h << 5) - h) + slug.charCodeAt(i);
-        h |= 0;
-    }
-    return GRADIENTS[Math.abs(h) % GRADIENTS.length];
+function hashCode(str){
+  let h = 0;
+  for (let i=0; i<str.length; i++){
+    h = ((h<<5) - h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h);
+}
+function gradientFor(slug){
+  const idx = hashCode(slug || 'x') % PALETTE.length;
+  const [a,b] = PALETTE[idx];
+  return 'linear-gradient(135deg, ' + a + ' 0%, ' + b + ' 100%)';
 }
 
-function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-function escapeAttr(s) { return escapeHtml(s); }
-
-function formatDate(yyyymmdd, fallback) {
-    if (fallback) return fallback;
-    try {
-        const [y, m, d] = yyyymmdd.split('-').map(Number);
-        const dt = new Date(y, m-1, d);
-        return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' });
-    } catch(e) { return yyyymmdd; }
+function buildLocationLine(e){
+  const parts = [];
+  if (e.city) parts.push(e.city);
+  if (e.state) parts.push(e.state);
+  return parts.join(', ');
 }
 
-function renderCard(ev) {
-    const grad = gradientFor(ev.slug);
-    const dateLabel = ev.showInfo || formatDate(ev.date);
-    const cityState = [ev.city, ev.state].filter(Boolean).join(', ');
-    return `
-        <div class="card">
-            <div class="card-photo-wrap">
-                <img src="${PHOTO_BASE}${escapeAttr(ev.slug)}.jpg" alt="${escapeAttr(ev.artist)}" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="card-photo-fallback" style="background:${grad}">${escapeHtml(ev.artist)}</div>
-            </div>
-            <div class="card-body">
-                <div class="card-artist">${escapeHtml(ev.artist)}</div>
-                <div class="card-date">${escapeHtml(dateLabel)}</div>
-                ${ev.showtime ? `<div class="card-time">${escapeHtml(ev.showtime)}</div>` : ''}
-                ${cityState ? `<div class="card-venue">${escapeHtml(cityState)}</div>` : ''}
-                ${ev.location ? `<div class="card-loc">${escapeHtml(ev.location)}</div>` : '<div class="card-loc"></div>'}
-                <a class="card-cta" href="${escapeAttr(ev.ticket)}" target="_blank" rel="noopener">Get Tickets</a>
-            </div>
-        </div>
-    `;
+function cardHTML(e){
+  const grad = gradientFor(e.slug);
+  const dateTimeBits = [];
+  if (e.displayDate) dateTimeBits.push(e.displayDate);
+  if (e.showtime) dateTimeBits.push(e.showtime);
+  const dateLine = dateTimeBits.join(' &middot; ');
+  const loc = buildLocationLine(e);
+  return ''
+  + '<article class="card">'
+  +   '<div class="card-photo-wrap">'
+  +     '<img src="' + PHOTO_BASE + esc(e.slug) + '.jpg" alt="' + esc(e.artist) + '" loading="lazy"'
+  +        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+  +     '<div class="card-photo-fallback" style="display:none;background:' + grad + '">' + esc(e.artist) + '</div>'
+  +   '</div>'
+  +   '<div class="card-body">'
+  +     '<div class="card-artist">' + esc(e.artist) + '</div>'
+  +     '<div class="card-meta">'
+  +       (dateLine ? '<div class="row"><span class="label">When</span><span class="val">' + dateLine + '</span></div>' : '')
+  +       (loc ? '<div class="row"><span class="label">Where</span><span class="val">' + esc(loc) + '</span></div>' : '')
+  +       (e.location ? '<div class="row"><span class="label">Venue</span><span class="val">' + esc(e.location) + '</span></div>' : '')
+  +     '</div>'
+  +     '<a class="card-cta" href="' + esc(e.ticket) + '" target="_blank" rel="noopener">Get Tickets &rarr;</a>'
+  +     (e.platform ? '<div class="card-platform">via ' + esc(e.platform) + '</div>' : '')
+  +   '</div>'
+  + '</article>';
 }
 
-const grid = document.getElementById('eventsGrid');
-const searchInput = document.getElementById('searchInput');
-const stateFilter = document.getElementById('stateFilter');
-const btnClear = document.getElementById('btnClear');
-const eventCount = document.getElementById('eventCount');
+function populateStates(){
+  const sel = document.getElementById('stateSelect');
+  STATES.forEach(function(st){
+    const opt = document.createElement('option');
+    opt.value = st;
+    opt.textContent = st;
+    sel.appendChild(opt);
+  });
+}
 
-function render() {
-    const q = searchInput.value.trim().toLowerCase();
-    const st = stateFilter.value;
-    const filtered = events.filter(ev => {
-        if (st && ev.state !== st) return false;
-        if (!q) return true;
-        return (
-            (ev.artist || '').toLowerCase().includes(q) ||
-            (ev.city || '').toLowerCase().includes(q) ||
-            (ev.state || '').toLowerCase().includes(q) ||
-            (ev.location || '').toLowerCase().includes(q)
-        );
+function render(){
+  const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+  const st = document.getElementById('stateSelect').value;
+  let out = events;
+  if (st) out = out.filter(function(e){ return e.state === st; });
+  if (q){
+    out = out.filter(function(e){
+      const hay = (e.artist + ' ' + (e.city||'') + ' ' + (e.location||'') + ' ' + (e.state||'')).toLowerCase();
+      return hay.indexOf(q) !== -1;
     });
-    if (filtered.length === 0) {
-        grid.innerHTML = '<div class="empty">No shows match your search. Try clearing filters.</div>';
-    } else {
-        grid.innerHTML = filtered.map(renderCard).join('');
-    }
-    eventCount.textContent = `${filtered.length} of ${events.length} shows`;
+  }
+  const grid = document.getElementById('grid');
+  if (!out.length){
+    grid.innerHTML = '<div class="empty">No shows match your filters. Try clearing them.</div>';
+  } else {
+    grid.innerHTML = out.map(cardHTML).join('');
+  }
+  document.getElementById('resultMeta').textContent =
+    (out.length === events.length)
+      ? ''
+      : ('Showing ' + out.length + ' of ' + events.length + ' shows');
 }
 
-searchInput.addEventListener('input', render);
-stateFilter.addEventListener('change', render);
-btnClear.addEventListener('click', () => {
-    searchInput.value = '';
-    stateFilter.value = '';
+document.addEventListener('DOMContentLoaded', function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  populateStates();
+  document.getElementById('searchInput').addEventListener('input', render);
+  document.getElementById('stateSelect').addEventListener('change', render);
+  document.getElementById('clearBtn').addEventListener('click', function(){
+    document.getElementById('searchInput').value = '';
+    document.getElementById('stateSelect').value = '';
     render();
+  });
+  render();
 });
-
-render();
 </script>
 </body>
 </html>
