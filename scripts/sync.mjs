@@ -9,7 +9,7 @@
 //   node scripts/sync.mjs            # write into repo root
 //   node scripts/sync.mjs --dry-run  # don't write files, just print summary
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -21,34 +21,34 @@ if (!AIRTABLE_PAT) {
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const BASE_ID      = 'appEy2dr1ecmzbEpb';
+const BASE_ID = 'appEy2dr1ecmzbEpb';
 const EVENTS_TABLE = 'tblu9UIlpXChPdvOB';
-const BANDS_TABLE  = 'tblOsZIDmFHt01rJn';
+const BANDS_TABLE = 'tblOsZIDmFHt01rJn';
 const VENUES_TABLE = 'tblno252DKqUf55As';
 
 // Event field IDs
-const F_SHOW_INFO  = 'fld2ky88mk1cTECxX';
-const F_TICKET     = 'fldjR0adsgFVDbzSe';
-const F_START_DATE = 'fld0VBiok50LzeKRZ';
-const F_ARTIST_LINK= 'fldRZ99cnPxHyPL18'; // multipleRecordLinks → BANDS-SHOWS
-const F_ARTIST_LOOK= 'fldVCAKyZlT8fYcbO'; // lookup → band Name
-const F_SHOWTIME   = 'fldpARJ5yjNnIhsTN';
-const F_CITY       = 'fldQxfhltNZfraKRq'; // lookup → text
-const F_STATE      = 'fldTn8sdmJ4UbPX5x'; // lookup → singleSelect {name}
-const F_VENUE_LINK = 'fldWNKIABxBYUyX0A'; // multipleRecordLinks → VENUES (From CP)
-const F_VENUE_ADDR = 'fldv6kMv0wmhrpLql'; // formula → full address string
-const F_PLATFORM   = 'fldczQJUGFvhg2NrC'; // lookup → multipleSelects {name}
+const F_SHOW_INFO     = 'fld2ky88mk1cTECxX';
+const F_TICKET        = 'fldjR0adsgFVDbzSe';
+const F_START_DATE    = 'fld0VBiok50LzeKRZ';
+const F_ARTIST_LINK   = 'fldRZ99cnPxHyPL18'; // actual link to BANDS-SHOWS (multipleRecordLinks)
+const F_ARTIST_LOOK   = 'fldVCAKyZlT8fYcbO'; // lookup → band Name (singleLineText)
+const F_SHOWTIME      = 'fldpARJ5yjNnIhsTN';
+const F_CITY          = 'fldQxfhltNZfraKRq'; // lookup → singleLineText
+const F_STATE         = 'fldTn8sdmJ4UbPX5x'; // lookup → singleSelect {name,...}
+const F_VENUE_LINK    = 'fldWNKIABxBYUyX0A'; // multipleRecordLinks → VENUES (From CP)
+const F_VENUE_ADDR    = 'fldv6kMv0wmhrpLql'; // "Venue Location" formula → full address string
+const F_PLATFORM      = 'fldczQJUGFvhg2NrC'; // lookup → multipleSelects
 
 // Bands field IDs
-const F_BAND_NAME  = 'fldLzk7pDCwNsBQob';
-const F_BAND_IMG   = 'fldp0jJuQ0uXf5wQl'; // New Web: 865x340
+const F_NAME     = 'fldLzk7pDCwNsBQob';
+const F_WEB_IMG  = 'fldmdmT8dvg45MLyn'; // Poster/Portrait (1:1, e.g. 1254x1254)
 
 // Venues field IDs
-const F_VENUE_NAME = 'fldNt6WjlSP0tivQ2'; // primary "Name"
+const F_VENUE_NAME = 'fldNt6WjlSP0tivQ2'; // primary field "Name" on VENUES (From CP)
 
 const SLUG_FIXES = {
   "Britain's Finest": 'britains-finest',
-  "Britain’s Finest": 'britains-finest',
+  'Britain\u2019s Finest': 'britains-finest',
   'THE MOODY BLUES TRIBUTE - GO NOW!': 'the-moody-blues-tribute--go-now',
   'Yachtzilla - The Monsters of Soft Rock': 'yachtzilla--the-monsters-of-soft-rock',
 };
@@ -59,7 +59,7 @@ function slugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-const repoRoot  = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const photosDir = path.join(repoRoot, 'artist-photos');
 const indexPath = path.join(repoRoot, 'index.html');
 
@@ -96,19 +96,27 @@ async function airtableListAll(tableId, { fields = [], filterByFormula = null, s
 
 // ---- Value extractors ----
 
-// Lookup fields return arrays. Text lookups → ["string", ...]; select lookups → [{name, ...}, ...].
-function firstLookupString(val) {
+// Lookup fields return arrays. For text lookups, entries are strings.
+// For select lookups, entries are {id, name, color} objects.
+// For multipleSelects lookups, entries may be arrays of objects.
+function firstLookupText(val) {
   if (val == null) return '';
   if (Array.isArray(val)) {
     for (const v of val) {
       if (v == null) continue;
-      if (typeof v === 'string') { const t = v.trim(); if (t) return t; }
-      if (Array.isArray(v)) { const inner = firstLookupString(v); if (inner) return inner; }
-      else if (typeof v === 'object' && typeof v.name === 'string') return v.name.trim();
+      if (typeof v === 'string') return v;
+      if (Array.isArray(v)) {
+        const inner = firstLookupText(v);
+        if (inner) return inner;
+      } else if (typeof v === 'object') {
+        if (typeof v.name === 'string') return v.name;
+      }
     }
-  } else if (typeof val === 'string') return val.trim();
-  else if (val && typeof val === 'object' && typeof val.name === 'string') return val.name.trim();
-  return '';
+    return '';
+  }
+  if (typeof val === 'string') return val;
+  if (typeof val === 'object' && typeof val.name === 'string') return val.name;
+  return String(val);
 }
 
 // ---- Pull events ----
@@ -126,7 +134,7 @@ async function pullEvents() {
   });
 
   const events = [];
-  const skipped = { badTicket: 0, past: 0, noArtistLink: 0, noDate: 0 };
+  const skipped = { noTicket: 0, past: 0, noArtistLink: 0, noDate: 0 };
 
   for (const r of records) {
     const f = r.fields;
@@ -134,38 +142,35 @@ async function pullEvents() {
     const startDate = f[F_START_DATE];
     const artistLinks = f[F_ARTIST_LINK];
 
-    if (!ticket) { skipped.badTicket++; continue; }
-    const tt = String(ticket).trim().toUpperCase();
-    if (tt === 'NOT APPLICABLE' || tt === 'N/A' || tt === 'NONE') { skipped.badTicket++; continue; }
+    if (!ticket || ticket === 'NOT APPLICABLE') { skipped.noTicket++; continue; }
     if (!startDate) { skipped.noDate++; continue; }
-    if (String(startDate) < today) { skipped.past++; continue; }
+    if (startDate < today) { skipped.past++; continue; }
     if (!artistLinks || artistLinks.length === 0) { skipped.noArtistLink++; continue; }
 
     const venueLinks = f[F_VENUE_LINK];
     events.push({
       recordId: r.id,
-      artistLinkId: artistLinks[0],
+      artistLinkId: artistLinks[0], // first linked band record id
       venueLinkId: (venueLinks && venueLinks[0]) || null,
       showInfo: f[F_SHOW_INFO] || '',
       ticket,
       date: startDate,
       showtime: f[F_SHOWTIME] || '',
-      artistFromLookup: firstLookupString(f[F_ARTIST_LOOK]),
-      city: firstLookupString(f[F_CITY]),
-      state: firstLookupString(f[F_STATE]),
+      artistFromLookup: firstLookupText(f[F_ARTIST_LOOK]),
+      city: firstLookupText(f[F_CITY]),
+      state: firstLookupText(f[F_STATE]),
       address: f[F_VENUE_ADDR] || '',
-      platform: firstLookupString(f[F_PLATFORM]),
+      platform: firstLookupText(f[F_PLATFORM]),
     });
   }
 
   return { events, skipped };
 }
 
-// ---- Resolve artist names + photo URLs ----
+// ---- Resolve artist names + photo URLs via BANDS-SHOWS ----
 
 async function pullBands(linkIds) {
   const unique = [...new Set(linkIds.filter(Boolean))];
-  if (unique.length === 0) return {};
   const chunks = [];
   for (let i = 0; i < unique.length; i += 80) chunks.push(unique.slice(i, i + 80));
 
@@ -173,19 +178,22 @@ async function pullBands(linkIds) {
   for (const chunk of chunks) {
     const formula = `OR(${chunk.map(id => `RECORD_ID()='${id}'`).join(',')})`;
     const records = await airtableListAll(BANDS_TABLE, {
-      fields: [F_BAND_NAME, F_BAND_IMG],
+      fields: [F_NAME, F_WEB_IMG],
       filterByFormula: formula,
     });
     for (const r of records) {
-      const name = r.fields[F_BAND_NAME];
-      const atts = r.fields[F_BAND_IMG];
-      byId[r.id] = { name, url: atts && atts[0] ? atts[0].url : null };
+      const name = r.fields[F_NAME];
+      const atts = r.fields[F_WEB_IMG];
+      byId[r.id] = {
+        name,
+        url: atts && atts[0] ? atts[0].url : null,
+      };
     }
   }
   return byId;
 }
 
-// ---- Resolve venue names ----
+// ---- Resolve venue names via VENUES (From CP) ----
 
 async function pullVenues(linkIds) {
   const unique = [...new Set(linkIds.filter(Boolean))];
@@ -201,7 +209,8 @@ async function pullVenues(linkIds) {
       filterByFormula: formula,
     });
     for (const r of records) {
-      byId[r.id] = (r.fields[F_VENUE_NAME] || '').trim();
+      const name = r.fields[F_VENUE_NAME];
+      byId[r.id] = (name || '').trim();
     }
   }
   return byId;
@@ -215,14 +224,14 @@ async function downloadPhotos(bandsById) {
   const results = { downloaded: 0, unchanged: 0, failed: [], skipped: [] };
   const slugsSeen = new Set();
 
-  for (const band of Object.values(bandsById)) {
+  for (const [id, band] of Object.entries(bandsById)) {
     if (!band.name) continue;
     const slug = slugify(band.name);
     if (slugsSeen.has(slug)) continue;
     slugsSeen.add(slug);
 
     if (!band.url) {
-      results.skipped.push({ name: band.name, slug, reason: 'no 865x340 attachment' });
+      results.skipped.push({ name: band.name, slug, reason: 'no Poster/Portrait attachment' });
       continue;
     }
 
@@ -247,156 +256,157 @@ async function downloadPhotos(bandsById) {
   return results;
 }
 
-// ---- HTML helpers ----
-
-function htmlesc(s) {
-  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
-    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;',
-  }[c]));
-}
-
 // ---- Build index.html ----
 
 function renderIndexHtml(events) {
   const states = [...new Set(events.map(e => e.state).filter(Boolean))].sort();
-  const compact = events.map(e => ({
-    a:  e.artist,
-    t:  e.ticket,
-    d:  e.date,
-    si: e.showInfo,
-    st: e.showtime,
-    c:  e.city,
-    s:  e.state,
-    vn: e.venue,
-    l:  e.address,
-    p:  e.platform,
-    sl: e.slug,
-  }));
-  const eventsJs = JSON.stringify(compact, null, 0).replace(/},\{/g, '},\n{');
+  const count = events.length;
+
+  const eventsJs = JSON.stringify(events.map(e => ({
+    artist: e.artist,
+    ticket: e.ticket,
+    date: e.date,
+    showtime: e.showtime,
+    city: e.city,
+    state: e.state,
+    venue: e.venue,
+    address: e.address,
+    platform: e.platform,
+    slug: e.slug,
+  })), null, 2);
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YourConcertTix - Find Live Shows &amp; Get Tickets</title>
-<meta name="description" content="Find live concerts, tribute shows, and entertainment events near you. Get tickets to the best live music experiences.">
+<title>YourConcertTix - Find Live Shows & Get Tickets</title>
+<meta name="description" content="Find live concert tickets near you. Tribute shows, classic rock, country and more.">
 <meta property="og:title" content="YourConcertTix - Find Live Shows & Get Tickets">
-<meta property="og:description" content="Find live concerts, tribute shows, and entertainment events near you.">
+<meta property="og:description" content="Find live concert tickets near you.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yourconcerttix.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#1a1a2e;--accent:#e94560;--accent2:#f5a623;--bg:#0f0f23;--card-bg:#16213e;--card-border:#1a1a3e;--text:#e8e8f0;--text-muted:#8888aa}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
-a{color:inherit;text-decoration:none}
-.fangenie-banner{background:linear-gradient(135deg,#0a0a1a 0%,#1a1a3e 100%);border-bottom:1px solid rgba(233,69,96,0.3);padding:10px 20px;text-align:center}
-.fangenie-banner a{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
-.powered-by{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
-.fg-logo{height:28px;vertical-align:middle}
-.fg-tagline{font-size:13px;color:var(--accent2);font-weight:500}
-header{background:linear-gradient(135deg,var(--primary) 0%,#0f0f23 100%);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--card-border);flex-wrap:wrap;gap:10px}
-.logo{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.event-count{background:rgba(233,69,96,0.15);color:var(--accent);padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600}
-.hero{text-align:center;padding:50px 20px 30px;background:radial-gradient(ellipse at center,rgba(233,69,96,0.08) 0%,transparent 70%)}
-.hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,#fff,#ccc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{color:var(--text-muted);font-size:18px;max-width:600px;margin:0 auto}
-.controls{max-width:1200px;margin:0 auto 30px;padding:0 20px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.controls input,.controls select{background:var(--card-bg);border:1px solid var(--card-border);color:var(--text);padding:12px 18px;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.3s}
-.controls input:focus,.controls select:focus{border-color:var(--accent)}
-.controls input{flex:1;min-width:220px;max-width:400px}
-.controls select{min-width:160px}
-.btn-clear{background:rgba(233,69,96,0.15);color:var(--accent);border:1px solid rgba(233,69,96,0.3);padding:12px 24px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.3s}
-.btn-clear:hover{background:var(--accent);color:#fff}
-.grid{max-width:1200px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(233,69,96,0.15)}
-.card-photo-wrap{aspect-ratio:16/9;overflow:hidden;position:relative;background:var(--primary)}
-.card-photo-wrap img{width:100%;height:100%;object-fit:cover}
-.card-photo-fallback{display:none;width:100%;height:100%;position:absolute;top:0;left:0;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;color:rgba(255,255,255,0.95);text-shadow:0 2px 8px rgba(0,0,0,0.5);text-align:center;padding:20px}
-.card-body{padding:18px;flex:1}
-.card-artist{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.3}
-.card-venue{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--accent2);margin-bottom:8px}
-.card-detail{font-size:13px;color:var(--text-muted);margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
-.card-detail .icon{flex-shrink:0;width:16px;text-align:center}
-.card-btn{display:block;margin:14px 18px 18px;padding:12px;text-align:center;background:linear-gradient(135deg,var(--accent),#c23152);color:#fff;border-radius:10px;font-weight:600;font-size:14px;transition:opacity 0.3s;letter-spacing:0.5px}
-.card-btn:hover{opacity:0.85}
-.no-results{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:18px;grid-column:1/-1}
-footer{text-align:center;padding:30px;border-top:1px solid var(--card-border);color:var(--text-muted);font-size:13px}
-@media(max-width:640px){header{padding:15px 20px}.logo{font-size:22px}.hero{padding:30px 15px 20px}.hero h1{font-size:26px}.grid{grid-template-columns:1fr;padding:0 15px 30px}}
+:root {
+  --primary: #1a1a2e;
+  --accent: #e94560;
+  --accent2: #f5a623;
+  --bg: #0f0f23;
+  --card-bg: #16213e;
+  --card-border: #1a1a3e;
+  --text: #e8e8f0;
+  --text-muted: #8888aa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+.fangenie-banner { background: linear-gradient(90deg, #1a1a3e, #0f0f23); padding: 8px 16px; text-align: center; border-bottom: 1px solid var(--card-border); }
+.fangenie-banner a { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; color: var(--text-muted); font-size: 13px; }
+.fangenie-banner .fg-logo { height: 18px; vertical-align: middle; }
+.fangenie-banner .fg-tagline { color: var(--text-muted); font-weight: 500; }
+header { padding: 24px 20px; text-align: center; border-bottom: 1px solid var(--card-border); }
+header h1 { font-family: 'Montserrat', sans-serif; font-size: 28px; letter-spacing: -0.5px; }
+header h1 .accent { color: var(--accent); }
+header .count { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
+.hero { text-align: center; padding: 48px 20px 24px; }
+.hero h2 { font-family: 'Montserrat', sans-serif; font-size: 36px; margin-bottom: 8px; }
+.hero p { color: var(--text-muted); }
+.controls { max-width: 960px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 12px; padding: 0 20px; }
+.controls input, .controls select, .controls button {
+  font: inherit; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--card-border);
+  background: var(--card-bg); color: var(--text);
+}
+.controls input { flex: 1 1 260px; }
+.controls select { flex: 0 1 200px; }
+.controls button { background: var(--accent); color: white; border: 0; cursor: pointer; font-weight: 600; }
+.controls button:hover { background: #ff5872; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+.card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.card-photo-wrap { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--primary); }
+.card-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; color: white; text-align: center; padding: 16px; font-size: 18px; }
+.card-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card-body h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; }
+.card-body .meta { color: var(--text-muted); font-size: 14px; }
+.card-body .meta strong { color: var(--text); }
+.card-body .cta { margin-top: auto; padding-top: 12px; }
+.card-body .cta a { display: block; background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
+.card-body .cta a:hover { background: #ff5872; }
+.empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
+footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--card-border); margin-top: 40px; }
+@media (max-width: 600px) {
+  .hero h2 { font-size: 28px; }
+  .grid { padding: 12px; gap: 12px; grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <div class="fangenie-banner">
-<a href="https://fangenie.com" target="_blank">
-<span class="powered-by">Powered by</span>
-<img src="https://app.fangenie.com/assets/images/newlogo.png" alt="FanGenie" class="fg-logo">
-<span class="fg-tagline">The Ticketing Platform That Sells Your Tickets For You!</span>
-</a>
+  <a href="https://fangenie.com" target="_blank">
+    <span class="powered-by">Powered by</span>
+    <img src="https://app.fangenie.com/assets/images/newlogo.png" alt="FanGenie" class="fg-logo">
+    <span class="fg-tagline">The Ticketing Platform That Sells Your Tickets For You!</span>
+  </a>
 </div>
 <header>
-<div class="logo">YourConcertTix</div>
-<div class="event-count" id="eventCount">${events.length} Upcoming Events</div>
+  <h1>Your<span class="accent">Concert</span>Tix</h1>
+  <div class="count">${count} upcoming shows</div>
 </header>
-<section class="hero">
-<h1>Find Live Shows Near You</h1>
-<p>Discover the best tribute bands and live entertainment events. Get your tickets today!</p>
-</section>
+<div class="hero">
+  <h2>Find Live Shows Near You</h2>
+  <p>Tribute bands, classic rock, country &amp; more</p>
+</div>
 <div class="controls">
-<input type="text" id="search" placeholder="Search artists, venues, cities..." autocomplete="off">
-<select id="stateFilter">
-<option value="">All States</option>
-${states.map(s => `<option value="${htmlesc(s)}">${htmlesc(s)}</option>`).join('\n')}
-</select>
-<button class="btn-clear" id="clearBtn">Clear Filters</button>
+  <input id="q" type="search" placeholder="Search artist, venue, or city...">
+  <select id="state">
+    <option value="">All states</option>
+    ${states.map(s => `<option value="${htmlesc(s)}">${htmlesc(s)}</option>`).join('\n    ')}
+  </select>
+  <button id="clear">Clear</button>
 </div>
 <div class="grid" id="grid"></div>
-<footer>&copy; ${new Date().getFullYear()} YourConcertTix. All rights reserved.</footer>
+<footer>&copy; ${new Date().getFullYear()} YourConcertTix</footer>
 <script>
-const PHOTO_BASE='/artist-photos/';
-const events=${eventsJs};
-const GRADIENTS=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#fbc2eb,#a6c1ee)','linear-gradient(135deg,#84fab0,#8fd3f4)'];
-function hashCode(str){let h=0;for(let i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i);h|=0}return Math.abs(h)}
-function gradientFor(artist){return GRADIENTS[hashCode(artist)%GRADIENTS.length]}
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
-function fmtDate(si){return si||''}
-function card(e){
-  const grad=gradientFor(e.a);
-  const locLine=[e.c,e.s].filter(Boolean).join(', ');
-  const plat=e.p?'<div class="card-detail"><span class="icon">🎟️</span><span>'+esc(e.p)+'</span></div>':'';
-  return '<div class="card">'+
-    '<div class="card-photo-wrap">'+
-      '<img src="'+PHOTO_BASE+esc(e.sl)+'.jpg" alt="'+esc(e.a)+'" loading="lazy" onerror="this.style.display=\\'none\\';this.nextElementSibling.style.display=\\'flex\\'">'+
-      '<div class="card-photo-fallback" style="background:'+grad+'">'+esc(e.a)+'</div>'+
-    '</div>'+
-    '<div class="card-body">'+
-      '<div class="card-artist">'+esc(e.a)+'</div>'+
-      (e.vn?'<div class="card-venue">'+esc(e.vn)+'</div>':'')+
-      '<div class="card-detail"><span class="icon">📅</span><span>'+esc(fmtDate(e.si))+(e.st?' · '+esc(e.st):'')+'</span></div>'+
-      (locLine?'<div class="card-detail"><span class="icon">📍</span><span>'+esc(locLine)+'</span></div>':'')+
-      plat+
-    '</div>'+
-    '<a class="card-btn" href="'+esc(e.t)+'" target="_blank" rel="noopener">Get Tickets</a>'+
-  '</div>';
-}
+const PHOTO_BASE = '/artist-photos/';
+const events = ${eventsJs};
+
+const palette = ['linear-gradient(135deg,#e94560,#f5a623)','linear-gradient(135deg,#6a11cb,#2575fc)','linear-gradient(135deg,#ff512f,#dd2476)','linear-gradient(135deg,#11998e,#38ef7d)','linear-gradient(135deg,#f12711,#f5af19)','linear-gradient(135deg,#8e2de2,#4a00e0)','linear-gradient(135deg,#ee0979,#ff6a00)','linear-gradient(135deg,#4568dc,#b06ab3)','linear-gradient(135deg,#c94b4b,#4b134f)','linear-gradient(135deg,#ff9966,#ff5e62)'];
+function grad(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return palette[h%palette.length];}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
 function render(){
-  const q=(document.getElementById('search').value||'').toLowerCase().trim();
-  const st=document.getElementById('stateFilter').value;
+  const q=document.getElementById('q').value.toLowerCase();
+  const st=document.getElementById('state').value;
   const filtered=events.filter(e=>{
-    if(st&&e.s!==st)return false;
+    if(st&&e.state!==st)return false;
     if(!q)return true;
-    return (e.a&&e.a.toLowerCase().includes(q))||(e.c&&e.c.toLowerCase().includes(q))||(e.vn&&e.vn.toLowerCase().includes(q))||(e.l&&e.l.toLowerCase().includes(q));
+    return (e.artist+' '+e.city+' '+(e.venue||'')+' '+(e.address||'')+' '+e.state).toLowerCase().includes(q);
   });
   const grid=document.getElementById('grid');
-  if(filtered.length===0){grid.innerHTML='<div class="no-results">No events match your filters.</div>';return}
-  grid.innerHTML=filtered.map(card).join('');
+  if(filtered.length===0){grid.innerHTML='<div class="empty">No shows match your filters.</div>';return;}
+  grid.innerHTML=filtered.map(e=>{
+    const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+    return \`<div class="card">
+      <div class="card-photo-wrap">
+        <img src="\${PHOTO_BASE}\${esc(e.slug)}.jpg" alt="\${esc(e.artist)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-photo-fallback" style="display:none;background:\${grad(e.slug)}">\${esc(e.artist)}</div>
+      </div>
+      <div class="card-body">
+        <h3>\${esc(e.artist)}</h3>
+        \${e.venue?'<div class="meta"><strong>'+esc(e.venue)+'</strong></div>':''}
+        <div class="meta"><strong>\${dateStr}</strong>\${e.showtime?' · '+esc(e.showtime):''}</div>
+        <div class="meta">\${esc(e.city)}\${e.state?', '+esc(e.state):''}</div>
+        <div class="cta"><a href="\${esc(e.ticket)}" target="_blank" rel="noopener">Get Tickets</a></div>
+      </div>
+    </div>\`;
+  }).join('');
 }
-document.getElementById('search').addEventListener('input',render);
-document.getElementById('stateFilter').addEventListener('change',render);
-document.getElementById('clearBtn').addEventListener('click',()=>{document.getElementById('search').value='';document.getElementById('stateFilter').value='';render()});
+document.getElementById('q').addEventListener('input',render);
+document.getElementById('state').addEventListener('change',render);
+document.getElementById('clear').addEventListener('click',()=>{document.getElementById('q').value='';document.getElementById('state').value='';render();});
 render();
 </script>
 </body>
@@ -404,10 +414,14 @@ render();
 `;
 }
 
+function htmlesc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 // ---- Main ----
 
 async function main() {
-  console.log('Pulling events from Airtable...');
+  console.log('Pulling events...');
   const { events, skipped } = await pullEvents();
   console.log(`  ${events.length} events kept; skipped ${JSON.stringify(skipped)}`);
 
@@ -419,7 +433,8 @@ async function main() {
   console.log(`Pulling ${new Set(venueLinkIds).size} unique venues...`);
   const venuesById = await pullVenues(venueLinkIds);
 
-  // Attach canonical names + slug to each event.
+  // Attach canonical artist name + slug to each event. Prefer BANDS-SHOWS Name;
+  // fall back to the lookup value if we couldn't resolve.
   for (const e of events) {
     const band = bandsById[e.artistLinkId];
     e.artist = (band && band.name) || e.artistFromLookup || '';
@@ -444,11 +459,13 @@ async function main() {
 
   console.log('\nSummary:');
   console.log(`  Events:                      ${usableEvents.length}`);
-  console.log(`  Unique venues:               ${new Set(usableEvents.map(e => e.venue).filter(Boolean)).size}`);
   console.log(`  Photos downloaded:           ${photoResults.downloaded}`);
   console.log(`  Photos unchanged:            ${photoResults.unchanged}`);
   console.log(`  Photos missing (fallback):   ${photoResults.skipped.length}`);
-  console.log(`  Date range:                  ${usableEvents[0]?.date} → ${usableEvents.at(-1)?.date}`);
+  if (photoResults.skipped.length) {
+    console.log('  Missing slugs (gradient fallback will render):');
+    photoResults.skipped.forEach(s => console.log(`    - ${s.slug} (${s.name})`));
+  }
 }
 
 main().catch(err => {
