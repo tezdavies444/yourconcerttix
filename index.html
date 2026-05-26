@@ -89,8 +89,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--card-border);co
 <footer>&copy; 2026 YourConcertTix. All rights reserved.</footer>
 <script>
 const PHOTO_BASE='/artist-photos/';
-const events=[
-[{"a":"Jay White","t":"https://www.axs.com/events/1255588/neil-diamond-legacy-concert-21-event-tickets","d":"2026-05-30","si":"May 30, 2026","st":"8:00 pm","c":"Bensalem","s":"PA","vn":"Parx Casino","l":"2999 Street Rd, Bensalem, PA 19020","p":"","sl":"jay-white"},
+const events=[{"a":"Jay White","t":"https://www.axs.com/events/1255588/neil-diamond-legacy-concert-21-event-tickets","d":"2026-05-30","si":"May 30, 2026","st":"8:00 pm","c":"Bensalem","s":"PA","vn":"Parx Casino","l":"2999 Street Rd, Bensalem, PA 19020","p":"","sl":"jay-white"},
 {"a":"Aretha","t":"https://www.haletheatrearizona.com/Online/default.asp?BOparam::WScontent::loadArticle::permalink=aretha26&BOparam::WScontent::loadArticle::context_id=","d":"2026-06-02","si":"June 2, 2026","st":"7:30 PM","c":"Gilbert","s":"AZ","vn":"Hale Concert Hall","l":"50 West Page Avenue, Gilbert, AZ 85233","p":"","sl":"aretha"},
 {"a":"Ultimate Chicago","t":"https://gaslightmusichall.csstix.com/event-details.php?e=1046","d":"2026-06-04","si":"June 4, 2026","st":"6:00pm","c":"Tucson","s":"AZ","vn":"Gaslight Music Hall","l":"13005 N Oracle Rd #165, Tucson, AZ 85739","p":"","sl":"ultimate-chicago"},
 {"a":"AbbaFab","t":"https://thecoachhouse.com/concert-schedule/14116934/abbafab/","d":"2026-06-05","si":"June 5, 2026","st":"8:00 pm","c":"San Juan Capistrano","s":"CA","vn":"The Coach House","l":"33157 Camino Capistrano, San Juan Capistrano, CA 92675","p":"","sl":"abbafab"},
@@ -197,7 +196,7 @@ const events=[
 {"a":"Fly Like An Eagle","t":"https://app.fangenie.com/pueblo-el-mirage/fly-like-an-eagle---tribute-to-steve-miller/BUz5koOV8m","d":"2027-03-19","si":"March 19, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"fly-like-an-eagle"},
 {"a":"Million Dollar McGraw","t":"https://app.fangenie.com/pueblo-el-mirage/million-dollar-mcgraw/gfdRsdrIxK","d":"2027-04-02","si":"April 2, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"million-dollar-mcgraw"},
 {"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-16","si":"April 16, 2027","st":"6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"},
-{"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-17","si":"April 17, 2027","st":"12:00pm & 6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"}]
+{"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-17","si":"April 17, 2027","st":"12:00pm & 6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"}
 ];
 const GRADIENTS=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#fbc2eb,#a6c1ee)','linear-gradient(135deg,#84fab0,#8fd3f4)'];
 function hashCode(str){let h=0;for(let i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i);h|=0}return Math.abs(h)}
