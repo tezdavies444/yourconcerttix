@@ -63,7 +63,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--card-border);co
 </div>
 <header>
 <div class="logo">YourConcertTix</div>
-<div class="event-count" id="eventCount">108 Upcoming Events</div>
+<div class="event-count" id="eventCount">110 Upcoming Events</div>
 </header>
 <section class="hero">
 <h1>Find Live Shows Near You</h1>
@@ -185,6 +185,8 @@ const events=[{"a":"Jay White","t":"https://www.axs.com/events/1255588/neil-diam
 {"a":"Honky Tonk Man","t":"https://app.fangenie.com/lake-havasu-aquatic-center/honky-tonk-man---a-tribute-to-dwight-yoakum/OEu2keJWZV","d":"2027-02-08","si":"February 8, 2027","st":"7:00 pm","c":"Lake Havasu City","s":"AZ","vn":"Lake Havasu Aquatic Center","l":"100 Park Ave, Lake Havasu City, AZ 86403","p":"Purple Pass","sl":"honky-tonk-man"},
 {"a":"Revisiting The Orbison Years","t":"https://app.fangenie.com/lake-havasu-aquatic-center/revisiting-the-orbison-years/m3pmgZAFxl","d":"2027-02-09","si":"February 9, 2027","st":"7:00 pm","c":"Lake Havasu City","s":"AZ","vn":"Lake Havasu Aquatic Center","l":"100 Park Ave, Lake Havasu City, AZ 86403","p":"Purple Pass","sl":"revisiting-the-orbison-years"},
 {"a":"Honky Tonk Man","t":"https://app.fangenie.com/pueblo-el-mirage/honky-tonk-man-a-tribute-to-dwight-yoakam/qRhHAEipk0","d":"2027-02-12","si":"February 12, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"honky-tonk-man"},
+{"a":"The Big Easy Live","t":"https://app.fangenie.com/lake-havasu-aquatic-center/the-big-easy-live/A26IXwXGTu","d":"2027-02-14","si":"February 14, 2027","st":"7:00 pm","c":"Lake Havasu City","s":"AZ","vn":"Lake Havasu Aquatic Center","l":"100 Park Ave, Lake Havasu City, AZ 86403","p":"Purple Pass","sl":"the-big-easy-live"},
+{"a":"Locked Out Of Heaven","t":"https://app.fangenie.com/lake-havasu-aquatic-center/locked-out-of-heaven---the-bruno-mars-concert/fTiG8wGCMF","d":"2027-02-15","si":"February 15, 2027","st":"7:00 pm","c":"Lake Havasu City","s":"AZ","vn":"Lake Havasu Aquatic Center","l":"100 Park Ave, Lake Havasu City, AZ 86403","p":"Purple Pass","sl":"locked-out-of-heaven"},
 {"a":"Springsteen: Born To Run","t":"https://app.fangenie.com/pueblo-el-mirage/springsteen-born-to-run/1fwmi3umQi","d":"2027-02-26","si":"February 26, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"springsteen-born-to-run"},
 {"a":"Gloria! Turn The Beat","t":"https://brtstage.org/shows/turn-the-beat/","d":"2027-03-03","si":"March 3, 2027","st":"multiple","c":"Bristol","s":"PA","vn":"Bristol Riverside Theatre","l":"120 Radcliffe St,  Bristol, PA 19007","p":"","sl":"gloria-turn-the-beat"},
 {"a":"Gloria! Turn The Beat","t":"https://brtstage.org/shows/turn-the-beat/","d":"2027-03-04","si":"March 4, 2027","st":"multiple","c":"Bristol","s":"PA","vn":"Bristol Riverside Theatre","l":"120 Radcliffe St,  Bristol, PA 19007","p":"","sl":"gloria-turn-the-beat"},
@@ -196,8 +198,7 @@ const events=[{"a":"Jay White","t":"https://www.axs.com/events/1255588/neil-diam
 {"a":"Fly Like An Eagle","t":"https://app.fangenie.com/pueblo-el-mirage/fly-like-an-eagle---tribute-to-steve-miller/BUz5koOV8m","d":"2027-03-19","si":"March 19, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"fly-like-an-eagle"},
 {"a":"Million Dollar McGraw","t":"https://app.fangenie.com/pueblo-el-mirage/million-dollar-mcgraw/gfdRsdrIxK","d":"2027-04-02","si":"April 2, 2027","st":"7:00 PM","c":"El Mirage","s":"AZ","vn":"Pueblo El Mirage RV Resort","l":"11201 N El Mirage Rd, El Mirage, AZ 85335","p":"Purple Pass","sl":"million-dollar-mcgraw"},
 {"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-16","si":"April 16, 2027","st":"6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"},
-{"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-17","si":"April 17, 2027","st":"12:00pm & 6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"}
-];
+{"a":"AbbaFab","t":"https://suncoastbroadway.com/Online/mapSelect.asp","d":"2027-04-17","si":"April 17, 2027","st":"12:00pm & 6:00pm","c":"Hudson","s":"FL","vn":"Suncoast Broadway","l":"16128 US 19, Hudson, FL 34667","p":"","sl":"abbafab"}];
 const GRADIENTS=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#fbc2eb,#a6c1ee)','linear-gradient(135deg,#84fab0,#8fd3f4)'];
 function hashCode(str){let h=0;for(let i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i);h|=0}return Math.abs(h)}
 function gradientFor(artist){return GRADIENTS[hashCode(artist)%GRADIENTS.length]}
