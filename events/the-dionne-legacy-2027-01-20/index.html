@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>The Dionne Legacy</h1>
       
       <p class="venue">Voyager RV Resort</p>
-      <div class="desc"><p>Prepare to be transported into the unforgettable world of Dionne Warwick’s legendary hits with The Dionne Legacy, starring the extraordinary Lorraine Brown. From the very first moment, Lorraine steps onto the stage, her magnetic presence, boundless energy, and commitment to her performance captivate every audience, setting the tone for an unforgettable tribute to one of music’s most iconic voices.</p><p>Lorraine Brown is a highly polished and dynamic solo performer with an illustrious career spanning Stage, TV, Recording, and International Cabaret. Known for her rich, powerful, and soulful voice, Lorraine brings a depth of emotion and passion to every song she sings. Whether she’s delivering a heartfelt ballad or an upbeat anthem, her performances are infused with a charisma that resonates with audiences long after the final note. Her ability to fully embody each song, bringing both technical skill and raw emotion to the stage, is why she consistently earns standing ovations wherever she performs.</p><p>In The Dionne Legacy, Lorraine pays tribute to the unforgettable catalog of Dionne Warwick, singing the hits that made her a household name, such as &quot;Walk on By,&quot; &quot;I Say a Little Prayer,&quot; &quot;Do You Know the Way to San Jose,&quot; and &quot;That’s What Friends Are For.&quot; Lorraine doesn’t just perform the songs; she channels the essence of Dionne, capturing the magic and timeless elegance that have made these songs beloved for generations.</p><p>The Dionne Legacy is more than just a tribute—it’s an electrifying celebration of Dionne Warwick’s music, delivered by the incomparable Lorraine Brown. Don’t miss the chance to experience the passion, soul, and stunning vocals that Lorraine brings to the stage in this powerful homage to one of the greatest voices of all time.</p></div>
+      <div class="desc clamp"><p>Prepare to be transported into the unforgettable world of Dionne Warwick’s legendary hits with The Dionne Legacy, starring the extraordinary Lorraine Brown. From the very first moment, Lorraine steps onto the stage, her magnetic presence, boundless energy, and commitment to her performance captivate every audience, setting the tone for an unforgettable tribute to one of music’s most iconic voices.</p><p>Lorraine Brown is a highly polished and dynamic solo performer with an illustrious career spanning Stage, TV, Recording, and International Cabaret. Known for her rich, powerful, and soulful voice, Lorraine brings a depth of emotion and passion to every song she sings. Whether she’s delivering a heartfelt ballad or an upbeat anthem, her performances are infused with a charisma that resonates with audiences long after the final note. Her ability to fully embody each song, bringing both technical skill and raw emotion to the stage, is why she consistently earns standing ovations wherever she performs.</p><p>In The Dionne Legacy, Lorraine pays tribute to the unforgettable catalog of Dionne Warwick, singing the hits that made her a household name, such as &quot;Walk on By,&quot; &quot;I Say a Little Prayer,&quot; &quot;Do You Know the Way to San Jose,&quot; and &quot;That’s What Friends Are For.&quot; Lorraine doesn’t just perform the songs; she channels the essence of Dionne, capturing the magic and timeless elegance that have made these songs beloved for generations.</p><p>The Dionne Legacy is more than just a tribute—it’s an electrifying celebration of Dionne Warwick’s music, delivered by the incomparable Lorraine Brown. Don’t miss the chance to experience the passion, soul, and stunning vocals that Lorraine brings to the stage in this powerful homage to one of the greatest voices of all time.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Wednesday, January 20, 2027</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

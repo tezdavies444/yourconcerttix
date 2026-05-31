@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Candle In The Wind</h1>
       <p class="tagline">A Tribute to Elton John</p>
       <p class="venue">Desertview Performing Arts Center</p>
-      <div class="desc"><p>National touring tribute artist, Candle In The Wind, The Elton John Experience performs the ultimate tribute to the music of Elton and his songwriting partner, Bernie Taupin. The band spotlights Elton and Bernie’s earlier Classic years songs, but also touches on selections from later eras.<br>Jeff Burkett as Sir Elton John, brings a truly authentic portrayal of the iconic artist and his music to the stage, as well as an uncanny resemblance to Elton himself. As a fan of Elton’s music since the early age of 12, Jeff aspired to become a successful singer/pianist/songwriter after hearing Elton John’s , Goodbye Yellow Brick Road album. It remains his favorite to this day. “The music is absolutely incredible. But it is also the heartfelt, often surreal imagery of Taupin’s lyrics set to Elton’s unique piano and vocal styling’s that tell these amazing stories best”, Jeff explains. “Mine and the band’s mission is to thoroughly re-create the Elton John concert experience, to the level or degree that after the show, fans truly feel as if they just saw Elton himself perform.”</p></div>
+      <div class="desc clamp"><p>National touring tribute artist, Candle In The Wind, The Elton John Experience performs the ultimate tribute to the music of Elton and his songwriting partner, Bernie Taupin. The band spotlights Elton and Bernie’s earlier Classic years songs, but also touches on selections from later eras.<br>Jeff Burkett as Sir Elton John, brings a truly authentic portrayal of the iconic artist and his music to the stage, as well as an uncanny resemblance to Elton himself. As a fan of Elton’s music since the early age of 12, Jeff aspired to become a successful singer/pianist/songwriter after hearing Elton John’s , Goodbye Yellow Brick Road album. It remains his favorite to this day. “The music is absolutely incredible. But it is also the heartfelt, often surreal imagery of Taupin’s lyrics set to Elton’s unique piano and vocal styling’s that tell these amazing stories best”, Jeff explains. “Mine and the band’s mission is to thoroughly re-create the Elton John concert experience, to the level or degree that after the show, fans truly feel as if they just saw Elton himself perform.”</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, June 6, 2026</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

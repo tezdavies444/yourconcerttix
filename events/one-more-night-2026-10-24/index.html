@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>One More Night</h1>
       
       <p class="venue">Gaslight Music Hall</p>
-      <div class="desc"><p>Since their humble beginnings in 2017 in Phoenix, Arizona, **_One More Night – The Phil Collins/Genesis Experience_** has been on an incredible musical journey, and they are very excited to share it with you.<br>They’ve had the privilege to perform at various venues, including casinos, performing arts theaters, and even some lively festivals. From the West Coast’s California to the East Coast’s New York, from the northern charm of Washington state to the sunny embrace of Florida, and even crossing borders to Canada, the band has been fortunate to take the music of Phil Collins on the road and connect with audiences like you.<br>**_One More Night_**’s performances are a heartfelt homage to the exceptional songs of Phil Collins and Genesis. They bring you hybrid versions that capture the essense of the studio releases along with the magic of live renditions, creating an experience that’s both familiar and fresh.<br>With immense gratitude, the band welcomes Bill Whittemore who steps into the lead role as Phil Collins. They extremely talented band members, including Charlie Green on drums, David Dion on bass and vocals, David Wagner on guitar and vocals, Bob “Desi” Desiderio on keyboards and vocals, and Shantel Laudel on vocals and percussion, pour their passion into every note they play and sing.<br>Your presence makes their journey worthwhile, and they work hard to create memorable evenings together with their audiences.</p></div>
+      <div class="desc clamp"><p>Since their humble beginnings in 2017 in Phoenix, Arizona, **_One More Night – The Phil Collins/Genesis Experience_** has been on an incredible musical journey, and they are very excited to share it with you.<br>They’ve had the privilege to perform at various venues, including casinos, performing arts theaters, and even some lively festivals. From the West Coast’s California to the East Coast’s New York, from the northern charm of Washington state to the sunny embrace of Florida, and even crossing borders to Canada, the band has been fortunate to take the music of Phil Collins on the road and connect with audiences like you.<br>**_One More Night_**’s performances are a heartfelt homage to the exceptional songs of Phil Collins and Genesis. They bring you hybrid versions that capture the essense of the studio releases along with the magic of live renditions, creating an experience that’s both familiar and fresh.<br>With immense gratitude, the band welcomes Bill Whittemore who steps into the lead role as Phil Collins. They extremely talented band members, including Charlie Green on drums, David Dion on bass and vocals, David Wagner on guitar and vocals, Bob “Desi” Desiderio on keyboards and vocals, and Shantel Laudel on vocals and percussion, pour their passion into every note they play and sing.<br>Your presence makes their journey worthwhile, and they work hard to create memorable evenings together with their audiences.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, October 24, 2026</strong></li>
         <li><span>Time</span><strong>2:00pm &amp; 6:00pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

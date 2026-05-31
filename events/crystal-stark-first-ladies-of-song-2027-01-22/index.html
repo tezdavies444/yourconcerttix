@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Crystal Stark - First Ladies Of Song</h1>
       
       <p class="venue">Quail Creek</p>
-      <div class="desc"><p>Prepare to be enchanted by “First Ladies of Song,” a spectacular tribute starring the incredible Crystal Stark! Celebrating the indomitable spirits and legendary voices of iconic artists such as Tina Turner, Carole King, Aretha Franklin, Dolly Parton, Ella Fitzgerald, and Whitney Houston, this show is a heartfelt homage to the women who have changed the music industry forever.<br>Crystal Stark, an American Idol finalist and vocal powerhouse, takes center stage to honor these legendary figures with her dynamic voice and captivating stage presence. Each performance is a celebration of the strength, resilience, and artistry that define these First Ladies of Song. With a repertoire that includes soul-stirring ballads and infectious anthems, Crystal invites you to laugh, smile, cry, and reflect on the extraordinary journeys of these fierce female trailblazers.<br>This is a night filled with inspiration, emotion, and incredible music as Crystal Stark pays homage to the women who have shaped the soundtrack of our lives. This is a celebration of strength, talent, and the unforgettable impact of the First Ladies of Song—an event you won’t want to miss!</p></div>
+      <div class="desc clamp"><p>Prepare to be enchanted by “First Ladies of Song,” a spectacular tribute starring the incredible Crystal Stark! Celebrating the indomitable spirits and legendary voices of iconic artists such as Tina Turner, Carole King, Aretha Franklin, Dolly Parton, Ella Fitzgerald, and Whitney Houston, this show is a heartfelt homage to the women who have changed the music industry forever.<br>Crystal Stark, an American Idol finalist and vocal powerhouse, takes center stage to honor these legendary figures with her dynamic voice and captivating stage presence. Each performance is a celebration of the strength, resilience, and artistry that define these First Ladies of Song. With a repertoire that includes soul-stirring ballads and infectious anthems, Crystal invites you to laugh, smile, cry, and reflect on the extraordinary journeys of these fierce female trailblazers.<br>This is a night filled with inspiration, emotion, and incredible music as Crystal Stark pays homage to the women who have shaped the soundtrack of our lives. This is a celebration of strength, talent, and the unforgettable impact of the First Ladies of Song—an event you won’t want to miss!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Friday, January 22, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

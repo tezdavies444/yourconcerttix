@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>A Lennon Legacy</h1>
       <p class="tagline">A Tribute to John Lennon</p>
       <p class="venue">Pueblo El Mirage RV Resort</p>
-      <div class="desc"><p>“A Lennon Legacy” is a world-class stage production showcasing the music of John Lennon and featuring the eerily “Lennon-like” Otto D’Agnolo whose voice and physical presence so resemble the man that people often say “it’s as if he channels the very spirit of John Lennon”.   Multiple costume changes performed while on stage allow this transformation, responding to his audiences’ longing to reconnect with this unforgettable icon.</p><p>Not to be confused with typical “tribute” shows,  D’Agnolo never pretends to be John Lennon, instead, he shares the many ways John’s music has influenced his own life and award-winning music career.  As the show unfolds with faithful renditions of twenty of John Lennon’s songs, D’Agnolo slowly takes on his Lennon persona right before the audience’s eyes.</p><p>There is no other concert like this.  It truly is that once-in-a-lifetime chance to feel like you’re watching John Lennon live in concert.</p></div>
+      <div class="desc clamp"><p>“A Lennon Legacy” is a world-class stage production showcasing the music of John Lennon and featuring the eerily “Lennon-like” Otto D’Agnolo whose voice and physical presence so resemble the man that people often say “it’s as if he channels the very spirit of John Lennon”.   Multiple costume changes performed while on stage allow this transformation, responding to his audiences’ longing to reconnect with this unforgettable icon.</p><p>Not to be confused with typical “tribute” shows,  D’Agnolo never pretends to be John Lennon, instead, he shares the many ways John’s music has influenced his own life and award-winning music career.  As the show unfolds with faithful renditions of twenty of John Lennon’s songs, D’Agnolo slowly takes on his Lennon persona right before the audience’s eyes.</p><p>There is no other concert like this.  It truly is that once-in-a-lifetime chance to feel like you’re watching John Lennon live in concert.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Friday, November 6, 2026</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

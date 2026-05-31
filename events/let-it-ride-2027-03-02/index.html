@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Let It Ride</h1>
       <p class="tagline">A Tribute to BTO &amp; The Guess Who</p>
       <p class="venue">Monte Vista Village Resort</p>
-      <div class="desc"><p>Get ready to rock to the timeless sounds of two of Canada’s most iconic bands! Let It Ride brings the unforgettable hits of The Guess Who and Bachman-Turner Overdrive to life with powerhouse vocals, authentic arrangements, and the energy that defined a generation.</p><p>From the soulful swagger of “These Eyes” and “American Woman” to the hard-driving anthems “Takin’ Care of Business” and “You Ain’t Seen Nothing Yet”, Let It Ride delivers an electrifying concert experience that celebrates the legacy of Burton Cummings, Randy Bachman, and the music that put Canadian rock on the map.</p><p>Featuring a group of seasoned musicians with a passion for classic rock, Let It Ride captures every harmony, hook, and groove with stunning precision. Whether you grew up with these songs or are discovering them for the first time, this show will have you singing along, clapping your hands, and letting it ride!</p></div>
+      <div class="desc clamp"><p>Get ready to rock to the timeless sounds of two of Canada’s most iconic bands! Let It Ride brings the unforgettable hits of The Guess Who and Bachman-Turner Overdrive to life with powerhouse vocals, authentic arrangements, and the energy that defined a generation.</p><p>From the soulful swagger of “These Eyes” and “American Woman” to the hard-driving anthems “Takin’ Care of Business” and “You Ain’t Seen Nothing Yet”, Let It Ride delivers an electrifying concert experience that celebrates the legacy of Burton Cummings, Randy Bachman, and the music that put Canadian rock on the map.</p><p>Featuring a group of seasoned musicians with a passion for classic rock, Let It Ride captures every harmony, hook, and groove with stunning precision. Whether you grew up with these songs or are discovering them for the first time, this show will have you singing along, clapping your hands, and letting it ride!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Tuesday, March 2, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

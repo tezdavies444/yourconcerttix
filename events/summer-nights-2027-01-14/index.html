@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Summer Nights</h1>
       <p class="tagline">A Tribute to Grease</p>
       <p class="venue">Lake Havasu Aquatic Center</p>
-      <div class="desc"><p>Summer Nights: A Tribute to Grease<br>It&#39;s Tribute Band meets Mini-Musical!!</p><p>Summer Nights is THE electrifying Grease tribute band! Get ready to rock and roll like it&#39;s 1959, with the most iconic soundtrack of all time! Part tribute band, part musical theater, all the fun of the 1978 classic movie! Summer Nights, brilliantly encapsulates the spirit of the cult-classic movie Grease, with unforgettable songs, dances, costumes, characters, and summer lovin!<br> <br>Summer Nights features hit after hit: Greased Lightnin, You’re The One That I Want, Grease, Hopelessly Devoted, Beauty School Drop-out, Born To Hand Jive, Sandy, Summer Nights, We Go Together and so many more!  The Summer Nights band features music by The Bee Gees, Frankie Valli, John Travolta, Olivia Newton-John, Frankie Avalon, Sha-Na-Na and more! Sing and dance along with your favorite Pink Ladies and T-Birds: Sandy, Danny, Rizzo, Frenchy, the Teen Angel and more! <br> <br>Summer Nights tribute band recreates the classic story of the new girl in town and the school’s coolest Greaser, navigating the tricky social waters at Rydell High to the unforgettable soundtrack that defines generations. Grease is the ultimate soundtrack of every generation, so come celebrate the magic, music, and memories with Summer Nights: A Tribute To Grease!</p></div>
+      <div class="desc clamp"><p>Summer Nights: A Tribute to Grease<br>It&#39;s Tribute Band meets Mini-Musical!!</p><p>Summer Nights is THE electrifying Grease tribute band! Get ready to rock and roll like it&#39;s 1959, with the most iconic soundtrack of all time! Part tribute band, part musical theater, all the fun of the 1978 classic movie! Summer Nights, brilliantly encapsulates the spirit of the cult-classic movie Grease, with unforgettable songs, dances, costumes, characters, and summer lovin!<br> <br>Summer Nights features hit after hit: Greased Lightnin, You’re The One That I Want, Grease, Hopelessly Devoted, Beauty School Drop-out, Born To Hand Jive, Sandy, Summer Nights, We Go Together and so many more!  The Summer Nights band features music by The Bee Gees, Frankie Valli, John Travolta, Olivia Newton-John, Frankie Avalon, Sha-Na-Na and more! Sing and dance along with your favorite Pink Ladies and T-Birds: Sandy, Danny, Rizzo, Frenchy, the Teen Angel and more! <br> <br>Summer Nights tribute band recreates the classic story of the new girl in town and the school’s coolest Greaser, navigating the tricky social waters at Rydell High to the unforgettable soundtrack that defines generations. Grease is the ultimate soundtrack of every generation, so come celebrate the magic, music, and memories with Summer Nights: A Tribute To Grease!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Thursday, January 14, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

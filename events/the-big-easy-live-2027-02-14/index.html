@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>The Big Easy Live</h1>
       <p class="tagline">The Spirit of New Orleans with a Bourbon Street Beat</p>
       <p class="venue">Lake Havasu Aquatic Center</p>
-      <div class="desc"><p>The Big Easy Live<br>A celebration of New Orleans culture, music and spirit.<br>Experience the vibrant spirit of New Orleans with “The Big Easy Live,” a musical journey that brings the energy of Bourbon Street straight to the stage. This show promises an unforgettable celebration of New Orleans’ rich musical heritage.<br>From the explosive opening with Gene Krupa’s iconic drum solo to the swinging rhythms of “Sing, Sing, Sing,” and the soulful melodies of “Summertime,” each performance is designed to capture the essence of The Big Easy. The show features a mix of timeless classics like “When the Saints Go Marching In” and “Hello Dolly,” alongside modern favorites such as “Jump, Jive, and Wail” and “Zoot Suit Riot.”<br>Our talented band and performers will transport you to the heart of New Orleans, where the music never stops, and the party is always in full swing. Whether it’s the jazzy beats of “Fever” or the playful tunes of “Friend Like Me” and “I Want to be Like You,” there’s something for everyone in this high-energy, immersive experience.<br>Join us for “The Big Easy Live” and let the music, costumes, and lively atmosphere make you feel like you’re in the middle of a Mardi Gras parade.</p></div>
+      <div class="desc clamp"><p>The Big Easy Live<br>A celebration of New Orleans culture, music and spirit.<br>Experience the vibrant spirit of New Orleans with “The Big Easy Live,” a musical journey that brings the energy of Bourbon Street straight to the stage. This show promises an unforgettable celebration of New Orleans’ rich musical heritage.<br>From the explosive opening with Gene Krupa’s iconic drum solo to the swinging rhythms of “Sing, Sing, Sing,” and the soulful melodies of “Summertime,” each performance is designed to capture the essence of The Big Easy. The show features a mix of timeless classics like “When the Saints Go Marching In” and “Hello Dolly,” alongside modern favorites such as “Jump, Jive, and Wail” and “Zoot Suit Riot.”<br>Our talented band and performers will transport you to the heart of New Orleans, where the music never stops, and the party is always in full swing. Whether it’s the jazzy beats of “Fever” or the playful tunes of “Friend Like Me” and “I Want to be Like You,” there’s something for everyone in this high-energy, immersive experience.<br>Join us for “The Big Easy Live” and let the music, costumes, and lively atmosphere make you feel like you’re in the middle of a Mardi Gras parade.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Sunday, February 14, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

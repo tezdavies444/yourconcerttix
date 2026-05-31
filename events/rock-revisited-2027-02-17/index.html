@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Rock Revisited</h1>
       <p class="tagline">formerly AOR</p>
       <p class="venue">Voyager RV Resort</p>
-      <div class="desc"><p>AOR was the name given to the AWESOME rock music that dominated FM radio during the 1980’s. The list of inspiring bands goes on and on – Toto, Foreigner, REO Speedwagon, Boston, Kansas, Night Ranger, Whitesnake, Cheap Trick, Heart, Mr Mister … You will hear them all in this show – and remember When FM Radio Ruled The World!</p></div>
+      <div class="desc clamp"><p>AOR was the name given to the AWESOME rock music that dominated FM radio during the 1980’s. The list of inspiring bands goes on and on – Toto, Foreigner, REO Speedwagon, Boston, Kansas, Night Ranger, Whitesnake, Cheap Trick, Heart, Mr Mister … You will hear them all in this show – and remember When FM Radio Ruled The World!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Wednesday, February 17, 2027</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

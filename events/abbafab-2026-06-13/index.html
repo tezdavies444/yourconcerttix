@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>AbbaFab</h1>
       <p class="tagline">America&#39;s favorite tribute to ABBA!</p>
       <p class="venue">Milton Theatre</p>
-      <div class="desc"><p>Having played to sold-out crowds across the U.S. and abroad, ABBAFAB is a stunning tribute to the music of ABBA featuring the sensational talents of some of TAD’s most talented and loved artists and musicians! This multimedia production is a tribute to some of the greatest music produced in the 70s and 80s including monster hits such as Waterloo, Fernando, Honey Honey, Dancing Queen and countless others. From ABBA’s earliest hits to Mamma Mia, ABBAFAB will take you on a technicolor journey that is unmatched. Our vocalists and musicians have toured the world as solo artists and band members and have come together to create the most entertaining ABBA tribute on the market today!<br>ABBA’s record breaking string of hits has stood the test of time and continues to thrill audiences of all ages. With vocals and musicianship the are second to none, the ABBAFAB vibe is infectious! ABBA fans love it and new ABBA fans are created at every show. There’s no generation gap here, so let’s ALL party like it’s 1979!</p></div>
+      <div class="desc clamp"><p>Having played to sold-out crowds across the U.S. and abroad, ABBAFAB is a stunning tribute to the music of ABBA featuring the sensational talents of some of TAD’s most talented and loved artists and musicians! This multimedia production is a tribute to some of the greatest music produced in the 70s and 80s including monster hits such as Waterloo, Fernando, Honey Honey, Dancing Queen and countless others. From ABBA’s earliest hits to Mamma Mia, ABBAFAB will take you on a technicolor journey that is unmatched. Our vocalists and musicians have toured the world as solo artists and band members and have come together to create the most entertaining ABBA tribute on the market today!<br>ABBA’s record breaking string of hits has stood the test of time and continues to thrill audiences of all ages. With vocals and musicianship the are second to none, the ABBAFAB vibe is infectious! ABBA fans love it and new ABBA fans are created at every show. There’s no generation gap here, so let’s ALL party like it’s 1979!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, June 13, 2026</strong></li>
         <li><span>Time</span><strong>3:00 pm and 7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

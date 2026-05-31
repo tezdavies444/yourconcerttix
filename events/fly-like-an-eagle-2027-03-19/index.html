@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Fly Like An Eagle</h1>
       
       <p class="venue">Pueblo El Mirage RV Resort</p>
-      <div class="desc"><p>Get ready to relive the magic of classic rock with Fly Like an Eagle, the ultimate Steve Miller Tribute Band! This dynamic five-piece ensemble brings to life the unforgettable hits of the legendary Steve Miller Band, including fan favorites like &quot;Fly Like an Eagle,&quot; &quot;Jungle Love,&quot; and &quot;Take the Money and Run.&quot; With their masterful musicianship and authentic sound, Fly Like an Eagle creates an electrifying atmosphere that will have you singing and dancing all night long.</p><p>Join us for an unforgettable evening filled with the iconic blend of rock and blues that made Steve Miller a household name. Whether you&#39;re a lifelong fan or new to his music, Fly Like an Eagle promises a thrilling live experience that captures the essence of Miller&#39;s greatest hits. Don&#39;t miss your chance to experience this tribute to one of rock&#39;s most beloved artists!</p></div>
+      <div class="desc clamp"><p>Get ready to relive the magic of classic rock with Fly Like an Eagle, the ultimate Steve Miller Tribute Band! This dynamic five-piece ensemble brings to life the unforgettable hits of the legendary Steve Miller Band, including fan favorites like &quot;Fly Like an Eagle,&quot; &quot;Jungle Love,&quot; and &quot;Take the Money and Run.&quot; With their masterful musicianship and authentic sound, Fly Like an Eagle creates an electrifying atmosphere that will have you singing and dancing all night long.</p><p>Join us for an unforgettable evening filled with the iconic blend of rock and blues that made Steve Miller a household name. Whether you&#39;re a lifelong fan or new to his music, Fly Like an Eagle promises a thrilling live experience that captures the essence of Miller&#39;s greatest hits. Don&#39;t miss your chance to experience this tribute to one of rock&#39;s most beloved artists!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Friday, March 19, 2027</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Karen Hester as Dolly Parton</h1>
       
       <p class="venue">Boca Black Box</p>
-      <div class="desc"><p>Coming from a family of musical people where everyone either picked up and instrument or sang along to the tune of the hour, the stage is as close to her heart as her son. She started by singing at family reunions, gospel quartets and trios, and then started venturing into theatrical productions and country music. Drawing inspiration from Madonna, Cyndi Lauper, Martina McBride and Dolly Parton, as Karen grew, so did her passion for music and performance.<br>Now, she’s been cast in regional and national commercials, acted in the Murder Mystery Dinner Theater shows at the House of Blues, featured in “the Dean Martin Show” at the Palace Theatre, and performed as an impersonator for “Dino’s TV Variety Show” in addition to being a staple as the Dolly Parton on the Legends in Concert stage. She was in the off-Broadway hit “The Marvelous Wonderettes”, and was the understudy for both female roles in “Golf: the Musical”. Not to mention, she has been the opening act for recording artists such as Trace Adkins and Ricky Van Shelton.<br>Harnessing this wide array of professional experience, and topping it off with outstanding costumes, wigs and makeup, Karen brings her Dolly Parton act to life. Come hear her sing Dolly’s best, and prepare to be impressed!<br>**_In association with Showtune Productions_**</p></div>
+      <div class="desc clamp"><p>Coming from a family of musical people where everyone either picked up and instrument or sang along to the tune of the hour, the stage is as close to her heart as her son. She started by singing at family reunions, gospel quartets and trios, and then started venturing into theatrical productions and country music. Drawing inspiration from Madonna, Cyndi Lauper, Martina McBride and Dolly Parton, as Karen grew, so did her passion for music and performance.<br>Now, she’s been cast in regional and national commercials, acted in the Murder Mystery Dinner Theater shows at the House of Blues, featured in “the Dean Martin Show” at the Palace Theatre, and performed as an impersonator for “Dino’s TV Variety Show” in addition to being a staple as the Dolly Parton on the Legends in Concert stage. She was in the off-Broadway hit “The Marvelous Wonderettes”, and was the understudy for both female roles in “Golf: the Musical”. Not to mention, she has been the opening act for recording artists such as Trace Adkins and Ricky Van Shelton.<br>Harnessing this wide array of professional experience, and topping it off with outstanding costumes, wigs and makeup, Karen brings her Dolly Parton act to life. Come hear her sing Dolly’s best, and prepare to be impressed!<br>**_In association with Showtune Productions_**</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Thursday, November 19, 2026</strong></li>
         <li><span>Time</span><strong>8.00 pm </strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

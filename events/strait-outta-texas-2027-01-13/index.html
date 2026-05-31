@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Strait Outta Texas</h1>
       
       <p class="venue">Voyager RV Resort</p>
-      <div class="desc"><p>**Strait Outta Texas – A Tribute to the King of Country, Just the Way George Did It**<br>Step into the timeless sound of pure country with **Strait Outta Texas**, the ultimate tribute to the one and only **George Strait**. From the very first note to the final encore, this band delivers an unforgettable experience that captures the heart, soul, and unmistakable sound of the King of Country—**just the way George did it**.<br>Every performance is a masterclass in authenticity, featuring the iconic fiddle runs, steel guitar bends, and smooth, signature vocals that defined Strait’s legendary career. Whether it’s a dancehall favorite like _“Amarillo By Morning,”_ a chart-topper like _“Check Yes or No,”_ or a timeless ballad like _“I Cross My Heart,”_ **Strait Outta Texas** performs each song with precision, passion, and genuine respect for the originals.<br>Perfect for country fans, dance halls, festivals, and true Strait die-hards, **Strait Outta Texas** isn’t just a tribute—it’s a heartfelt celebration of the man who defined a genre.<br>**No gimmicks. No shortcuts. Just the hits, the sound, and the spirit of George Strait.**</p></div>
+      <div class="desc clamp"><p>**Strait Outta Texas – A Tribute to the King of Country, Just the Way George Did It**<br>Step into the timeless sound of pure country with **Strait Outta Texas**, the ultimate tribute to the one and only **George Strait**. From the very first note to the final encore, this band delivers an unforgettable experience that captures the heart, soul, and unmistakable sound of the King of Country—**just the way George did it**.<br>Every performance is a masterclass in authenticity, featuring the iconic fiddle runs, steel guitar bends, and smooth, signature vocals that defined Strait’s legendary career. Whether it’s a dancehall favorite like _“Amarillo By Morning,”_ a chart-topper like _“Check Yes or No,”_ or a timeless ballad like _“I Cross My Heart,”_ **Strait Outta Texas** performs each song with precision, passion, and genuine respect for the originals.<br>Perfect for country fans, dance halls, festivals, and true Strait die-hards, **Strait Outta Texas** isn’t just a tribute—it’s a heartfelt celebration of the man who defined a genre.<br>**No gimmicks. No shortcuts. Just the hits, the sound, and the spirit of George Strait.**</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Wednesday, January 13, 2027</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

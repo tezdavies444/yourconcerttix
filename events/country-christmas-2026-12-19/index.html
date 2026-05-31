@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Country Christmas</h1>
       
       <p class="venue">Gaslight Music Hall</p>
-      <div class="desc"><p>There’s nothing quite like the feeling of singing your favorite holiday songs in the style of your favorite Country Music singers. The latest production from TAD Management delivers just that!<br>COUNTRY CHRISTMAS will put you in the holiday mood in true Country Music fashion. Drew Baloh, star of Garth Live, is joined on stage by Hana Baloh and the Garth Live band to deliver a Christmas show you will be talking about for years to come!<br>In addition to the Country Christmas Classics, you will also hear some of the greatest music produced in the 90’s country era including monster hits such as “Friends in Low Places”, “The Thunder Rolls”, “The Dance”, “Much Too Young (To Feel This Damn Old)”, Ain’t Goin’ Down (till the Sun Comes Up)”, and countless others.<br>It sure is a Country Christmas!</p></div>
+      <div class="desc clamp"><p>There’s nothing quite like the feeling of singing your favorite holiday songs in the style of your favorite Country Music singers. The latest production from TAD Management delivers just that!<br>COUNTRY CHRISTMAS will put you in the holiday mood in true Country Music fashion. Drew Baloh, star of Garth Live, is joined on stage by Hana Baloh and the Garth Live band to deliver a Christmas show you will be talking about for years to come!<br>In addition to the Country Christmas Classics, you will also hear some of the greatest music produced in the 90’s country era including monster hits such as “Friends in Low Places”, “The Thunder Rolls”, “The Dance”, “Much Too Young (To Feel This Damn Old)”, Ain’t Goin’ Down (till the Sun Comes Up)”, and countless others.<br>It sure is a Country Christmas!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, December 19, 2026</strong></li>
         <li><span>Time</span><strong>2:00PM &amp; 6:00PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

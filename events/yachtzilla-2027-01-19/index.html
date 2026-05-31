@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Yachtzilla</h1>
       <p class="tagline">The Monsters of Soft Rock</p>
       <p class="venue">Sunland Village East</p>
-      <div class="desc"><p>Get ready to set sail on a smooth, melodic journey with **Yachtzilla - The Monsters of Soft Rock**! This high-energy band delivers the best of yacht rock with a fun and infectious vibe that will have you singing along all night. Featuring a lineup of talented musicians who bring a fresh, modern twist to classic soft rock hits from the &#39;70s and &#39;80s, Yachtzilla is here to make every performance a memorable occasion.<br>From the smooth sounds of Christopher Cross to the feel-good tunes of Hall &amp; Oates, Yachtzilla captures the essence of the era with impeccable style and charisma. Their lively shows are packed with harmonies, catchy melodies, and a groove that just won&#39;t quit. Whether you&#39;re a die-hard fan of the genre or discovering it for the first time, Yachtzilla promises a musical experience that&#39;s nothing short of spectacular.<br>So, don your captain&#39;s hat, grab a cocktail, and join Yachtzilla for a night of unparalleled fun on the high seas of soft rock!</p></div>
+      <div class="desc clamp"><p>Get ready to set sail on a smooth, melodic journey with **Yachtzilla - The Monsters of Soft Rock**! This high-energy band delivers the best of yacht rock with a fun and infectious vibe that will have you singing along all night. Featuring a lineup of talented musicians who bring a fresh, modern twist to classic soft rock hits from the &#39;70s and &#39;80s, Yachtzilla is here to make every performance a memorable occasion.<br>From the smooth sounds of Christopher Cross to the feel-good tunes of Hall &amp; Oates, Yachtzilla captures the essence of the era with impeccable style and charisma. Their lively shows are packed with harmonies, catchy melodies, and a groove that just won&#39;t quit. Whether you&#39;re a die-hard fan of the genre or discovering it for the first time, Yachtzilla promises a musical experience that&#39;s nothing short of spectacular.<br>So, don your captain&#39;s hat, grab a cocktail, and join Yachtzilla for a night of unparalleled fun on the high seas of soft rock!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Tuesday, January 19, 2027</strong></li>
         <li><span>Time</span><strong>3:00pm and 7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

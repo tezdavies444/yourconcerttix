@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Rocky Mountain Christmas</h1>
       <p class="tagline">The John Denver Tribute Holiday Show</p>
       <p class="venue">Pueblo El Mirage RV Resort</p>
-      <div class="desc"><p>Get ready to experience the heartwarming magic of “Rocky Mountain Christmas – The John Denver Tribute Holiday Show,” featuring the incredible Jim Curry. This special performance is a celebration of America’s most beloved singer-songwriter, John Denver, and promises an unforgettable evening of music and nostalgia. You will be enchanted as Jim Curry takes you on a musical journey through Denver’s timeless hits. From the uplifting “Take Me Home, Country Roads” and the soulful “Annie’s Song” to the festive charm of “Rocky Mountain High,” Jim’s performance captures the essence of John Denver’s beloved songs, bringing joy and hope to every note.<br>“Rocky Mountain Christmas” is more than just a tribute; it’s a celebration of the music that has touched hearts and inspired generations. Join us for an evening filled with sing-alongs, clapping hands, and the pure joy of experiencing Denver’s classics performed with passion and authenticity.</p></div>
+      <div class="desc clamp"><p>Get ready to experience the heartwarming magic of “Rocky Mountain Christmas – The John Denver Tribute Holiday Show,” featuring the incredible Jim Curry. This special performance is a celebration of America’s most beloved singer-songwriter, John Denver, and promises an unforgettable evening of music and nostalgia. You will be enchanted as Jim Curry takes you on a musical journey through Denver’s timeless hits. From the uplifting “Take Me Home, Country Roads” and the soulful “Annie’s Song” to the festive charm of “Rocky Mountain High,” Jim’s performance captures the essence of John Denver’s beloved songs, bringing joy and hope to every note.<br>“Rocky Mountain Christmas” is more than just a tribute; it’s a celebration of the music that has touched hearts and inspired generations. Join us for an evening filled with sing-alongs, clapping hands, and the pure joy of experiencing Denver’s classics performed with passion and authenticity.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Friday, December 11, 2026</strong></li>
         <li><span>Time</span><strong>7:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

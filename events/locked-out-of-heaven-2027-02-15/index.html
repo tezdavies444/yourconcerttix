@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Locked Out Of Heaven</h1>
       
       <p class="venue">Lake Havasu Aquatic Center</p>
-      <div class="desc"><p>Step into a world where the magic of Bruno Mars comes alive like never before. “Locked Out of Heaven” isn’t just a tribute band; it’s an immersive experience that will transport you to the heart-pounding, chart-topping hits of the multi-talented pop sensation himself.<br>From the moment the first note hits, you’ll be captivated by the sheer energy, charisma, and unmatched stage presence of this sensational tribute act. The show is a rollercoaster of emotions, featuring spot-on renditions of Bruno Mars’ greatest hits, including “Uptown Funk,” “24K Magic,” “Treasure,” “Grenade,” and so many more. Every dance move, every vocal riff, and every infectious groove will have you on your feet, dancing the night away.<br>The band’s attention to detail is second to none. Their costumes, choreography, and instrumentation are a testament to their dedication to bringing Bruno Mars’ world-class live performances to your doorstep. Feel the rhythm, feel the rhyme – “Locked Out of Heaven” is your passport to an unforgettable night of pure musical bliss.Whether you’re a die-hard Bruno Mars fan or simply looking for an unforgettable night of entertainment, “Locked Out of Heaven” is the show you’ve been waiting for. They’ll make you believe you’ve been transported to one of Bruno’s sold-out arena concerts, and you won’t want the night to end.</p></div>
+      <div class="desc clamp"><p>Step into a world where the magic of Bruno Mars comes alive like never before. “Locked Out of Heaven” isn’t just a tribute band; it’s an immersive experience that will transport you to the heart-pounding, chart-topping hits of the multi-talented pop sensation himself.<br>From the moment the first note hits, you’ll be captivated by the sheer energy, charisma, and unmatched stage presence of this sensational tribute act. The show is a rollercoaster of emotions, featuring spot-on renditions of Bruno Mars’ greatest hits, including “Uptown Funk,” “24K Magic,” “Treasure,” “Grenade,” and so many more. Every dance move, every vocal riff, and every infectious groove will have you on your feet, dancing the night away.<br>The band’s attention to detail is second to none. Their costumes, choreography, and instrumentation are a testament to their dedication to bringing Bruno Mars’ world-class live performances to your doorstep. Feel the rhythm, feel the rhyme – “Locked Out of Heaven” is your passport to an unforgettable night of pure musical bliss.Whether you’re a die-hard Bruno Mars fan or simply looking for an unforgettable night of entertainment, “Locked Out of Heaven” is the show you’ve been waiting for. They’ll make you believe you’ve been transported to one of Bruno’s sold-out arena concerts, and you won’t want the night to end.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Monday, February 15, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

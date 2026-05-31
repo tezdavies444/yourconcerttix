@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Sharon Owens</h1>
       
       <p class="venue">Boca Black Box</p>
-      <div class="desc"><p>Sharon Owens is an acclaimed singer, actress, and tribute artist, known for her stunning performances as the legendary diva, Barbra Streisand.<br>With over two decades of experience in the entertainment industry, Owens has become one of the most sought-after Streisand tribute acts in the world. Her uncanny ability to capture Streisand’s signature sound, style, and mannerisms has earned her critical acclaim and a loyal fanbase.<br>Owens’ repertoire includes all of Streisand’s biggest hits, such as “The Way We Were,” “People,” “Evergreen,” and “Don’t Rain on My Parade,” among others. She also performs popular songs from Streisand’s films, including “A Star is Born” and “Funny Girl.” In addition to her live performances, Owens has also appeared on television and in feature films, showcasing her impressive range and versatility as a performer.<br>Whether performing at corporate events, private parties, or sold-out theaters, Owens’ tribute to Streisand is a must-see for any fan of the iconic singer. Her passion for the music, attention to detail, and dedication to the craft make her a true standout in the world of tribute acts.</p><p>Sharon Owens is an acclaimed singer, actress, and tribute artist, known for her stunning performances as the legendary diva, Barbra Streisand.<br>With over two decades of experience in the entertainment industry, Owens has become one of the most sought-after Streisand tribute acts in the world. Her uncanny ability to capture Streisand’s signature sound, style, and mannerisms has earned her critical acclaim and a loyal fanbase.<br>Owens’ repertoire includes all of Streisand’s biggest hits, such as “The Way We Were,” “People,” “Evergreen,” and “Don’t Rain on My Parade,” among others. She also performs popular songs from Streisand’s films, including “A Star is Born” and “Funny Girl.” In addition to her live performances, Owens has also appeared on television and in feature films, showcasing her impressive range and versatility as a performer.<br>Whether performing at corporate events, private parties, or sold-out theaters, Owens’ tribute to Streisand is a must-see for any fan of the iconic singer. Her passion for the music, attention to detail, and dedication to the craft make her a true standout in the world of tribute acts.</p></div>
+      <div class="desc clamp"><p>Sharon Owens is an acclaimed singer, actress, and tribute artist, known for her stunning performances as the legendary diva, Barbra Streisand.<br>With over two decades of experience in the entertainment industry, Owens has become one of the most sought-after Streisand tribute acts in the world. Her uncanny ability to capture Streisand’s signature sound, style, and mannerisms has earned her critical acclaim and a loyal fanbase.<br>Owens’ repertoire includes all of Streisand’s biggest hits, such as “The Way We Were,” “People,” “Evergreen,” and “Don’t Rain on My Parade,” among others. She also performs popular songs from Streisand’s films, including “A Star is Born” and “Funny Girl.” In addition to her live performances, Owens has also appeared on television and in feature films, showcasing her impressive range and versatility as a performer.<br>Whether performing at corporate events, private parties, or sold-out theaters, Owens’ tribute to Streisand is a must-see for any fan of the iconic singer. Her passion for the music, attention to detail, and dedication to the craft make her a true standout in the world of tribute acts.</p><p>Sharon Owens is an acclaimed singer, actress, and tribute artist, known for her stunning performances as the legendary diva, Barbra Streisand.<br>With over two decades of experience in the entertainment industry, Owens has become one of the most sought-after Streisand tribute acts in the world. Her uncanny ability to capture Streisand’s signature sound, style, and mannerisms has earned her critical acclaim and a loyal fanbase.<br>Owens’ repertoire includes all of Streisand’s biggest hits, such as “The Way We Were,” “People,” “Evergreen,” and “Don’t Rain on My Parade,” among others. She also performs popular songs from Streisand’s films, including “A Star is Born” and “Funny Girl.” In addition to her live performances, Owens has also appeared on television and in feature films, showcasing her impressive range and versatility as a performer.<br>Whether performing at corporate events, private parties, or sold-out theaters, Owens’ tribute to Streisand is a must-see for any fan of the iconic singer. Her passion for the music, attention to detail, and dedication to the craft make her a true standout in the world of tribute acts.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, September 19, 2026</strong></li>
         <li><span>Time</span><strong>6.30 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

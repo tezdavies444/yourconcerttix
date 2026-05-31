@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>FlashPants</h1>
       
       <p class="venue">Downtown Grand Hotel &amp; Casino - NV</p>
-      <div class="desc"><p>**FlashPants** is not just an 80s band—it’s a full-blown, high-energy experience that turns every event into a neon-soaked, sing-at-the-top-of-your-lungs celebration. From the first note to the final encore, FlashPants delivers the biggest hits of the decade with a Vegas-style production, larger-than-life personalities, and nonstop crowd interaction that keeps dance floors packed all night long.<br>Packed with iconic anthems, outrageous style, and infectious energy, the show transports audiences straight back to the era of big hair, bold fashion, and unforgettable music. Whether it’s _Don’t Stop Believin’_, _Livin’ on a Prayer_, or _Girls Just Want to Have Fun_, FlashPants doesn’t just play the hits—they bring them to life in a way that feels fresh, exciting, and impossible to resist.<br>Performing over 200 events a year, FlashPants has built a reputation for delivering consistently electric performances at corporate events, festivals, weddings, and private parties across the country. With hundreds of 5-star reviews and national television appearances, they’ve become one of the most in-demand 80s acts in America.<br>But what truly sets FlashPants apart is their ability to create a shared experience—one where every guest feels like part of the show. It’s more than music. It’s a party, a throwback, and a full-on celebration of one of the greatest decades in pop culture.<br>**FlashPants guarantees a night your audience won’t just remember—they’ll talk about it long after the lights come up.**</p></div>
+      <div class="desc clamp"><p>**FlashPants** is not just an 80s band—it’s a full-blown, high-energy experience that turns every event into a neon-soaked, sing-at-the-top-of-your-lungs celebration. From the first note to the final encore, FlashPants delivers the biggest hits of the decade with a Vegas-style production, larger-than-life personalities, and nonstop crowd interaction that keeps dance floors packed all night long.<br>Packed with iconic anthems, outrageous style, and infectious energy, the show transports audiences straight back to the era of big hair, bold fashion, and unforgettable music. Whether it’s _Don’t Stop Believin’_, _Livin’ on a Prayer_, or _Girls Just Want to Have Fun_, FlashPants doesn’t just play the hits—they bring them to life in a way that feels fresh, exciting, and impossible to resist.<br>Performing over 200 events a year, FlashPants has built a reputation for delivering consistently electric performances at corporate events, festivals, weddings, and private parties across the country. With hundreds of 5-star reviews and national television appearances, they’ve become one of the most in-demand 80s acts in America.<br>But what truly sets FlashPants apart is their ability to create a shared experience—one where every guest feels like part of the show. It’s more than music. It’s a party, a throwback, and a full-on celebration of one of the greatest decades in pop culture.<br>**FlashPants guarantees a night your audience won’t just remember—they’ll talk about it long after the lights come up.**</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, August 22, 2026</strong></li>
         <li><span>Time</span><strong>8:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

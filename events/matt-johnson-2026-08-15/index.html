@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Matt Johnson</h1>
       
       <p class="venue">Suncoast Broadway</p>
-      <div class="desc"><p>Matt Johnson – Master Magician &amp; Escapologist</p><p>Over the past 25 years Matt has literally traveled the globe performing in exotic locations such as Japan, Dubai, Argentina, Australia, Bermuda, Canada, USA and throughout Europe. He has performed at theaters, on cruise ships and for many of the world’s largest companies including Mercedes, Ford, AT&amp;T, Toyota, Norwegian Cruise Lines and Microsoft to name just a few. He is a cast member of the hit show The Illusionists direct from Broadway and his performances have been viewed in more than 60 countries.</p><p>Every performance incorporates magic, mind-reading, the power of suggestion, stunts, comedy and audience participation into an act that has been hailed “Incredible!” by Simon Cowell and “Wonderful!” by Penn &amp; Teller.</p><p>Matt is also recognized globally for his dangerous escapes. They were featured on the hit TV show Britain’s Got Talent and since his appearance in 2018 they have gained Matt over 450 MILLION views on You Tube. That same year Matt was also voted the #1 MOST DANGEROUS ACT of BGT and the #2 MOST VIEWED ACT.</p><p>Add to this, appearances on hit TV shows around the world such as The World’s Best, The Late Late Show with James Corden, Penn &amp; Teller Fool Us, Tu Si Que Vales, Wizard Wars, Lorraine and many more.</p></div>
+      <div class="desc clamp"><p>Matt Johnson – Master Magician &amp; Escapologist</p><p>Over the past 25 years Matt has literally traveled the globe performing in exotic locations such as Japan, Dubai, Argentina, Australia, Bermuda, Canada, USA and throughout Europe. He has performed at theaters, on cruise ships and for many of the world’s largest companies including Mercedes, Ford, AT&amp;T, Toyota, Norwegian Cruise Lines and Microsoft to name just a few. He is a cast member of the hit show The Illusionists direct from Broadway and his performances have been viewed in more than 60 countries.</p><p>Every performance incorporates magic, mind-reading, the power of suggestion, stunts, comedy and audience participation into an act that has been hailed “Incredible!” by Simon Cowell and “Wonderful!” by Penn &amp; Teller.</p><p>Matt is also recognized globally for his dangerous escapes. They were featured on the hit TV show Britain’s Got Talent and since his appearance in 2018 they have gained Matt over 450 MILLION views on You Tube. That same year Matt was also voted the #1 MOST DANGEROUS ACT of BGT and the #2 MOST VIEWED ACT.</p><p>Add to this, appearances on hit TV shows around the world such as The World’s Best, The Late Late Show with James Corden, Penn &amp; Teller Fool Us, Tu Si Que Vales, Wizard Wars, Lorraine and many more.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, August 15, 2026</strong></li>
         <li><span>Time</span><strong>1:30pm &amp; 7:30pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

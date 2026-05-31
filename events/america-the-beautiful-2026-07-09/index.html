@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>America The Beautiful</h1>
       
       <p class="venue">Willow Valley Communities</p>
-      <div class="desc"><p>Get ready to wave your flags high and celebrate a once-in-a-lifetime milestone with **AMERICA THE BEAUTIFUL: 250 YEARS OF THE RED, WHITE &amp; BLUE**! This all-American concert spectacular honors the nation’s greatest songs, stories, and spirit in an unforgettable evening of pride, power, and passion.<br>From the soaring anthem of _The Star-Spangled Banner_ to the heartfelt unity of _God Bless America_, this show takes audiences on a sweeping journey through the soundtrack of America’s history. Relive the timeless classics of legends like Elvis Presley, Johnny Cash, The Eagles, The Beach Boys, Billy Joel, Neil Diamond, Lynyrd Skynyrd, Garth Brooks, and many more—performed with the energy, authenticity, and heart that made them iconic.<br>Feel the thunder of _Born in the USA_, the soul-stirring emotion of _Proud to Be an American_, the nostalgia of _Sweet Home Alabama_, and the grandeur of _America the Beautiful_ as this powerhouse concert pays tribute to the songs that shaped our nation’s identity.<br>With dazzling multimedia, electrifying performances, and the spirit of freedom shining through every note, **AMERICA THE BEAUTIFUL – 250 YEARS OF THE RED, WHITE &amp; BLUE** isn’t just a concert—it’s a patriotic celebration for the ages.<br>So raise your voice, lift your heart, and join us for this monumental tribute to the land we love. From sea to shining sea, this is America’s party—and you’re invited!</p></div>
+      <div class="desc clamp"><p>Get ready to wave your flags high and celebrate a once-in-a-lifetime milestone with **AMERICA THE BEAUTIFUL: 250 YEARS OF THE RED, WHITE &amp; BLUE**! This all-American concert spectacular honors the nation’s greatest songs, stories, and spirit in an unforgettable evening of pride, power, and passion.<br>From the soaring anthem of _The Star-Spangled Banner_ to the heartfelt unity of _God Bless America_, this show takes audiences on a sweeping journey through the soundtrack of America’s history. Relive the timeless classics of legends like Elvis Presley, Johnny Cash, The Eagles, The Beach Boys, Billy Joel, Neil Diamond, Lynyrd Skynyrd, Garth Brooks, and many more—performed with the energy, authenticity, and heart that made them iconic.<br>Feel the thunder of _Born in the USA_, the soul-stirring emotion of _Proud to Be an American_, the nostalgia of _Sweet Home Alabama_, and the grandeur of _America the Beautiful_ as this powerhouse concert pays tribute to the songs that shaped our nation’s identity.<br>With dazzling multimedia, electrifying performances, and the spirit of freedom shining through every note, **AMERICA THE BEAUTIFUL – 250 YEARS OF THE RED, WHITE &amp; BLUE** isn’t just a concert—it’s a patriotic celebration for the ages.<br>So raise your voice, lift your heart, and join us for this monumental tribute to the land we love. From sea to shining sea, this is America’s party—and you’re invited!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Thursday, July 9, 2026</strong></li>
         <li><span>Time</span><strong>2pm &amp; 7pm  </strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

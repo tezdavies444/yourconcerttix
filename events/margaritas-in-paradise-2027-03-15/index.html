@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Margaritas In Paradise</h1>
       
       <p class="venue">Paradise RV</p>
-      <div class="desc"><p>Welcome to the electrifying tribute show to the one and only Jimmy Buffet - **Margaritas In Paradise**! Get ready to be transported to a tropical paradise, where the sun is shining, the waves are crashing, and the margaritas are flowing.<br>This show is an explosive celebration of the iconic music of Jimmy Buffet, featuring all of his greatest hits that will have you singing along and dancing in your seat. With a band that is as talented as it is passionate, you&#39;ll be treated to a performance that captures the essence of Buffet&#39;s music and the lifestyle it embodies.<br>But the music is only half the fun! **Margaritas In Paradise** also boasts the most colorful stage you&#39;ve ever seen. From palm trees to tiki bars to beach balls, the stage is a sensory explosion that perfectly captures the laid-back, beachy vibe of Buffet&#39;s music.<br>And the performers themselves? They&#39;re not just talented, they&#39;re also having the time of their lives. With infectious energy and an undeniable passion for the music, they&#39;ll have you feeling like you&#39;re right there with them, sipping on a frozen margarita and soaking up the sun.<br>So come on down to **Margaritas In Paradise** and get ready for a night of excitement, fun, and unforgettable music. It&#39;s the perfect escape from the daily grind and a celebration of the good life. Don&#39;t miss out on this unforgettable experience!</p></div>
+      <div class="desc clamp"><p>Welcome to the electrifying tribute show to the one and only Jimmy Buffet - **Margaritas In Paradise**! Get ready to be transported to a tropical paradise, where the sun is shining, the waves are crashing, and the margaritas are flowing.<br>This show is an explosive celebration of the iconic music of Jimmy Buffet, featuring all of his greatest hits that will have you singing along and dancing in your seat. With a band that is as talented as it is passionate, you&#39;ll be treated to a performance that captures the essence of Buffet&#39;s music and the lifestyle it embodies.<br>But the music is only half the fun! **Margaritas In Paradise** also boasts the most colorful stage you&#39;ve ever seen. From palm trees to tiki bars to beach balls, the stage is a sensory explosion that perfectly captures the laid-back, beachy vibe of Buffet&#39;s music.<br>And the performers themselves? They&#39;re not just talented, they&#39;re also having the time of their lives. With infectious energy and an undeniable passion for the music, they&#39;ll have you feeling like you&#39;re right there with them, sipping on a frozen margarita and soaking up the sun.<br>So come on down to **Margaritas In Paradise** and get ready for a night of excitement, fun, and unforgettable music. It&#39;s the perfect escape from the daily grind and a celebration of the good life. Don&#39;t miss out on this unforgettable experience!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Monday, March 15, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

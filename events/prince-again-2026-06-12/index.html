@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Prince Again</h1>
       
       <p class="venue">Parx Casino</p>
-      <div class="desc"><p>It doesn’t get more legendary than the music of Prince. When the iconic performer passed in 2016, the world mourned the loss of the multi-instrumentalist savant who was well ahead of his time musically. Whether you were a fan of Prince’s irrevocable style, or only discovered his catalog after his passing, Prince Again is a show for all to enjoy.<br>Prince’s hits smashed the Billboard Charts and created memories for generations – after all, Prince penned arguably some of the best songs in music history; with tracks such as Little Red Corvette, 1999, Kiss, Cream, Diamonds &amp; Pearls, I Wanna Be Your Lover and the iconic Purple Rain. With no doubt that Prince Again will pay homage in a party fashion, audiences are guaranteed to be on their feet from start to finish. Fans will revisit and keep those purple memories alive along with creating new ones in deference to the Prince.<br>Don your Raspberry Beret, recreate the magic of Prince live on your stage or at your special event, and make a beeline for this fantastic live show which punches out all of the icon’s top numbers, dance moves, and stagecraft with perfection.</p></div>
+      <div class="desc clamp"><p>It doesn’t get more legendary than the music of Prince. When the iconic performer passed in 2016, the world mourned the loss of the multi-instrumentalist savant who was well ahead of his time musically. Whether you were a fan of Prince’s irrevocable style, or only discovered his catalog after his passing, Prince Again is a show for all to enjoy.<br>Prince’s hits smashed the Billboard Charts and created memories for generations – after all, Prince penned arguably some of the best songs in music history; with tracks such as Little Red Corvette, 1999, Kiss, Cream, Diamonds &amp; Pearls, I Wanna Be Your Lover and the iconic Purple Rain. With no doubt that Prince Again will pay homage in a party fashion, audiences are guaranteed to be on their feet from start to finish. Fans will revisit and keep those purple memories alive along with creating new ones in deference to the Prince.<br>Don your Raspberry Beret, recreate the magic of Prince live on your stage or at your special event, and make a beeline for this fantastic live show which punches out all of the icon’s top numbers, dance moves, and stagecraft with perfection.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Friday, June 12, 2026</strong></li>
         <li><span>Time</span><strong>8:00pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

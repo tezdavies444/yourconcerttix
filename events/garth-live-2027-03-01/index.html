@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Garth Live</h1>
       <p class="tagline">A Tribute to Garth Brooks</p>
       <p class="venue">Paradise RV</p>
-      <div class="desc"><p>Step into the world of Garth Brooks as you’ve never seen before, with Drew Baloh channeling the legendary icon in a way that will leave you questioning if you’re witnessing the real deal. From his signature cowboy hat to that unmistakable voice, Baloh’s resemblance to Garth Brooks is uncanny, and he’s ready to take you on a musical journey like no other.Feel the excitement as the lights dim and the music kicks in, launching you into a time when 90’s country music ruled the airwaves. GARTH LIVE! is a high-energy showcase of Garth Brooks’ greatest hits, including the iconic “Friends in Low Places,” the thunderous “The Thunder Rolls,” the heart-wrenching “The Dance,” and the rollicking “Ain’t Goin’ Down (til the Sun Comes Up).”<br>But that’s just the beginning – the show is packed with countless other chart-toppers and fan favorites that will have you singing along all night long.Relive the magic of Garth’s earliest hits and experience the electric atmosphere of his legendary “Live in Central Park” performance. With stunning visuals, expert musicianship, and Drew Baloh’s incredible talent, GARTH LIVE! will transport you to a time when country music was at its peak.Whether you’re a die-hard Garth Brooks fan or simply love great music, GARTH LIVE! promises a night of entertainment that is second to none. So dust off your cowboy boots, grab your friends, and get ready to dance, sing, and celebrate the timeless music of Garth Brooks in a show that is as close to the real thing as it gets. Don’t miss your chance to be a part of this unforgettable country music experience!</p></div>
+      <div class="desc clamp"><p>Step into the world of Garth Brooks as you’ve never seen before, with Drew Baloh channeling the legendary icon in a way that will leave you questioning if you’re witnessing the real deal. From his signature cowboy hat to that unmistakable voice, Baloh’s resemblance to Garth Brooks is uncanny, and he’s ready to take you on a musical journey like no other.Feel the excitement as the lights dim and the music kicks in, launching you into a time when 90’s country music ruled the airwaves. GARTH LIVE! is a high-energy showcase of Garth Brooks’ greatest hits, including the iconic “Friends in Low Places,” the thunderous “The Thunder Rolls,” the heart-wrenching “The Dance,” and the rollicking “Ain’t Goin’ Down (til the Sun Comes Up).”<br>But that’s just the beginning – the show is packed with countless other chart-toppers and fan favorites that will have you singing along all night long.Relive the magic of Garth’s earliest hits and experience the electric atmosphere of his legendary “Live in Central Park” performance. With stunning visuals, expert musicianship, and Drew Baloh’s incredible talent, GARTH LIVE! will transport you to a time when country music was at its peak.Whether you’re a die-hard Garth Brooks fan or simply love great music, GARTH LIVE! promises a night of entertainment that is second to none. So dust off your cowboy boots, grab your friends, and get ready to dance, sing, and celebrate the timeless music of Garth Brooks in a show that is as close to the real thing as it gets. Don’t miss your chance to be a part of this unforgettable country music experience!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Monday, March 1, 2027</strong></li>
         <li><span>Time</span><strong>7:00 pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

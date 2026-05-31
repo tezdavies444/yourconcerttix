@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>TOBY</h1>
       
       <p class="venue">Downtown Grand Hotel &amp; Casino - NV</p>
-      <div class="desc"><p>Get ready for a wild ride through the heart and soul of country music with TOBY, the ultimate tribute to the bad boy of country music, Toby Keith! This electrifying show is guaranteed to leave audiences on their feet, singing along to hit after hit of great country music, all brought to life by the one and only Hollywood Yates! The air pulsates with anticipation as Hollywood Yates takes center stage, belting out country music anthems that have become the soundtrack to countless lives. Sing your heart out to timeless classics like “How Do You Like Me Now,” “Should’ve Been a Cowboy,” and “I Love This Bar,” feeling every word resonate deep within your soul.<br>With every strum of the guitar and every beat of the drum, TOBY pays homage to Toby Keith’s extraordinary career, capturing the essence of his rebellious charm and his unwavering dedication to his craft. Hollywood Yates embodies the spirit of this country music legend, delivering a powerhouse performance that will leave you craving more.<br>So grab your cowboy hat, put on your boots, and get ready to experience the energy, the passion, and the undeniable talent of Toby Keith like never before. TOBY is a must-see show for country music lovers, a journey that will transport you to the heart of Nashville and leave you yearning for more. Get ready to sing, dance, and raise a glass to the unforgettable legacy of Toby Keith!</p></div>
+      <div class="desc clamp"><p>Get ready for a wild ride through the heart and soul of country music with TOBY, the ultimate tribute to the bad boy of country music, Toby Keith! This electrifying show is guaranteed to leave audiences on their feet, singing along to hit after hit of great country music, all brought to life by the one and only Hollywood Yates! The air pulsates with anticipation as Hollywood Yates takes center stage, belting out country music anthems that have become the soundtrack to countless lives. Sing your heart out to timeless classics like “How Do You Like Me Now,” “Should’ve Been a Cowboy,” and “I Love This Bar,” feeling every word resonate deep within your soul.<br>With every strum of the guitar and every beat of the drum, TOBY pays homage to Toby Keith’s extraordinary career, capturing the essence of his rebellious charm and his unwavering dedication to his craft. Hollywood Yates embodies the spirit of this country music legend, delivering a powerhouse performance that will leave you craving more.<br>So grab your cowboy hat, put on your boots, and get ready to experience the energy, the passion, and the undeniable talent of Toby Keith like never before. TOBY is a must-see show for country music lovers, a journey that will transport you to the heart of Nashville and leave you yearning for more. Get ready to sing, dance, and raise a glass to the unforgettable legacy of Toby Keith!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, June 27, 2026</strong></li>
         <li><span>Time</span><strong>8:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

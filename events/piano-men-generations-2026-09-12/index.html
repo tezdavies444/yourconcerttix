@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>Piano Men: Generations</h1>
       <p class="tagline">Celebrating the music of Billy Joel &amp; Elton John</p>
       <p class="venue">The Coach House</p>
-      <div class="desc"><p>**Two Men – Two Pianos – One Extraordinary Band!**<br>**Piano Men: Generations** isn’t just a concert—it’s a high-octane, emotionally charged musical journey led by a father-son duo and a world-class band that takes audiences on a ride they won’t forget. At its heart are Terry and Nick—father and son, bonded by blood and a deep love for the music of Billy Joel and Elton John. Their on-stage chemistry is genuine, spontaneous, and moving—sometimes funny, always magnetic.<br>Terry, a seasoned musician with decades of orchestral and rock ‘n’ roll experience, commands the stage with authority and heart. Nick brings fresh energy, charisma, and powerhouse vocals, effortlessly blending his style with his dad’s.<br>Elevating the show is the live band—an electrifying ensemble of elite musicians who are stars in their own right. Guitar solos soar, basslines groove, and the rhythm section drives the performance with precision. At the core is drummer Mike Richau—the visual and sonic heartbeat of the band. With jaw-dropping stick flips, relentless energy, and razor-sharp timing, he turns every show into a spectacle. One moment he’s laying down a subtle groove, the next he’s launching into a thunderous solo—sticks flying, crowd roaring.<br>From the first chord to the final encore, the show is a rollercoaster of iconic hits, delivered with authenticity, showmanship, and a deep sense of legacy.<br>The result? A celebration of music, family, and unforgettable moments that span decades and bring generations together.<br>Whether you grew up on the vinyl of the ’70s or are discovering this music for the first time, **Piano Men: Generations** hits where it matters most—in the soul.</p></div>
+      <div class="desc clamp"><p>**Two Men – Two Pianos – One Extraordinary Band!**<br>**Piano Men: Generations** isn’t just a concert—it’s a high-octane, emotionally charged musical journey led by a father-son duo and a world-class band that takes audiences on a ride they won’t forget. At its heart are Terry and Nick—father and son, bonded by blood and a deep love for the music of Billy Joel and Elton John. Their on-stage chemistry is genuine, spontaneous, and moving—sometimes funny, always magnetic.<br>Terry, a seasoned musician with decades of orchestral and rock ‘n’ roll experience, commands the stage with authority and heart. Nick brings fresh energy, charisma, and powerhouse vocals, effortlessly blending his style with his dad’s.<br>Elevating the show is the live band—an electrifying ensemble of elite musicians who are stars in their own right. Guitar solos soar, basslines groove, and the rhythm section drives the performance with precision. At the core is drummer Mike Richau—the visual and sonic heartbeat of the band. With jaw-dropping stick flips, relentless energy, and razor-sharp timing, he turns every show into a spectacle. One moment he’s laying down a subtle groove, the next he’s launching into a thunderous solo—sticks flying, crowd roaring.<br>From the first chord to the final encore, the show is a rollercoaster of iconic hits, delivered with authenticity, showmanship, and a deep sense of legacy.<br>The result? A celebration of music, family, and unforgettable moments that span decades and bring generations together.<br>Whether you grew up on the vinyl of the ’70s or are discovering this music for the first time, **Piano Men: Generations** hits where it matters most—in the soul.</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, September 12, 2026</strong></li>
         <li><span>Time</span><strong>8:00pm</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>

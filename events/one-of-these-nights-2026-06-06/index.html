@@ -30,6 +30,12 @@ a{color:inherit;text-decoration:none;}
 .content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
 .desc p+p{margin-top:10px;}
+.desc.clamp{max-height:9em;overflow:hidden;position:relative;}
+.desc.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card-bg));}
+.desc.clamp.expanded{max-height:none;}
+.desc.clamp.expanded::after{display:none;}
+.read-more{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-top:2px;}
+.read-more:hover{text-decoration:underline;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -53,7 +59,8 @@ footer a:hover{color:var(--accent);}
       <h1>One Of These Nights</h1>
       
       <p class="venue">Downtown Grand Hotel &amp; Casino - NV</p>
-      <div class="desc"><p>Get ready to be transported back to the golden era of classic rock as ONE OF THESE NIGHTS takes the stage! This extraordinary tribute band brings to life the timeless music of the Eagles, one of the most iconic and beloved rock bands in American history. With their impeccable musicianship and uncanny ability to capture the essence of the Eagles’ sound, ONE OF THESE NIGHTS promises an unforgettable night of nostalgia and pure musical bliss.<br>Whether you’re a die-hard fan or discovering The Eagles’ music for the first time, this tribute show is guaranteed to leave you wanting more.<br>So join us for a night of nostalgia, sing-along choruses, and unforgettable moments as ONE OF THESE NIGHTS brings the magic and legacy of The Eagles to life. Don’t miss your chance to witness the ultimate tribute to America’s favorite band, and experience the music that has stood the test of time. Get ready to soar on the wings of classic rock with ONE OF THESE NIGHTS – The Tribute to The Eagles!</p></div>
+      <div class="desc clamp"><p>Get ready to be transported back to the golden era of classic rock as ONE OF THESE NIGHTS takes the stage! This extraordinary tribute band brings to life the timeless music of the Eagles, one of the most iconic and beloved rock bands in American history. With their impeccable musicianship and uncanny ability to capture the essence of the Eagles’ sound, ONE OF THESE NIGHTS promises an unforgettable night of nostalgia and pure musical bliss.<br>Whether you’re a die-hard fan or discovering The Eagles’ music for the first time, this tribute show is guaranteed to leave you wanting more.<br>So join us for a night of nostalgia, sing-along choruses, and unforgettable moments as ONE OF THESE NIGHTS brings the magic and legacy of The Eagles to life. Don’t miss your chance to witness the ultimate tribute to America’s favorite band, and experience the music that has stood the test of time. Get ready to soar on the wings of classic rock with ONE OF THESE NIGHTS – The Tribute to The Eagles!</p></div>
+      <button class="read-more" type="button">Read more&hellip;</button>
       <ul class="details">
         <li><span>Date</span><strong>Saturday, June 6, 2026</strong></li>
         <li><span>Time</span><strong>8:00 PM</strong></li>
@@ -66,5 +73,18 @@ footer a:hover{color:var(--accent);}
   </article>
 </main>
 <footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
+<script>
+(function(){
+  var d=document.querySelector('.desc.clamp');
+  var b=document.querySelector('.read-more');
+  if(!d||!b)return;
+  // If the bio already fits within the clamp, drop the link entirely.
+  if(d.scrollHeight<=d.clientHeight+4){b.style.display='none';return;}
+  b.addEventListener('click',function(){
+    var open=d.classList.toggle('expanded');
+    b.innerHTML=open?'Read less':'Read more&hellip;';
+  });
+})();
+</script>
 </body>
 </html>
