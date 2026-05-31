@@ -87,8 +87,17 @@ function formatLongDate(d) {
   if (isNaN(dt)) return d;
   return `${WEEKDAYS[dt.getDay()]}, ${MONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
 }
+// Values that mean "no real ticket" — events matching these are excluded entirely.
+// Matched case-insensitively and trimmed, so "N/A", "n/a", "Not Available", etc. all count.
+const UNAVAILABLE_TICKETS = new Set([
+  'n/a', 'na', 'not available', 'not applicable',
+]);
+function isUnavailableTicket(ticket) {
+  if (!ticket) return true;
+  return UNAVAILABLE_TICKETS.has(String(ticket).trim().toLowerCase());
+}
 function hasValidTicket(ticket) {
-  return Boolean(ticket) && ticket !== 'N/A' && ticket !== 'NOT APPLICABLE';
+  return !isUnavailableTicket(ticket);
 }
 
 // ---- Airtable REST helpers ----
@@ -170,7 +179,7 @@ async function pullEvents() {
     const startDate = f[F_START_DATE];
     const artistLinks = f[F_ARTIST_LINK];
 
-    if (!ticket || ticket === 'NOT APPLICABLE') { skipped.noTicket++; continue; }
+    if (isUnavailableTicket(ticket)) { skipped.noTicket++; continue; }
     if (!startDate) { skipped.noDate++; continue; }
     if (startDate < today) { skipped.past++; continue; }
     if (!artistLinks || artistLinks.length === 0) { skipped.noArtistLink++; continue; }
@@ -410,11 +419,14 @@ const events = ${eventsJs};
 const palette = ['linear-gradient(135deg,#e94560,#f5a623)','linear-gradient(135deg,#6a11cb,#2575fc)','linear-gradient(135deg,#ff512f,#dd2476)','linear-gradient(135deg,#11998e,#38ef7d)','linear-gradient(135deg,#f12711,#f5af19)','linear-gradient(135deg,#8e2de2,#4a00e0)','linear-gradient(135deg,#ee0979,#ff6a00)','linear-gradient(135deg,#4568dc,#b06ab3)','linear-gradient(135deg,#c94b4b,#4b134f)','linear-gradient(135deg,#ff9966,#ff5e62)'];
 function grad(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return palette[h%palette.length];}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const UNAVAILABLE=new Set(['n/a','na','not available','not applicable']);
+function isUnavailable(t){return !t||UNAVAILABLE.has(String(t).trim().toLowerCase());}
 
 function render(){
   const q=document.getElementById('q').value.toLowerCase();
   const st=document.getElementById('state').value;
   const filtered=events.filter(e=>{
+    if(isUnavailable(e.ticket))return false;
     if(st&&e.state!==st)return false;
     if(!q)return true;
     return (e.artist+' '+e.city+' '+(e.venue||'')+' '+(e.address||'')+' '+e.state).toLowerCase().includes(q);
@@ -424,7 +436,7 @@ function render(){
   grid.innerHTML=filtered.map(e=>{
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
     const eventUrl='/events/'+esc(e.id)+'/';
-    const hasTix=e.ticket&&e.ticket!=='N/A'&&e.ticket!=='NOT APPLICABLE';
+    const hasTix=!isUnavailable(e.ticket);
     const cta=(hasTix?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>':'')
       +'<a class="details" href="'+eventUrl+'">Details</a>';
     return \`<div class="card">
