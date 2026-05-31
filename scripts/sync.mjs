@@ -9,7 +9,7 @@
 //   node scripts/sync.mjs            # write into repo root
 //   node scripts/sync.mjs --dry-run  # don't write files, just print summary
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -62,6 +62,32 @@ function slugify(name) {
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const photosDir = path.join(repoRoot, 'artist-photos');
 const indexPath = path.join(repoRoot, 'index.html');
+const eventsDir = path.join(repoRoot, 'events');
+
+// Gradient fallback palette — kept in sync with the client-side card renderer below.
+const PALETTE = [
+  'linear-gradient(135deg,#e94560,#f5a623)', 'linear-gradient(135deg,#6a11cb,#2575fc)',
+  'linear-gradient(135deg,#ff512f,#dd2476)', 'linear-gradient(135deg,#11998e,#38ef7d)',
+  'linear-gradient(135deg,#f12711,#f5af19)', 'linear-gradient(135deg,#8e2de2,#4a00e0)',
+  'linear-gradient(135deg,#ee0979,#ff6a00)', 'linear-gradient(135deg,#4568dc,#b06ab3)',
+  'linear-gradient(135deg,#c94b4b,#4b134f)', 'linear-gradient(135deg,#ff9966,#ff5e62)',
+];
+function gradFor(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function formatLongDate(d) {
+  const dt = new Date(d + 'T12:00:00');
+  if (isNaN(dt)) return d;
+  return `${WEEKDAYS[dt.getDay()]}, ${MONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
+}
+function hasValidTicket(ticket) {
+  return Boolean(ticket) && ticket !== 'N/A' && ticket !== 'NOT APPLICABLE';
+}
 
 // ---- Airtable REST helpers ----
 
@@ -273,6 +299,7 @@ function renderIndexHtml(events) {
     address: e.address,
     platform: e.platform,
     slug: e.slug,
+    id: e.id,
   })), null, 2);
 
   return `<!DOCTYPE html>
@@ -325,16 +352,19 @@ header .count { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
 .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; }
 .card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-.card-photo-wrap { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--primary); }
+.card-photo-wrap { display: block; position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--primary); }
 .card-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; color: white; text-align: center; padding: 16px; font-size: 18px; }
 .card-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card-body h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; }
 .card-body .meta { color: var(--text-muted); font-size: 14px; }
 .card-body .meta strong { color: var(--text); }
-.card-body .cta { margin-top: auto; padding-top: 12px; }
-.card-body .cta a { display: block; background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
-.card-body .cta a:hover { background: #ff5872; }
+.card-body .cta { margin-top: auto; padding-top: 12px; display: flex; gap: 8px; }
+.card-body .cta a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
+.card-body .cta a.get { background: var(--accent); color: white; }
+.card-body .cta a.get:hover { background: #ff5872; }
+.card-body .cta a.details { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
+.card-body .cta a.details:hover { border-color: var(--accent); color: var(--accent); }
 .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
 footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--card-border); margin-top: 40px; }
 @media (max-width: 600px) {
@@ -389,17 +419,21 @@ function render(){
   if(filtered.length===0){grid.innerHTML='<div class="empty">No shows match your filters.</div>';return;}
   grid.innerHTML=filtered.map(e=>{
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+    const eventUrl='/events/'+esc(e.id)+'/';
+    const hasTix=e.ticket&&e.ticket!=='N/A'&&e.ticket!=='NOT APPLICABLE';
+    const cta=(hasTix?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>':'')
+      +'<a class="details" href="'+eventUrl+'">Details</a>';
     return \`<div class="card">
-      <div class="card-photo-wrap">
+      <a class="card-photo-wrap" href="\${eventUrl}">
         <img src="\${PHOTO_BASE}\${esc(e.slug)}.jpg" alt="\${esc(e.artist)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="card-photo-fallback" style="display:none;background:\${grad(e.slug)}">\${esc(e.artist)}</div>
-      </div>
+      </a>
       <div class="card-body">
-        <h3>\${esc(e.artist)}</h3>
+        <h3><a href="\${eventUrl}">\${esc(e.artist)}</a></h3>
         \${e.venue?'<div class="meta"><strong>'+esc(e.venue)+'</strong></div>':''}
         <div class="meta"><strong>\${dateStr}</strong>\${e.showtime?' · '+esc(e.showtime):''}</div>
         <div class="meta">\${esc(e.city)}\${e.state?', '+esc(e.state):''}</div>
-        <div class="cta"><a href="\${esc(e.ticket)}" target="_blank" rel="noopener">Get Tickets</a></div>
+        <div class="cta">\${cta}</div>
       </div>
     </div>\`;
   }).join('');
@@ -409,6 +443,94 @@ document.getElementById('state').addEventListener('change',render);
 document.getElementById('clear').addEventListener('click',()=>{document.getElementById('q').value='';document.getElementById('state').value='';render();});
 render();
 </script>
+</body>
+</html>
+`;
+}
+
+// ---- Build a single event detail page ----
+
+function renderEventHtml(e) {
+  const dateStr = formatLongDate(e.date);
+  const hasTix = hasValidTicket(e.ticket);
+  const locality = [e.city, e.state].filter(Boolean).join(', ');
+  const title = `${e.artist}${e.venue ? ' · ' + e.venue : ''} | YourConcertTix`;
+  const ogDesc = [dateStr, e.venue, locality].filter(Boolean).join(' — ');
+  const descHtml = e.showInfo
+    ? `<p class="desc">${htmlesc(e.showInfo).replace(/\n/g, '<br>')}</p>`
+    : '';
+  const detailRows = [
+    `<li><span>Date</span><strong>${htmlesc(dateStr)}</strong></li>`,
+    e.showtime ? `<li><span>Time</span><strong>${htmlesc(e.showtime)}</strong></li>` : '',
+    e.venue ? `<li><span>Venue</span><strong>${htmlesc(e.venue)}</strong></li>` : '',
+    locality ? `<li><span>Location</span><strong>${htmlesc(locality)}</strong></li>` : '',
+    e.address ? `<li><span>Address</span><strong>${htmlesc(e.address)}</strong></li>` : '',
+  ].filter(Boolean).join('\n        ');
+  const cta = hasTix
+    ? `<a class="get-tickets" href="${htmlesc(e.ticket)}" target="_blank" rel="noopener">Get Tickets</a>`
+    : `<span class="get-tickets disabled">Tickets coming soon</span>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${htmlesc(title)}</title>
+<meta name="description" content="${htmlesc(ogDesc)}">
+<meta property="og:title" content="${htmlesc(e.artist)}">
+<meta property="og:description" content="${htmlesc(ogDesc)}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/artist-photos/${htmlesc(e.slug)}.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1a1a2e;--accent:#e94560;--bg:#0f0f23;--card-bg:#16213e;--card-border:#1a1a3e;--text:#e8e8f0;--text-muted:#8888aa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;display:flex;flex-direction:column;}
+a{color:inherit;text-decoration:none;}
+.wrap{flex:1;width:100%;max-width:560px;margin:0 auto;padding:20px;display:flex;flex-direction:column;}
+.back{color:var(--text-muted);font-size:14px;padding:8px 0;display:inline-block;}
+.back:hover{color:var(--accent);}
+.event-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;margin-top:8px;}
+.photo{position:relative;aspect-ratio:1/1;background:var(--primary);}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;text-align:center;padding:24px;font-size:26px;}
+.content{padding:20px;}
+.content h1{font-family:'Montserrat',sans-serif;font-size:26px;line-height:1.2;}
+.content .venue{color:var(--accent);font-weight:600;margin-top:4px;}
+.desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
+.details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
+.details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
+.details li span{color:var(--text-muted);}
+.details li strong{color:var(--text);text-align:right;}
+.get-tickets{display:block;background:var(--accent);color:#fff;text-align:center;padding:16px;border-radius:10px;font-weight:700;font-size:18px;font-family:'Montserrat',sans-serif;}
+.get-tickets:hover{background:#ff5872;}
+.get-tickets.disabled{background:var(--card-border);color:var(--text-muted);cursor:default;}
+footer{text-align:center;padding:20px;color:var(--text-muted);font-size:13px;}
+footer a:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="/">&larr; All shows</a>
+  <article class="event-card">
+    <div class="photo">
+      <img src="/artist-photos/${htmlesc(e.slug)}.jpg" alt="${htmlesc(e.artist)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="photo-fallback" style="display:none;background:${gradFor(e.slug)}">${htmlesc(e.artist)}</div>
+    </div>
+    <div class="content">
+      <h1>${htmlesc(e.artist)}</h1>
+      ${e.venue ? `<p class="venue">${htmlesc(e.venue)}</p>` : ''}
+      ${descHtml}
+      <ul class="details">
+        ${detailRows}
+      </ul>
+      ${cta}
+    </div>
+  </article>
+</main>
+<footer><a href="/">YourConcertTix</a> &middot; Powered by <a href="https://fangenie.com" target="_blank" rel="noopener">FanGenie</a></footer>
 </body>
 </html>
 `;
@@ -443,6 +565,17 @@ async function main() {
   }
   const usableEvents = events.filter(e => e.artist);
 
+  // Give each event a stable, unique URL id (artist slug + date, de-duplicated
+  // when the same act plays the same day at more than one venue).
+  const idsSeen = new Set();
+  for (const e of usableEvents) {
+    const base = `${e.slug}-${e.date}`;
+    let id = base, n = 2;
+    while (idsSeen.has(id)) id = `${base}-${n++}`;
+    idsSeen.add(id);
+    e.id = id;
+  }
+
   console.log('Downloading photos...');
   const photoResults = await downloadPhotos(bandsById);
   console.log(`  downloaded=${photoResults.downloaded} unchanged=${photoResults.unchanged} failed=${photoResults.failed.length} skipped=${photoResults.skipped.length}`);
@@ -452,9 +585,18 @@ async function main() {
   const html = renderIndexHtml(usableEvents);
   if (DRY_RUN) {
     console.log(`[DRY RUN] would write ${indexPath} (${html.length} bytes)`);
+    console.log(`[DRY RUN] would write ${usableEvents.length} event pages under ${eventsDir}/`);
   } else {
     writeFileSync(indexPath, html);
     console.log(`Wrote ${indexPath} (${html.length} bytes)`);
+    // Rebuild the events/ tree from scratch so pages for removed shows don't linger.
+    rmSync(eventsDir, { recursive: true, force: true });
+    for (const e of usableEvents) {
+      const dir = path.join(eventsDir, e.id);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(path.join(dir, 'index.html'), renderEventHtml(e));
+    }
+    console.log(`Wrote ${usableEvents.length} event pages under ${eventsDir}/`);
   }
 
   console.log('\nSummary:');
