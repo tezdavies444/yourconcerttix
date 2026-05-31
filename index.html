@@ -48,16 +48,19 @@ header .count { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
 .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; }
 .card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-.card-photo-wrap { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--primary); }
+.card-photo-wrap { display: block; position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--primary); }
 .card-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; color: white; text-align: center; padding: 16px; font-size: 18px; }
 .card-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card-body h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; }
 .card-body .meta { color: var(--text-muted); font-size: 14px; }
 .card-body .meta strong { color: var(--text); }
-.card-body .cta { margin-top: auto; padding-top: 12px; }
-.card-body .cta a { display: block; background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
-.card-body .cta a:hover { background: #ff5872; }
+.card-body .cta { margin-top: auto; padding-top: 12px; display: flex; gap: 8px; }
+.card-body .cta a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
+.card-body .cta a.get { background: var(--accent); color: white; }
+.card-body .cta a.get:hover { background: #ff5872; }
+.card-body .cta a.details { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
+.card-body .cta a.details:hover { border-color: var(--accent); color: var(--accent); }
 .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
 footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--card-border); margin-top: 40px; }
 @media (max-width: 600px) {
@@ -113,7 +116,8 @@ const events = [
     "venue": "Hale Concert Hall",
     "address": "50 West Page Avenue, Gilbert, AZ 85233",
     "platform": "",
-    "slug": "aretha"
+    "slug": "aretha",
+    "id": "aretha-2026-06-02"
   },
   {
     "artist": "Ultimate Chicago",
@@ -125,7 +129,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "ultimate-chicago"
+    "slug": "ultimate-chicago",
+    "id": "ultimate-chicago-2026-06-04"
   },
   {
     "artist": "AbbaFab",
@@ -137,7 +142,8 @@ const events = [
     "venue": "The Coach House",
     "address": "33157 Camino Capistrano, San Juan Capistrano, CA 92675",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2026-06-05"
   },
   {
     "artist": "Candle In The Wind",
@@ -149,7 +155,8 @@ const events = [
     "venue": "Desertview Performing Arts Center",
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
-    "slug": "candle-in-the-wind"
+    "slug": "candle-in-the-wind",
+    "id": "candle-in-the-wind-2026-06-06"
   },
   {
     "artist": "Neon Circus",
@@ -161,7 +168,8 @@ const events = [
     "venue": "Blacksmith Public House",
     "address": "308 SW Evergreen Ave, Redmond, OR 97756",
     "platform": "",
-    "slug": "neon-circus"
+    "slug": "neon-circus",
+    "id": "neon-circus-2026-06-06"
   },
   {
     "artist": "One Of These Nights",
@@ -173,7 +181,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "one-of-these-nights"
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2026-06-06"
   },
   {
     "artist": "AbbaFab",
@@ -185,7 +194,8 @@ const events = [
     "venue": "Dutch Apple Dinner Theatre",
     "address": "510 Centerville Rd,, Lancaster, PA 17601",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2026-06-08"
   },
   {
     "artist": "AbbaFab",
@@ -197,7 +207,8 @@ const events = [
     "venue": "Dutch Apple Dinner Theatre",
     "address": "510 Centerville Rd,, Lancaster, PA 17601",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2026-06-09"
   },
   {
     "artist": "Yachtzilla",
@@ -209,7 +220,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "yachtzilla"
+    "slug": "yachtzilla",
+    "id": "yachtzilla-2026-06-11"
   },
   {
     "artist": "Prince Again",
@@ -221,7 +233,8 @@ const events = [
     "venue": "Parx Casino",
     "address": "2999 Street Rd, Bensalem, PA 19020",
     "platform": "",
-    "slug": "prince-again"
+    "slug": "prince-again",
+    "id": "prince-again-2026-06-12"
   },
   {
     "artist": "Yachtzilla",
@@ -233,7 +246,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "yachtzilla"
+    "slug": "yachtzilla",
+    "id": "yachtzilla-2026-06-13"
   },
   {
     "artist": "AbbaFab",
@@ -245,7 +259,8 @@ const events = [
     "venue": "Milton Theatre",
     "address": "110 Union St, Milton, DE 19968",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2026-06-13"
   },
   {
     "artist": "TOBY",
@@ -257,7 +272,8 @@ const events = [
     "venue": "Harold's",
     "address": "6895 E Cave Creek Rd, Cave Creek, AZ 85331",
     "platform": "",
-    "slug": "toby"
+    "slug": "toby",
+    "id": "toby-2026-06-13"
   },
   {
     "artist": "Almost Folsom",
@@ -269,7 +285,8 @@ const events = [
     "venue": "Arizona Broadway Theatre",
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2026-06-15"
   },
   {
     "artist": "One Of These Nights",
@@ -281,7 +298,8 @@ const events = [
     "venue": "Venture In RV Resort",
     "address": "270 N Clark Rd, Show Low, AZ 85901",
     "platform": "FanGenie",
-    "slug": "one-of-these-nights"
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2026-06-18"
   },
   {
     "artist": "Rock Revisited",
@@ -293,7 +311,8 @@ const events = [
     "venue": "Wild Horse Pass Casino",
     "address": "5040 Wild Horse Pass Blvd, Chandler, AZ 85226",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-06-19"
   },
   {
     "artist": "Candle In The Wind",
@@ -305,7 +324,8 @@ const events = [
     "venue": "Pebble Creek Renaissance Theatre",
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
-    "slug": "candle-in-the-wind"
+    "slug": "candle-in-the-wind",
+    "id": "candle-in-the-wind-2026-06-20"
   },
   {
     "artist": "All McCartney Live",
@@ -317,7 +337,8 @@ const events = [
     "venue": "Parx Casino",
     "address": "2999 Street Rd, Bensalem, PA 19020",
     "platform": "",
-    "slug": "all-mccartney-live"
+    "slug": "all-mccartney-live",
+    "id": "all-mccartney-live-2026-06-20"
   },
   {
     "artist": "December '63",
@@ -329,7 +350,8 @@ const events = [
     "venue": "Starbright Theatre",
     "address": "2215 Thomas W Ryan Blvd, Las Vegas, NV 89134",
     "platform": "",
-    "slug": "december-63"
+    "slug": "december-63",
+    "id": "december-63-2026-06-21"
   },
   {
     "artist": "American Highwaymen",
@@ -341,7 +363,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "american-highwaymen"
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2026-06-21"
   },
   {
     "artist": "Honky Tonk Man",
@@ -353,7 +376,8 @@ const events = [
     "venue": "The Savannah Center",
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2026-06-24"
   },
   {
     "artist": "Almost Folsom",
@@ -365,7 +389,8 @@ const events = [
     "venue": "The Savannah Center",
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2026-06-25"
   },
   {
     "artist": "AbbaFab",
@@ -377,7 +402,8 @@ const events = [
     "venue": "Dawson Memorial Auditorium",
     "address": "601 9th Street, Dawson, MN 56232",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2026-06-27"
   },
   {
     "artist": "Almost Folsom",
@@ -389,7 +415,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2026-06-27"
   },
   {
     "artist": "TOBY",
@@ -401,7 +428,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "toby"
+    "slug": "toby",
+    "id": "toby-2026-06-27"
   },
   {
     "artist": "Almost Folsom",
@@ -413,7 +441,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2026-06-28"
   },
   {
     "artist": "America The Beautiful",
@@ -425,7 +454,8 @@ const events = [
     "venue": "Sun Village",
     "address": "17300 N Sun Village Pkwy, Surprise, AZ 85374",
     "platform": "Purple Pass",
-    "slug": "america-the-beautiful"
+    "slug": "america-the-beautiful",
+    "id": "america-the-beautiful-2026-07-03"
   },
   {
     "artist": "The Big Easy Live",
@@ -437,7 +467,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "the-big-easy-live"
+    "slug": "the-big-easy-live",
+    "id": "the-big-easy-live-2026-07-04"
   },
   {
     "artist": "America The Beautiful",
@@ -449,7 +480,8 @@ const events = [
     "venue": "Willow Valley Communities",
     "address": "900 Willow Valley Lakes Dr., Willow Street, PA 17584",
     "platform": "",
-    "slug": "america-the-beautiful"
+    "slug": "america-the-beautiful",
+    "id": "america-the-beautiful-2026-07-09"
   },
   {
     "artist": "Members Only",
@@ -461,7 +493,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "members-only"
+    "slug": "members-only",
+    "id": "members-only-2026-07-10"
   },
   {
     "artist": "Garth Live",
@@ -473,7 +506,8 @@ const events = [
     "venue": "Arizona Broadway Theatre",
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
-    "slug": "garth-live"
+    "slug": "garth-live",
+    "id": "garth-live-2026-07-13"
   },
   {
     "artist": "TOBY",
@@ -485,7 +519,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "toby"
+    "slug": "toby",
+    "id": "toby-2026-07-16"
   },
   {
     "artist": "Margaritas In Paradise",
@@ -497,7 +532,8 @@ const events = [
     "venue": "Pebble Creek Renaissance Theatre",
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
-    "slug": "margaritas-in-paradise"
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2026-07-17"
   },
   {
     "artist": "Rock Revisited",
@@ -509,7 +545,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-07-22"
   },
   {
     "artist": "The Bad Co. Experience",
@@ -521,7 +558,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "the-bad-co-experience"
+    "slug": "the-bad-co-experience",
+    "id": "the-bad-co-experience-2026-07-23"
   },
   {
     "artist": "Rock Revisited",
@@ -533,7 +571,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-07-23"
   },
   {
     "artist": "Rock Revisited",
@@ -545,7 +584,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-07-24"
   },
   {
     "artist": "The Bad Co. Experience",
@@ -557,7 +597,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "the-bad-co-experience"
+    "slug": "the-bad-co-experience",
+    "id": "the-bad-co-experience-2026-07-24"
   },
   {
     "artist": "Rock Revisited",
@@ -569,7 +610,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-07-25"
   },
   {
     "artist": "Rock Revisited",
@@ -581,7 +623,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-07-26"
   },
   {
     "artist": "Disco Inferno",
@@ -593,7 +636,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "disco-inferno"
+    "slug": "disco-inferno",
+    "id": "disco-inferno-2026-07-30"
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -605,7 +649,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "springsteen-born-to-run"
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2026-08-01"
   },
   {
     "artist": "American Highwaymen",
@@ -617,7 +662,8 @@ const events = [
     "venue": "Pebble Creek Renaissance Theatre",
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
-    "slug": "american-highwaymen"
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2026-08-08"
   },
   {
     "artist": "Yachtzilla",
@@ -629,7 +675,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "yachtzilla"
+    "slug": "yachtzilla",
+    "id": "yachtzilla-2026-08-08"
   },
   {
     "artist": "Matt Johnson",
@@ -641,7 +688,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "matt-johnson"
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2026-08-15"
   },
   {
     "artist": "Kevin Farley ",
@@ -653,7 +701,8 @@ const events = [
     "venue": "The Savannah Center",
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
-    "slug": "kevin-farley"
+    "slug": "kevin-farley",
+    "id": "kevin-farley-2026-08-19"
   },
   {
     "artist": "Garth Live",
@@ -665,7 +714,8 @@ const events = [
     "venue": "Venture In RV Resort",
     "address": "270 N Clark Rd, Show Low, AZ 85901",
     "platform": "FanGenie",
-    "slug": "garth-live"
+    "slug": "garth-live",
+    "id": "garth-live-2026-08-20"
   },
   {
     "artist": "FlashPants",
@@ -677,7 +727,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "flashpants"
+    "slug": "flashpants",
+    "id": "flashpants-2026-08-22"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -689,7 +740,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2026-08-29"
   },
   {
     "artist": "Voyager",
@@ -701,7 +753,8 @@ const events = [
     "venue": "Venture In RV Resort",
     "address": "270 N Clark Rd, Show Low, AZ 85901",
     "platform": "FanGenie",
-    "slug": "voyager"
+    "slug": "voyager",
+    "id": "voyager-2026-09-03"
   },
   {
     "artist": "Honky Tonk Man",
@@ -713,7 +766,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2026-09-05"
   },
   {
     "artist": "Locked Out Of Heaven",
@@ -725,7 +779,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "locked-out-of-heaven"
+    "slug": "locked-out-of-heaven",
+    "id": "locked-out-of-heaven-2026-09-05"
   },
   {
     "artist": "The Kings of Queen",
@@ -737,7 +792,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "the-kings-of-queen"
+    "slug": "the-kings-of-queen",
+    "id": "the-kings-of-queen-2026-09-10"
   },
   {
     "artist": "The Kings of Queen",
@@ -749,7 +805,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "the-kings-of-queen"
+    "slug": "the-kings-of-queen",
+    "id": "the-kings-of-queen-2026-09-11"
   },
   {
     "artist": "Disco Inferno",
@@ -761,7 +818,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "disco-inferno"
+    "slug": "disco-inferno",
+    "id": "disco-inferno-2026-09-11"
   },
   {
     "artist": "Ghost In The Machine",
@@ -773,7 +831,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "ghost-in-the-machine"
+    "slug": "ghost-in-the-machine",
+    "id": "ghost-in-the-machine-2026-09-11"
   },
   {
     "artist": "Piano Men: Generations",
@@ -785,7 +844,8 @@ const events = [
     "venue": "The Coach House",
     "address": "33157 Camino Capistrano, San Juan Capistrano, CA 92675",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2026-09-12"
   },
   {
     "artist": "The Kings of Queen",
@@ -797,7 +857,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "the-kings-of-queen"
+    "slug": "the-kings-of-queen",
+    "id": "the-kings-of-queen-2026-09-12"
   },
   {
     "artist": "Piano Men: Generations",
@@ -809,7 +870,8 @@ const events = [
     "venue": "Vacaville PAC",
     "address": " 1010 Ulatis Dr, Vacaville, CA  95687",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2026-09-13"
   },
   {
     "artist": "The Big Easy Live",
@@ -821,7 +883,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "the-big-easy-live"
+    "slug": "the-big-easy-live",
+    "id": "the-big-easy-live-2026-09-13"
   },
   {
     "artist": "The Big Easy Live",
@@ -833,7 +896,8 @@ const events = [
     "venue": "Arizona Broadway Theatre",
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
-    "slug": "the-big-easy-live"
+    "slug": "the-big-easy-live",
+    "id": "the-big-easy-live-2026-09-14"
   },
   {
     "artist": "Sharon Owens",
@@ -845,7 +909,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "sharon-owens"
+    "slug": "sharon-owens",
+    "id": "sharon-owens-2026-09-19"
   },
   {
     "artist": "Voyager",
@@ -857,7 +922,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "voyager"
+    "slug": "voyager",
+    "id": "voyager-2026-10-03"
   },
   {
     "artist": "56tees",
@@ -869,7 +935,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "56tees"
+    "slug": "56tees",
+    "id": "56tees-2026-10-03"
   },
   {
     "artist": "Almost Folsom",
@@ -881,7 +948,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2026-10-08"
   },
   {
     "artist": "Margaritas In Paradise",
@@ -893,7 +961,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "margaritas-in-paradise"
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2026-10-09"
   },
   {
     "artist": "Piano Men: Generations",
@@ -905,7 +974,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2026-10-20"
   },
   {
     "artist": "Piano Men: Generations",
@@ -917,7 +987,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2026-10-21"
   },
   {
     "artist": "The K-Tel All Stars",
@@ -929,7 +1000,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "the-k-tel-all-stars"
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2026-10-22"
   },
   {
     "artist": "Magic Of Manilow",
@@ -941,7 +1013,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "magic-of-manilow"
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2026-10-22"
   },
   {
     "artist": "Piano Men: Generations",
@@ -953,7 +1026,8 @@ const events = [
     "venue": "Egyptian Theatre (DeKalb)",
     "address": "135 N 2nd St, DeKalb, IL 60115",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2026-10-24"
   },
   {
     "artist": "One More Night",
@@ -965,7 +1039,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "one-more-night"
+    "slug": "one-more-night",
+    "id": "one-more-night-2026-10-24"
   },
   {
     "artist": "Members Only",
@@ -977,7 +1052,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "members-only"
+    "slug": "members-only",
+    "id": "members-only-2026-10-31"
   },
   {
     "artist": "A Lennon Legacy",
@@ -989,7 +1065,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "a-lennon-legacy"
+    "slug": "a-lennon-legacy",
+    "id": "a-lennon-legacy-2026-11-06"
   },
   {
     "artist": "Voyager",
@@ -1001,7 +1078,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "voyager"
+    "slug": "voyager",
+    "id": "voyager-2026-11-08"
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -1013,7 +1091,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "karen-hester-as-dolly-parton"
+    "slug": "karen-hester-as-dolly-parton",
+    "id": "karen-hester-as-dolly-parton-2026-11-19"
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -1025,7 +1104,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "karen-hester-as-dolly-parton"
+    "slug": "karen-hester-as-dolly-parton",
+    "id": "karen-hester-as-dolly-parton-2026-11-20"
   },
   {
     "artist": "Rock Revisited",
@@ -1037,7 +1117,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-11-20"
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -1049,7 +1130,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "karen-hester-as-dolly-parton"
+    "slug": "karen-hester-as-dolly-parton",
+    "id": "karen-hester-as-dolly-parton-2026-11-21"
   },
   {
     "artist": "Go Now",
@@ -1061,7 +1143,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "go-now"
+    "slug": "go-now",
+    "id": "go-now-2026-11-21"
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1073,7 +1156,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "sleigh-bells-swing"
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-07"
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1085,7 +1169,8 @@ const events = [
     "venue": "Sunland Village East",
     "address": "2145 S. Farnsworth Drive, Mesa, AZ 85209",
     "platform": "",
-    "slug": "sleigh-bells-swing"
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-08"
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1097,7 +1182,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "sleigh-bells-swing"
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-09"
   },
   {
     "artist": "Rocky Mountain Christmas",
@@ -1109,7 +1195,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "rocky-mountain-christmas"
+    "slug": "rocky-mountain-christmas",
+    "id": "rocky-mountain-christmas-2026-12-11"
   },
   {
     "artist": "3 International Tenors",
@@ -1121,7 +1208,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "3-international-tenors"
+    "slug": "3-international-tenors",
+    "id": "3-international-tenors-2026-12-12"
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1133,7 +1221,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "sleigh-bells-swing"
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-14"
   },
   {
     "artist": "Ivan Pecel",
@@ -1145,7 +1234,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "ivan-pecel"
+    "slug": "ivan-pecel",
+    "id": "ivan-pecel-2026-12-18"
   },
   {
     "artist": "Country Christmas",
@@ -1157,7 +1247,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "country-christmas"
+    "slug": "country-christmas",
+    "id": "country-christmas-2026-12-19"
   },
   {
     "artist": "A Lennon Legacy",
@@ -1169,7 +1260,8 @@ const events = [
     "venue": "Gaslight Music Hall",
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
-    "slug": "a-lennon-legacy"
+    "slug": "a-lennon-legacy",
+    "id": "a-lennon-legacy-2026-12-27"
   },
   {
     "artist": "Honky Tonk Man",
@@ -1181,7 +1273,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-01-04"
   },
   {
     "artist": "One Of These Nights",
@@ -1193,7 +1286,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "one-of-these-nights"
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2027-01-04"
   },
   {
     "artist": "The Kings of Queen",
@@ -1205,7 +1299,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "the-kings-of-queen"
+    "slug": "the-kings-of-queen",
+    "id": "the-kings-of-queen-2027-01-05"
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1217,7 +1312,8 @@ const events = [
     "venue": "Boca Black Box",
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
-    "slug": "the-lionel-richie-songbook"
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-07"
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1229,7 +1325,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "the-lionel-richie-songbook"
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-08"
   },
   {
     "artist": "TOBY",
@@ -1241,7 +1338,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "toby"
+    "slug": "toby",
+    "id": "toby-2027-01-08"
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1253,7 +1351,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "the-lionel-richie-songbook"
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-09"
   },
   {
     "artist": "TOBY",
@@ -1265,7 +1364,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "toby"
+    "slug": "toby",
+    "id": "toby-2027-01-10"
   },
   {
     "artist": "Hot August Night",
@@ -1277,7 +1377,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "hot-august-night"
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-11"
   },
   {
     "artist": "Voyager",
@@ -1289,7 +1390,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "voyager"
+    "slug": "voyager",
+    "id": "voyager-2027-01-11"
   },
   {
     "artist": "Hot August Night",
@@ -1301,7 +1403,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "hot-august-night"
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-12"
   },
   {
     "artist": "Randy Linder - CCR",
@@ -1313,7 +1416,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "randy-linder-ccr"
+    "slug": "randy-linder-ccr",
+    "id": "randy-linder-ccr-2027-01-12"
   },
   {
     "artist": "Strait Outta Texas",
@@ -1325,7 +1429,8 @@ const events = [
     "venue": "Voyager RV Resort",
     "address": "8701 S Kolb Rd, Tucson, AZ 85756",
     "platform": "",
-    "slug": "strait-outta-texas"
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-13"
   },
   {
     "artist": "Summer Nights",
@@ -1337,7 +1442,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "summer-nights"
+    "slug": "summer-nights",
+    "id": "summer-nights-2027-01-14"
   },
   {
     "artist": "Yachtzilla",
@@ -1349,7 +1455,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "yachtzilla"
+    "slug": "yachtzilla",
+    "id": "yachtzilla-2027-01-15"
   },
   {
     "artist": "Hot August Night",
@@ -1361,7 +1468,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "hot-august-night"
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-15"
   },
   {
     "artist": "Strait Outta Texas",
@@ -1373,7 +1481,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "strait-outta-texas"
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-17"
   },
   {
     "artist": "Fly Like An Eagle",
@@ -1385,7 +1494,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "fly-like-an-eagle"
+    "slug": "fly-like-an-eagle",
+    "id": "fly-like-an-eagle-2027-01-18"
   },
   {
     "artist": "Let It Ride",
@@ -1397,7 +1507,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "let-it-ride"
+    "slug": "let-it-ride",
+    "id": "let-it-ride-2027-01-18"
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1409,7 +1520,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "springsteen-born-to-run"
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-01-19"
   },
   {
     "artist": "Yachtzilla",
@@ -1421,7 +1533,8 @@ const events = [
     "venue": "Sunland Village East",
     "address": "2145 S. Farnsworth Drive, Mesa, AZ 85209",
     "platform": "",
-    "slug": "yachtzilla"
+    "slug": "yachtzilla",
+    "id": "yachtzilla-2027-01-19"
   },
   {
     "artist": "Total Country",
@@ -1433,7 +1546,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "total-country"
+    "slug": "total-country",
+    "id": "total-country-2027-01-19"
   },
   {
     "artist": "The Dionne Legacy",
@@ -1445,7 +1559,8 @@ const events = [
     "venue": "Voyager RV Resort",
     "address": "8701 S Kolb Rd, Tucson, AZ 85756",
     "platform": "",
-    "slug": "the-dionne-legacy"
+    "slug": "the-dionne-legacy",
+    "id": "the-dionne-legacy-2027-01-20"
   },
   {
     "artist": "Strait Outta Texas",
@@ -1457,7 +1572,8 @@ const events = [
     "venue": "Towerpoint RV Resort",
     "address": "4860 E Main St, Mesa, AZ 85205",
     "platform": "",
-    "slug": "strait-outta-texas"
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-21"
   },
   {
     "artist": "Crystal Stark - First Ladies Of Song",
@@ -1469,7 +1585,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "crystal-stark-first-ladies-of-song"
+    "slug": "crystal-stark-first-ladies-of-song",
+    "id": "crystal-stark-first-ladies-of-song-2027-01-22"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1481,7 +1598,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-25"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1493,7 +1611,8 @@ const events = [
     "venue": "Valle Del Oro",
     "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-27"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1505,7 +1624,8 @@ const events = [
     "venue": "Mesa Regal RV Resort",
     "address": "4700 E Main St, Mesa, AZ 85205",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-28"
   },
   {
     "artist": "Almost Folsom",
@@ -1517,7 +1637,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "almost-folsom"
+    "slug": "almost-folsom",
+    "id": "almost-folsom-2027-01-29"
   },
   {
     "artist": "Family Tradition",
@@ -1529,7 +1650,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "family-tradition"
+    "slug": "family-tradition",
+    "id": "family-tradition-2027-02-01"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1541,7 +1663,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-02-02"
   },
   {
     "artist": "Satisfaction",
@@ -1553,7 +1676,8 @@ const events = [
     "venue": "Towerpoint RV Resort",
     "address": "4860 E Main St, Mesa, AZ 85205",
     "platform": "",
-    "slug": "satisfaction"
+    "slug": "satisfaction",
+    "id": "satisfaction-2027-02-04"
   },
   {
     "artist": "One Of These Nights",
@@ -1565,7 +1689,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "one-of-these-nights"
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2027-02-05"
   },
   {
     "artist": "AbbaFab",
@@ -1577,7 +1702,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2027-02-05"
   },
   {
     "artist": "The K-Tel All Stars",
@@ -1589,7 +1715,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "the-k-tel-all-stars"
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2027-02-07"
   },
   {
     "artist": "Uptown",
@@ -1601,7 +1728,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "uptown"
+    "slug": "uptown",
+    "id": "uptown-2027-02-08"
   },
   {
     "artist": "Honky Tonk Man",
@@ -1613,7 +1741,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-02-08"
   },
   {
     "artist": "Revisiting The Orbison Years",
@@ -1625,7 +1754,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "revisiting-the-orbison-years"
+    "slug": "revisiting-the-orbison-years",
+    "id": "revisiting-the-orbison-years-2027-02-09"
   },
   {
     "artist": "The Shania Twain Experience",
@@ -1637,7 +1767,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "the-shania-twain-experience"
+    "slug": "the-shania-twain-experience",
+    "id": "the-shania-twain-experience-2027-02-09"
   },
   {
     "artist": "Honky Tonk Man",
@@ -1649,7 +1780,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-02-12"
   },
   {
     "artist": "The Big Easy Live",
@@ -1661,7 +1793,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "the-big-easy-live"
+    "slug": "the-big-easy-live",
+    "id": "the-big-easy-live-2027-02-14"
   },
   {
     "artist": "Turn The Page",
@@ -1673,7 +1806,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "turn-the-page"
+    "slug": "turn-the-page",
+    "id": "turn-the-page-2027-02-15"
   },
   {
     "artist": "Locked Out Of Heaven",
@@ -1685,7 +1819,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "locked-out-of-heaven"
+    "slug": "locked-out-of-heaven",
+    "id": "locked-out-of-heaven-2027-02-15"
   },
   {
     "artist": "Locked Out Of Heaven",
@@ -1697,7 +1832,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "locked-out-of-heaven"
+    "slug": "locked-out-of-heaven",
+    "id": "locked-out-of-heaven-2027-02-16"
   },
   {
     "artist": "Magic Of Manilow",
@@ -1709,7 +1845,8 @@ const events = [
     "venue": "Lake Havasu Aquatic Center",
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
-    "slug": "magic-of-manilow"
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2027-02-16"
   },
   {
     "artist": "Rock Revisited",
@@ -1721,7 +1858,8 @@ const events = [
     "venue": "Voyager RV Resort",
     "address": "8701 S Kolb Rd, Tucson, AZ 85756",
     "platform": "",
-    "slug": "rock-revisited"
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2027-02-17"
   },
   {
     "artist": "Prince Again",
@@ -1733,7 +1871,8 @@ const events = [
     "venue": "Valle Del Oro",
     "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "prince-again"
+    "slug": "prince-again",
+    "id": "prince-again-2027-02-18"
   },
   {
     "artist": "Magic Of Manilow",
@@ -1745,7 +1884,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "magic-of-manilow"
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2027-02-19"
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1757,7 +1897,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "springsteen-born-to-run"
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-02-22"
   },
   {
     "artist": "Queen Nation",
@@ -1769,7 +1910,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "queen-nation"
+    "slug": "queen-nation",
+    "id": "queen-nation-2027-02-24"
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1781,7 +1923,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "springsteen-born-to-run"
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-02-26"
   },
   {
     "artist": "Garth Live",
@@ -1793,7 +1936,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "garth-live"
+    "slug": "garth-live",
+    "id": "garth-live-2027-03-01"
   },
   {
     "artist": "Let It Ride",
@@ -1805,7 +1949,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "let-it-ride"
+    "slug": "let-it-ride",
+    "id": "let-it-ride-2027-03-02"
   },
   {
     "artist": "Return To Woodstock",
@@ -1817,7 +1962,8 @@ const events = [
     "venue": "Sunland Village East",
     "address": "2145 S. Farnsworth Drive, Mesa, AZ 85209",
     "platform": "",
-    "slug": "return-to-woodstock"
+    "slug": "return-to-woodstock",
+    "id": "return-to-woodstock-2027-03-02"
   },
   {
     "artist": "Piano Men: Generations",
@@ -1829,7 +1975,8 @@ const events = [
     "venue": "Voyager RV Resort",
     "address": "8701 S Kolb Rd, Tucson, AZ 85756",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-03"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1841,7 +1988,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-03"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1853,7 +2001,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-04"
   },
   {
     "artist": "Voyager",
@@ -1865,7 +2014,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "voyager"
+    "slug": "voyager",
+    "id": "voyager-2027-03-05"
   },
   {
     "artist": "Let It Ride",
@@ -1877,7 +2027,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "let-it-ride"
+    "slug": "let-it-ride",
+    "id": "let-it-ride-2027-03-05"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1889,7 +2040,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-05"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1901,7 +2053,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-06"
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1913,7 +2066,8 @@ const events = [
     "venue": "Bristol Riverside Theatre",
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
-    "slug": "gloria-turn-the-beat"
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-07"
   },
   {
     "artist": "Photographs and Memories",
@@ -1925,7 +2079,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "photographs-and-memories"
+    "slug": "photographs-and-memories",
+    "id": "photographs-and-memories-2027-03-08"
   },
   {
     "artist": "Honky Tonk Man",
@@ -1937,7 +2092,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "honky-tonk-man"
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-03-09"
   },
   {
     "artist": "Broadway Concert Experience",
@@ -1949,7 +2105,8 @@ const events = [
     "venue": "Voyager RV Resort",
     "address": "8701 S Kolb Rd, Tucson, AZ 85756",
     "platform": "",
-    "slug": "broadway-concert-experience"
+    "slug": "broadway-concert-experience",
+    "id": "broadway-concert-experience-2027-03-10"
   },
   {
     "artist": "Go Now",
@@ -1961,7 +2118,8 @@ const events = [
     "venue": "Riverview High School Performing Arts Center",
     "address": "1 Ram Way, Sarasota , FL 34231",
     "platform": "FanGenie",
-    "slug": "go-now"
+    "slug": "go-now",
+    "id": "go-now-2027-03-11"
   },
   {
     "artist": "Turn The Page",
@@ -1973,7 +2131,8 @@ const events = [
     "venue": "Beardsley Park",
     "address": "12755 W Beardsley Rd, Sun City West, AZ 85375",
     "platform": "",
-    "slug": "turn-the-page"
+    "slug": "turn-the-page",
+    "id": "turn-the-page-2027-03-11"
   },
   {
     "artist": "Southern Rock Explosion",
@@ -1985,7 +2144,8 @@ const events = [
     "venue": "Beardsley Park",
     "address": "12755 W Beardsley Rd, Sun City West, AZ 85375",
     "platform": "",
-    "slug": "southern-rock-explosion"
+    "slug": "southern-rock-explosion",
+    "id": "southern-rock-explosion-2027-03-13"
   },
   {
     "artist": "Margaritas In Paradise",
@@ -1997,7 +2157,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "margaritas-in-paradise"
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2027-03-15"
   },
   {
     "artist": "AbbaFab",
@@ -2009,7 +2170,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2027-03-16"
   },
   {
     "artist": "Five Way Street",
@@ -2021,7 +2183,8 @@ const events = [
     "venue": "Valle Del Oro",
     "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "five-way-street"
+    "slug": "five-way-street",
+    "id": "five-way-street-2027-03-18"
   },
   {
     "artist": "Fly Like An Eagle",
@@ -2033,7 +2196,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "fly-like-an-eagle"
+    "slug": "fly-like-an-eagle",
+    "id": "fly-like-an-eagle-2027-03-19"
   },
   {
     "artist": "Five Way Street",
@@ -2045,7 +2209,8 @@ const events = [
     "venue": "Good Life RV Resort",
     "address": "3403 E Main St, Mesa, AZ 85213",
     "platform": "",
-    "slug": "five-way-street"
+    "slug": "five-way-street",
+    "id": "five-way-street-2027-03-19"
   },
   {
     "artist": "December '63",
@@ -2057,7 +2222,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "december-63"
+    "slug": "december-63",
+    "id": "december-63-2027-03-19"
   },
   {
     "artist": "Hearts Desire",
@@ -2069,7 +2235,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "hearts-desire"
+    "slug": "hearts-desire",
+    "id": "hearts-desire-2027-03-22"
   },
   {
     "artist": "One Of These Nights",
@@ -2081,7 +2248,8 @@ const events = [
     "venue": "Monte Vista Village Resort",
     "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
     "platform": "",
-    "slug": "one-of-these-nights"
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2027-03-23"
   },
   {
     "artist": "Piano Men: Generations",
@@ -2093,7 +2261,8 @@ const events = [
     "venue": "Paradise RV",
     "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
     "platform": "",
-    "slug": "piano-men-generations"
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-29"
   },
   {
     "artist": "Million Dollar McGraw",
@@ -2105,7 +2274,8 @@ const events = [
     "venue": "Pueblo El Mirage RV Resort",
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
-    "slug": "million-dollar-mcgraw"
+    "slug": "million-dollar-mcgraw",
+    "id": "million-dollar-mcgraw-2027-04-02"
   },
   {
     "artist": "AbbaFab",
@@ -2117,7 +2287,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2027-04-16"
   },
   {
     "artist": "AbbaFab",
@@ -2129,7 +2300,8 @@ const events = [
     "venue": "Suncoast Broadway",
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
-    "slug": "abbafab"
+    "slug": "abbafab",
+    "id": "abbafab-2027-04-17"
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -2141,7 +2313,8 @@ const events = [
     "venue": "Quail Creek",
     "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "sleigh-bells-swing"
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2027-12-06"
   }
 ];
 
@@ -2161,17 +2334,21 @@ function render(){
   if(filtered.length===0){grid.innerHTML='<div class="empty">No shows match your filters.</div>';return;}
   grid.innerHTML=filtered.map(e=>{
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+    const eventUrl='/events/'+esc(e.id)+'/';
+    const hasTix=e.ticket&&e.ticket!=='N/A'&&e.ticket!=='NOT APPLICABLE';
+    const cta=(hasTix?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>':'')
+      +'<a class="details" href="'+eventUrl+'">Details</a>';
     return `<div class="card">
-      <div class="card-photo-wrap">
+      <a class="card-photo-wrap" href="${eventUrl}">
         <img src="${PHOTO_BASE}${esc(e.slug)}.jpg" alt="${esc(e.artist)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="card-photo-fallback" style="display:none;background:${grad(e.slug)}">${esc(e.artist)}</div>
-      </div>
+      </a>
       <div class="card-body">
-        <h3>${esc(e.artist)}</h3>
+        <h3><a href="${eventUrl}">${esc(e.artist)}</a></h3>
         ${e.venue?'<div class="meta"><strong>'+esc(e.venue)+'</strong></div>':''}
         <div class="meta"><strong>${dateStr}</strong>${e.showtime?' · '+esc(e.showtime):''}</div>
         <div class="meta">${esc(e.city)}${e.state?', '+esc(e.state):''}</div>
-        <div class="cta"><a href="${esc(e.ticket)}" target="_blank" rel="noopener">Get Tickets</a></div>
+        <div class="cta">${cta}</div>
       </div>
     </div>`;
   }).join('');
