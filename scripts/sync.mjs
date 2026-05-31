@@ -42,6 +42,8 @@ const F_PLATFORM      = 'fldczQJUGFvhg2NrC'; // lookup → multipleSelects
 // Bands field IDs
 const F_NAME     = 'fldLzk7pDCwNsBQob';
 const F_WEB_IMG  = 'fldmdmT8dvg45MLyn'; // Poster/Portrait (1:1, e.g. 1254x1254)
+const F_BIO      = 'fldZRMHNofVVU5S6J'; // "Copy" — performer bio / show description (longText)
+const F_TAGLINE  = 'fldTq2ehkhKtjfRUU'; // "Tagline" — short subtitle, e.g. "A Tribute to John Lennon"
 
 // Venues field IDs
 const F_VENUE_NAME = 'fldNt6WjlSP0tivQ2'; // primary field "Name" on VENUES (From CP)
@@ -204,7 +206,7 @@ async function pullBands(linkIds) {
   for (const chunk of chunks) {
     const formula = `OR(${chunk.map(id => `RECORD_ID()='${id}'`).join(',')})`;
     const records = await airtableListAll(BANDS_TABLE, {
-      fields: [F_NAME, F_WEB_IMG],
+      fields: [F_NAME, F_WEB_IMG, F_BIO, F_TAGLINE],
       filterByFormula: formula,
     });
     for (const r of records) {
@@ -213,6 +215,8 @@ async function pullBands(linkIds) {
       byId[r.id] = {
         name,
         url: atts && atts[0] ? atts[0].url : null,
+        bio: (r.fields[F_BIO] || '').trim(),
+        tagline: (r.fields[F_TAGLINE] || '').trim(),
       };
     }
   }
@@ -455,10 +459,15 @@ function renderEventHtml(e) {
   const hasTix = hasValidTicket(e.ticket);
   const locality = [e.city, e.state].filter(Boolean).join(', ');
   const title = `${e.artist}${e.venue ? ' · ' + e.venue : ''} | YourConcertTix`;
-  const ogDesc = [dateStr, e.venue, locality].filter(Boolean).join(' — ');
-  const descHtml = e.showInfo
-    ? `<p class="desc">${htmlesc(e.showInfo).replace(/\n/g, '<br>')}</p>`
+  // Prefer the performer bio for the social description; fall back to event facts.
+  const ogDesc = e.tagline
+    ? `${e.tagline} — ${[dateStr, e.venue].filter(Boolean).join(', ')}`
+    : (e.bio ? e.bio.replace(/\s+/g, ' ').slice(0, 160) : [dateStr, e.venue, locality].filter(Boolean).join(' — '));
+  // Description body: the bio is the real prose; Show Info is just a date string, so ignore it.
+  const descHtml = e.bio
+    ? `<div class="desc">${htmlesc(e.bio).split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}</div>`
     : '';
+  const taglineHtml = e.tagline ? `<p class="tagline">${htmlesc(e.tagline)}</p>` : '';
   const detailRows = [
     `<li><span>Date</span><strong>${htmlesc(dateStr)}</strong></li>`,
     e.showtime ? `<li><span>Time</span><strong>${htmlesc(e.showtime)}</strong></li>` : '',
@@ -498,8 +507,10 @@ a{color:inherit;text-decoration:none;}
 .photo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;text-align:center;padding:24px;font-size:26px;}
 .content{padding:20px;}
 .content h1{font-family:'Montserrat',sans-serif;font-size:26px;line-height:1.2;}
-.content .venue{color:var(--accent);font-weight:600;margin-top:4px;}
+.content .tagline{color:var(--text-muted);font-size:15px;font-style:italic;margin-top:4px;}
+.content .venue{color:var(--accent);font-weight:600;margin-top:6px;}
 .desc{color:var(--text-muted);font-size:15px;margin-top:14px;}
+.desc p+p{margin-top:10px;}
 .details{list-style:none;margin:16px 0;border-top:1px solid var(--card-border);}
 .details li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:14px;}
 .details li span{color:var(--text-muted);}
@@ -521,6 +532,7 @@ footer a:hover{color:var(--accent);}
     </div>
     <div class="content">
       <h1>${htmlesc(e.artist)}</h1>
+      ${taglineHtml}
       ${e.venue ? `<p class="venue">${htmlesc(e.venue)}</p>` : ''}
       ${descHtml}
       <ul class="details">
@@ -562,6 +574,8 @@ async function main() {
     e.artist = (band && band.name) || e.artistFromLookup || '';
     e.slug = slugify(e.artist);
     e.venue = (e.venueLinkId && venuesById[e.venueLinkId]) || '';
+    e.bio = (band && band.bio) || '';
+    e.tagline = (band && band.tagline) || '';
   }
   const usableEvents = events.filter(e => e.artist);
 
