@@ -601,19 +601,34 @@ function youtubeId(url) {
   return m ? m[1] : null;
 }
 
-// Render the promo video block shown under the Get Tickets button.
-// Embeds a responsive YouTube player when the URL is a recognizable YouTube
-// link; otherwise falls back to a plain "Watch Promo Video" link button.
-function promoVideoHtml(url) {
-  if (!url) return '';
-  const id = youtubeId(url);
-  if (id) {
-    return `<div class="promo-video">
-        <iframe src="https://www.youtube-nocookie.com/embed/${id}" title="Promo video"
+// Extract the numeric video id from common Vimeo URL forms
+// (vimeo.com/123, player.vimeo.com/video/123, channels/.../123). Returns null if not recognized.
+function vimeoId(url) {
+  if (!url) return null;
+  const m = String(url).match(
+    /(?:player\.)?vimeo\.com\/(?:video\/|channels\/[^/]+\/|groups\/[^/]+\/videos\/)?(\d+)/
+  );
+  return m ? m[1] : null;
+}
+
+// Wrap an embed src in the responsive 16:9 player container.
+function videoEmbed(src) {
+  return `<div class="promo-video">
+        <iframe src="${src}" title="Promo video"
           loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>`;
-  }
+}
+
+// Render the promo video block shown under the Get Tickets button.
+// Embeds a responsive YouTube or Vimeo player when the URL is recognizable;
+// otherwise falls back to a plain "Watch Promo Video" link button.
+function promoVideoHtml(url) {
+  if (!url) return '';
+  const yt = youtubeId(url);
+  if (yt) return videoEmbed(`https://www.youtube-nocookie.com/embed/${yt}`);
+  const vm = vimeoId(url);
+  if (vm) return videoEmbed(`https://player.vimeo.com/video/${vm}`);
   return `<a class="watch-promo" href="${htmlesc(url)}" target="_blank" rel="noopener">&#9654; Watch Promo Video</a>`;
 }
 
