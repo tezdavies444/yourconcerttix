@@ -44,6 +44,7 @@ const F_NAME     = 'fldLzk7pDCwNsBQob';
 const F_WEB_IMG  = 'fldmdmT8dvg45MLyn'; // Poster/Portrait (1:1, e.g. 1254x1254)
 const F_BIO      = 'fldZRMHNofVVU5S6J'; // "Copy" — performer bio / show description (longText)
 const F_TAGLINE  = 'fldTq2ehkhKtjfRUU'; // "Tagline" — short subtitle, e.g. "A Tribute to John Lennon"
+const F_PROMO_VIDEO = 'fldPzPlEyiezhUMrB'; // "Promo Video" — YouTube URL (url field)
 
 // Venues field IDs
 const F_VENUE_NAME = 'fldNt6WjlSP0tivQ2'; // primary field "Name" on VENUES (From CP)
@@ -215,7 +216,7 @@ async function pullBands(linkIds) {
   for (const chunk of chunks) {
     const formula = `OR(${chunk.map(id => `RECORD_ID()='${id}'`).join(',')})`;
     const records = await airtableListAll(BANDS_TABLE, {
-      fields: [F_NAME, F_WEB_IMG, F_BIO, F_TAGLINE],
+      fields: [F_NAME, F_WEB_IMG, F_BIO, F_TAGLINE, F_PROMO_VIDEO],
       filterByFormula: formula,
     });
     for (const r of records) {
@@ -226,6 +227,7 @@ async function pullBands(linkIds) {
         url: atts && atts[0] ? atts[0].url : null,
         bio: (r.fields[F_BIO] || '').trim(),
         tagline: (r.fields[F_TAGLINE] || '').trim(),
+        promoVideo: (r.fields[F_PROMO_VIDEO] || '').trim(),
       };
     }
   }
@@ -537,6 +539,10 @@ a{color:inherit;text-decoration:none;}
 .get-tickets{display:block;background:var(--accent);color:#fff;text-align:center;padding:16px;border-radius:10px;font-weight:700;font-size:18px;font-family:'Montserrat',sans-serif;}
 .get-tickets:hover{background:#ff5872;}
 .get-tickets.disabled{background:var(--card-border);color:var(--text-muted);cursor:default;}
+.promo-video{margin-top:14px;position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;}
+.promo-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.watch-promo{display:block;margin-top:12px;background:var(--card-border);color:var(--text);text-align:center;padding:14px;border-radius:10px;font-weight:600;font-size:15px;}
+.watch-promo:hover{color:var(--accent);}
 footer{text-align:center;padding:20px;color:var(--text-muted);font-size:13px;}
 footer a:hover{color:var(--accent);}
 </style>
@@ -558,6 +564,7 @@ footer a:hover{color:var(--accent);}
         ${detailRows}
       </ul>
       ${cta}
+      ${promoVideoHtml(e.promoVideo)}
     </div>
   </article>
 </main>
@@ -584,6 +591,32 @@ function htmlesc(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// Extract the 11-char video id from common YouTube URL forms
+// (watch?v=, youtu.be/, /embed/, /shorts/, /live/). Returns null if not recognized.
+function youtubeId(url) {
+  if (!url) return null;
+  const m = String(url).match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+  );
+  return m ? m[1] : null;
+}
+
+// Render the promo video block shown under the Get Tickets button.
+// Embeds a responsive YouTube player when the URL is a recognizable YouTube
+// link; otherwise falls back to a plain "Watch Promo Video" link button.
+function promoVideoHtml(url) {
+  if (!url) return '';
+  const id = youtubeId(url);
+  if (id) {
+    return `<div class="promo-video">
+        <iframe src="https://www.youtube-nocookie.com/embed/${id}" title="Promo video"
+          loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>`;
+  }
+  return `<a class="watch-promo" href="${htmlesc(url)}" target="_blank" rel="noopener">&#9654; Watch Promo Video</a>`;
+}
+
 // ---- Main ----
 
 async function main() {
@@ -608,6 +641,7 @@ async function main() {
     e.venue = (e.venueLinkId && venuesById[e.venueLinkId]) || '';
     e.bio = (band && band.bio) || '';
     e.tagline = (band && band.tagline) || '';
+    e.promoVideo = (band && band.promoVideo) || '';
   }
   const usableEvents = events.filter(e => e.artist);
 
