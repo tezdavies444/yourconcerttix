@@ -38,6 +38,10 @@ const F_STATE         = 'fldTn8sdmJ4UbPX5x'; // lookup → singleSelect {name,..
 const F_VENUE_LINK    = 'fldWNKIABxBYUyX0A'; // multipleRecordLinks → VENUES (From CP)
 const F_VENUE_ADDR    = 'fldv6kMv0wmhrpLql'; // "Venue Location" formula → full address string
 const F_PLATFORM      = 'fldczQJUGFvhg2NrC'; // lookup → multipleSelects
+const F_YCT_LINK      = 'fld2j6LeVomGaGCPP'; // "YCT Link" (url) — public event page URL, written back by this script
+
+// Public origin of the deployed site. Event pages live at `${SITE_ORIGIN}/events/<id>/`.
+const SITE_ORIGIN = 'https://yourconcerttix.com';
 
 // Bands field IDs
 const F_NAME     = 'fldLzk7pDCwNsBQob';
@@ -130,6 +134,26 @@ async function airtableListAll(tableId, { fields = [], filterByFormula = null, s
     offset = data.offset;
   } while (offset);
   return records;
+}
+
+// PATCH records in batches of 10 (Airtable's per-request limit). Each record is
+// { id, fields: { <fieldId>: value } }. Field IDs are used (returnFieldsByFieldId).
+async function airtableUpdate(tableId, records) {
+  for (let i = 0; i < records.length; i += 10) {
+    const batch = records.slice(i, i + 10);
+    const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${tableId}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_PAT}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ records: batch, returnFieldsByFieldId: true }),
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Airtable PATCH ${tableId} ${res.status}: ${body.slice(0, 400)}`);
+    }
+  }
 }
 
 // ---- Value extractors ----
@@ -632,6 +656,49 @@ function promoVideoHtml(url) {
   return `<a class="watch-promo" href="${htmlesc(url)}" target="_blank" rel="noopener">&#9654; Watch Promo Video</a>`;
 }
 
+// ---- Write the public event URL back into each CURRENT EVENTS record ----
+//
+// Keeps the "YCT Link" field in sync with what's actually on the site:
+//   - events currently live get their `${SITE_ORIGIN}/events/<id>/` URL
+//   - events that have a stored link but are no longer live get it cleared
+// Only diffs are written, so steady-state runs make zero changes. Failures here
+// (e.g. a read-only PAT) are reported but never abort the site build.
+async function syncYctLinks(usableEvents) {
+  const desired = new Map(); // recordId -> url
+  for (const e of usableEvents) {
+    if (e.recordId && e.id) desired.set(e.recordId, `${SITE_ORIGIN}/events/${e.id}/`);
+  }
+
+  // Records that currently hold a YCT Link, so we know what to update or clear.
+  const existing = await airtableListAll(EVENTS_TABLE, {
+    fields: [F_YCT_LINK],
+    filterByFormula: `NOT({YCT Link}='')`,
+  });
+  const current = new Map(); // recordId -> stored url
+  for (const r of existing) current.set(r.id, r.fields[F_YCT_LINK] || '');
+
+  const toWrite = [];
+  for (const [recordId, url] of desired) {
+    if (current.get(recordId) !== url) toWrite.push({ id: recordId, fields: { [F_YCT_LINK]: url } });
+  }
+  const toClear = [];
+  for (const recordId of current.keys()) {
+    if (!desired.has(recordId)) toClear.push({ id: recordId, fields: { [F_YCT_LINK]: '' } });
+  }
+
+  const updates = [...toWrite, ...toClear];
+  if (DRY_RUN) {
+    console.log(`[DRY RUN] YCT Link: would set ${toWrite.length}, clear ${toClear.length} (${desired.size} live events)`);
+    return;
+  }
+  if (updates.length === 0) {
+    console.log(`YCT Link: already in sync (${desired.size} live events).`);
+    return;
+  }
+  await airtableUpdate(EVENTS_TABLE, updates);
+  console.log(`YCT Link: set ${toWrite.length}, cleared ${toClear.length} (${desired.size} live events).`);
+}
+
 // ---- Main ----
 
 async function main() {
@@ -692,6 +759,15 @@ async function main() {
       writeFileSync(path.join(dir, 'index.html'), renderEventHtml(e));
     }
     console.log(`Wrote ${usableEvents.length} event pages under ${eventsDir}/`);
+  }
+
+  // Write each live event's public URL back into Airtable ("YCT Link"). Isolated
+  // so a write-permission error (read-only PAT) logs a warning without failing.
+  try {
+    await syncYctLinks(usableEvents);
+  } catch (e) {
+    console.warn(`WARNING: YCT Link write-back skipped — ${e.message}`);
+    console.warn('  (the AIRTABLE_PAT likely needs the data.records:write scope)');
   }
 
   console.log('\nSummary:');
