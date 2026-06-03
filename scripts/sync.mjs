@@ -57,8 +57,16 @@ const SLUG_FIXES = {
   "Britain's Finest": 'britains-finest',
   'Britain\u2019s Finest': 'britains-finest',
   'THE MOODY BLUES TRIBUTE - GO NOW!': 'the-moody-blues-tribute--go-now',
-  'Yachtzilla - The Monsters of Soft Rock': 'yachtzilla--the-monsters-of-soft-rock',
 };
+
+// Acts to suppress from the public site. Their records stay in Airtable
+// (booking history is preserved) but they are never published to the site.
+// Matched case-insensitively as a substring of the resolved artist name.
+const EXCLUDED_ARTISTS = ['yachtzilla'];
+function isExcludedArtist(name) {
+  const n = (name || '').toLowerCase();
+  return EXCLUDED_ARTISTS.some(x => n.includes(x));
+}
 
 function slugify(name) {
   if (!name) return '';
@@ -725,7 +733,7 @@ async function main() {
     e.tagline = (band && band.tagline) || '';
     e.promoVideo = (band && band.promoVideo) || '';
   }
-  const usableEvents = events.filter(e => e.artist);
+  const usableEvents = events.filter(e => e.artist && !isExcludedArtist(e.artist));
 
   // Give each event a stable, unique URL id (artist slug + date, de-duplicated
   // when the same act plays the same day at more than one venue).
