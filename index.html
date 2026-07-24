@@ -79,7 +79,7 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
 </div>
 <header>
   <h1>Your<span class="accent">Concert</span>Tix</h1>
-  <div class="count">178 upcoming shows</div>
+  <div class="count">184 upcoming shows</div>
 </header>
 <div class="hero">
   <h2>Find Live Shows Near You</h2>
@@ -89,11 +89,13 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
   <input id="q" type="search" placeholder="Search artist, venue, or city...">
   <select id="state">
     <option value="">All states</option>
+    <option value="AR">AR</option>
     <option value="AZ">AZ</option>
     <option value="CA">CA</option>
     <option value="FL">FL</option>
     <option value="IL">IL</option>
     <option value="NC">NC</option>
+    <option value="NJ">NJ</option>
     <option value="NV">NV</option>
     <option value="PA">PA</option>
     <option value="VA">VA</option>
@@ -106,45 +108,6 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
 <script>
 const PHOTO_BASE = '/artist-photos/';
 const events = [
-  {
-    "artist": "The Bad Co. Experience",
-    "ticket": "https://gaslightmusichall.csstix.com/event-details.php?e=1066",
-    "date": "2026-07-23",
-    "showtime": "6:00 PM",
-    "city": "Tucson",
-    "state": "AZ",
-    "venue": "Gaslight Music Hall",
-    "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
-    "platform": "",
-    "slug": "the-bad-co-experience",
-    "id": "the-bad-co-experience-2026-07-23"
-  },
-  {
-    "artist": "Spouse Whisperer",
-    "ticket": "https://N/A",
-    "date": "2026-07-23",
-    "showtime": "6:30 PM",
-    "city": "Show Low",
-    "state": "AZ",
-    "venue": "Venture In RV Resort",
-    "address": "270 N Clark Rd, Show Low, AZ 85901",
-    "platform": "FanGenie",
-    "slug": "spouse-whisperer",
-    "id": "spouse-whisperer-2026-07-23"
-  },
-  {
-    "artist": "Rock Revisited",
-    "ticket": "https://brtstage.org/shows/rock-revisited/",
-    "date": "2026-07-23",
-    "showtime": "7:30 PM",
-    "city": " Bristol",
-    "state": "PA",
-    "venue": "Bristol Riverside Theatre",
-    "address": "120 Radcliffe St,  Bristol, PA 19007",
-    "platform": "",
-    "slug": "rock-revisited",
-    "id": "rock-revisited-2026-07-23"
-  },
   {
     "artist": "Rock Revisited",
     "ticket": "https://brtstage.org/shows/rock-revisited/",
@@ -250,6 +213,19 @@ const events = [
     "id": "springsteen-born-to-run-2026-08-01"
   },
   {
+    "artist": "Margaritas In Paradise",
+    "ticket": "https://www.etix.com/ticket/p/97973486/margaritas-in-paradise-jimmy-buffet-tribute-band-730-pm-8326-banner-elk-forum-at-leesmcrae-college",
+    "date": "2026-08-03",
+    "showtime": "5:00 pm & 7:30 pm ",
+    "city": "Banner Elk",
+    "state": "NC",
+    "venue": "Lees-McRae\n  Community College",
+    "address": "191   Main St     PO Box 128, Banner Elk, NC 28604",
+    "platform": "",
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2026-08-03"
+  },
+  {
     "artist": "Ultimate Bon Jovi",
     "ticket": "https://www.dvpac.net/tix/ultimate-bon-jovi",
     "date": "2026-08-08",
@@ -261,6 +237,19 @@ const events = [
     "platform": "",
     "slug": "ultimate-bon-jovi",
     "id": "ultimate-bon-jovi-2026-08-08"
+  },
+  {
+    "artist": "FanGenie Only",
+    "ticket": "https://app.fangenie.com/downtown-grand-hotel-casino/yachtzilla---monsters-of-soft-rock/Byk2aZyFxY",
+    "date": "2026-08-08",
+    "showtime": "8:00 PM",
+    "city": "Las Vegas",
+    "state": "NV",
+    "venue": "Downtown Grand Hotel & Casino - NV",
+    "address": "206 N. 3rd St., Las Vegas, NV 89101",
+    "platform": "FanGenie",
+    "slug": "fangenie-only",
+    "id": "fangenie-only-2026-08-08"
   },
   {
     "artist": "TOBY",
@@ -354,7 +343,7 @@ const events = [
     "id": "ultimate-carrie-2026-08-22"
   },
   {
-    "artist": "FlashPants",
+    "artist": "FanGenie Only",
     "ticket": "https://app.fangenie.com/downtown-grand-hotel-casino/flashpants---80s-party-band/R0gRzxIHk8",
     "date": "2026-08-22",
     "showtime": "8:00 PM",
@@ -363,8 +352,8 @@ const events = [
     "venue": "Downtown Grand Hotel & Casino - NV",
     "address": "206 N. 3rd St., Las Vegas, NV 89101",
     "platform": "FanGenie",
-    "slug": "flashpants",
-    "id": "flashpants-2026-08-22"
+    "slug": "fangenie-only",
+    "id": "fangenie-only-2026-08-22"
   },
   {
     "artist": "The She Gees",
@@ -601,6 +590,19 @@ const events = [
     "id": "the-big-easy-live-2026-09-14"
   },
   {
+    "artist": "Dementia Man - An Existential Journey",
+    "ticket": "https://www.grunincenter.org/booking/?instance_id=44401",
+    "date": "2026-09-16",
+    "showtime": "10:00 AM",
+    "city": "Toms River, NJ ",
+    "state": "NJ",
+    "venue": "Grunin Center for the Arts",
+    "address": "College Drive Toms River, NJ 08754, Toms River, NJ , NJ 08754",
+    "platform": "",
+    "slug": "dementia-man-an-existential-journey",
+    "id": "dementia-man-an-existential-journey-2026-09-16"
+  },
+  {
     "artist": "Fly Like An Eagle",
     "ticket": "https://www.dvpac.net/tix/fly-like-an-eagle",
     "date": "2026-09-16",
@@ -664,6 +666,19 @@ const events = [
     "platform": "",
     "slug": "toby",
     "id": "toby-2026-09-24"
+  },
+  {
+    "artist": "Dementia Man - An Existential Journey",
+    "ticket": "https://Private Event",
+    "date": "2026-09-24",
+    "showtime": "7:30pm",
+    "city": "North Little Rock",
+    "state": "AR",
+    "venue": "ACANSA Arts Festival of the South",
+    "address": "413A Main Street, North Little Rock, AR 72114",
+    "platform": "",
+    "slug": "dementia-man-an-existential-journey",
+    "id": "dementia-man-an-existential-journey-2026-09-24"
   },
   {
     "artist": "TOBY",
@@ -1017,6 +1032,19 @@ const events = [
     "id": "piano-men-generations-2026-11-02"
   },
   {
+    "artist": "Dementia Man - An Existential Journey",
+    "ticket": "https://Private Event",
+    "date": "2026-11-05",
+    "showtime": "10:00am and 4:00pm",
+    "city": "Sarasota",
+    "state": "FL",
+    "venue": "Plymouth Harbor on Sarasota Bay",
+    "address": "700 John Ringling Blvd, Sarasota, FL 34236",
+    "platform": "",
+    "slug": "dementia-man-an-existential-journey",
+    "id": "dementia-man-an-existential-journey-2026-11-05"
+  },
+  {
     "artist": "A Lennon Legacy",
     "ticket": "https://app.fangenie.com/pueblo-el-mirage/a-lennon-legacy/bcCgGOCxUT",
     "date": "2026-11-06",
@@ -1199,6 +1227,19 @@ const events = [
     "id": "toby-2026-11-30"
   },
   {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "https://Not yet up for sale.",
+    "date": "2026-12-02",
+    "showtime": "4:00pm",
+    "city": "The Villages ",
+    "state": "FL",
+    "venue": "The Savannah Center",
+    "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-02"
+  },
+  {
     "artist": "Abba Holly Jolly Christmas",
     "ticket": "https://www.azbroadway.org/shows/abba-holly-jolly-christmas",
     "date": "2026-12-07",
@@ -1290,6 +1331,19 @@ const events = [
     "id": "country-christmas-2026-12-19"
   },
   {
+    "artist": "Rocky Mountain Christmas",
+    "ticket": "https://Private Event",
+    "date": "2026-12-21",
+    "showtime": "2:00pm & 7:00pm ",
+    "city": "Willow Street",
+    "state": "PA",
+    "venue": "Willow Valley Communities",
+    "address": "900 Willow Valley Lakes Dr., Willow Street, PA 17584",
+    "platform": "",
+    "slug": "rocky-mountain-christmas",
+    "id": "rocky-mountain-christmas-2026-12-21"
+  },
+  {
     "artist": "Sleigh Bells Swing",
     "ticket": "https://www.azbroadway.org/shows/sleigh-bells-swing",
     "date": "2026-12-21",
@@ -1379,6 +1433,19 @@ const events = [
     "platform": "",
     "slug": "the-lionel-richie-songbook",
     "id": "the-lionel-richie-songbook-2027-01-08"
+  },
+  {
+    "artist": "The Dionne Legacy",
+    "ticket": "https://Private Event",
+    "date": "2027-01-08",
+    "showtime": "7:00pm",
+    "city": "Winter Haven",
+    "state": "FL",
+    "venue": "The Ritz Winter Haven",
+    "address": "263 West Central Avenue, Winter Haven, FL 33880",
+    "platform": "",
+    "slug": "the-dionne-legacy",
+    "id": "the-dionne-legacy-2027-01-08"
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1665,6 +1732,19 @@ const events = [
     "platform": "",
     "slug": "december-63",
     "id": "december-63-2027-02-01"
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "https://theatrewinterhaven.com/event/piano-men-generations/",
+    "date": "2027-02-03",
+    "showtime": "7:00pm",
+    "city": "Winter Haven",
+    "state": "FL",
+    "venue": "The Ritz Winter Haven",
+    "address": "263 West Central Avenue, Winter Haven, FL 33880",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-02-03"
   },
   {
     "artist": "One Of These Nights",
