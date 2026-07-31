@@ -59,6 +59,7 @@ header .count { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
 .card-body .cta a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
 .card-body .cta a.get { background: var(--accent); color: white; }
 .card-body .cta a.get:hover { background: #ff5872; }
+.card-body .cta span.get.disabled { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; background: var(--card-border); color: var(--text-muted); cursor: default; }
 .card-body .cta a.details { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
 .card-body .cta a.details:hover { border-color: var(--accent); color: var(--accent); }
 .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
@@ -79,7 +80,7 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
 </div>
 <header>
   <h1>Your<span class="accent">Concert</span>Tix</h1>
-  <div class="count">186 upcoming shows</div>
+  <div class="count">364 upcoming shows</div>
 </header>
 <div class="hero">
   <h2>Find Live Shows Near You</h2>
@@ -89,18 +90,27 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
   <input id="q" type="search" placeholder="Search artist, venue, or city...">
   <select id="state">
     <option value="">All states</option>
-    <option value="AR">AR</option>
     <option value="AZ">AZ</option>
     <option value="CA">CA</option>
+    <option value="CO">CO</option>
     <option value="FL">FL</option>
+    <option value="IA">IA</option>
     <option value="IL">IL</option>
+    <option value="KS">KS</option>
+    <option value="MN">MN</option>
+    <option value="MT">MT</option>
     <option value="NC">NC</option>
+    <option value="ND">ND</option>
+    <option value="NE">NE</option>
     <option value="NJ">NJ</option>
     <option value="NV">NV</option>
+    <option value="OK">OK</option>
     <option value="PA">PA</option>
+    <option value="SD">SD</option>
     <option value="TX">TX</option>
     <option value="VA">VA</option>
     <option value="WI">WI</option>
+    <option value="WY">WY</option>
   </select>
   <button id="clear">Clear</button>
 </div>
@@ -109,6 +119,20 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
 <script>
 const PHOTO_BASE = '/artist-photos/';
 const events = [
+  {
+    "artist": "The K-Tel All Stars",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-07-31",
+    "showtime": "7:00 PM",
+    "city": "Henderson",
+    "state": "NV",
+    "venue": "Sun City Anthem (NV)",
+    "address": "2450 Hampton Rd. , Henderson, NV 89052",
+    "platform": "",
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2026-07-31",
+    "hasTix": false
+  },
   {
     "artist": "Corrie Sachs is Reba",
     "ticket": "https://app.arts-people.com/?show=343814",
@@ -120,7 +144,8 @@ const events = [
     "address": "2215 Thomas W Ryan Blvd, Las Vegas, NV 89134",
     "platform": "",
     "slug": "corrie-sachs-is-reba",
-    "id": "corrie-sachs-is-reba-2026-08-01"
+    "id": "corrie-sachs-is-reba-2026-08-01",
+    "hasTix": true
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -133,7 +158,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "springsteen-born-to-run",
-    "id": "springsteen-born-to-run-2026-08-01"
+    "id": "springsteen-born-to-run-2026-08-01",
+    "hasTix": true
   },
   {
     "artist": "Margaritas In Paradise",
@@ -146,7 +172,50 @@ const events = [
     "address": "191   Main St     PO Box 128, Banner Elk, NC 28604",
     "platform": "",
     "slug": "margaritas-in-paradise",
-    "id": "margaritas-in-paradise-2026-08-03"
+    "id": "margaritas-in-paradise-2026-08-03",
+    "hasTix": true
+  },
+  {
+    "artist": "American Highwaymen",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-07",
+    "showtime": "7:00 PM",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2026-08-07",
+    "hasTix": false
+  },
+  {
+    "artist": "Return To Woodstock",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-07",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "return-to-woodstock",
+    "id": "return-to-woodstock-2026-08-07",
+    "hasTix": false
+  },
+  {
+    "artist": "American Highwaymen",
+    "ticket": "N/A",
+    "date": "2026-08-08",
+    "showtime": "7:00 PM",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2026-08-08",
+    "hasTix": false
   },
   {
     "artist": "Ultimate Bon Jovi",
@@ -159,7 +228,8 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "ultimate-bon-jovi",
-    "id": "ultimate-bon-jovi-2026-08-08"
+    "id": "ultimate-bon-jovi-2026-08-08",
+    "hasTix": true
   },
   {
     "artist": "TOBY",
@@ -172,7 +242,50 @@ const events = [
     "address": "7847 North Mockingbird Ln., Scottsdale, AZ 85253",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-08-08"
+    "id": "toby-2026-08-08",
+    "hasTix": false
+  },
+  {
+    "artist": "Members Only",
+    "ticket": "N/A",
+    "date": "2026-08-14",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "members-only",
+    "id": "members-only-2026-08-14",
+    "hasTix": false
+  },
+  {
+    "artist": "The Jack",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-14",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "the-jack",
+    "id": "the-jack-2026-08-14",
+    "hasTix": false
+  },
+  {
+    "artist": "Return To Woodstock",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-15",
+    "showtime": "7:00pm",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "return-to-woodstock",
+    "id": "return-to-woodstock-2026-08-15",
+    "hasTix": false
   },
   {
     "artist": "Matt Johnson",
@@ -185,7 +298,22 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "matt-johnson",
-    "id": "matt-johnson-2026-08-15"
+    "id": "matt-johnson-2026-08-15",
+    "hasTix": true
+  },
+  {
+    "artist": "Hearts Desire",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-15",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "hearts-desire",
+    "id": "hearts-desire-2026-08-15",
+    "hasTix": false
   },
   {
     "artist": "Matt Johnson",
@@ -198,7 +326,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "matt-johnson",
-    "id": "matt-johnson-2026-08-16"
+    "id": "matt-johnson-2026-08-16",
+    "hasTix": true
   },
   {
     "artist": "Kevin Farley ",
@@ -211,7 +340,8 @@ const events = [
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
     "slug": "kevin-farley",
-    "id": "kevin-farley-2026-08-19"
+    "id": "kevin-farley-2026-08-19",
+    "hasTix": true
   },
   {
     "artist": "Ultimate Carrie",
@@ -224,7 +354,8 @@ const events = [
     "address": "1911 Juniper Ridge Resort, Show Low, AZ 85901",
     "platform": "",
     "slug": "ultimate-carrie",
-    "id": "ultimate-carrie-2026-08-21"
+    "id": "ultimate-carrie-2026-08-21",
+    "hasTix": false
   },
   {
     "artist": "Ultimate Carrie",
@@ -237,7 +368,36 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "ultimate-carrie",
-    "id": "ultimate-carrie-2026-08-22"
+    "id": "ultimate-carrie-2026-08-22",
+    "hasTix": true
+  },
+  {
+    "artist": "AbbaFab",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-25",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "abbafab",
+    "id": "abbafab-2026-08-25",
+    "hasTix": false
+  },
+  {
+    "artist": "American Highwaymen",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-08-28",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2026-08-28",
+    "hasTix": false
   },
   {
     "artist": "Members Only",
@@ -250,7 +410,36 @@ const events = [
     "address": "17300 N Sun Village Pkwy, Surprise, AZ 85374",
     "platform": "Purple Pass",
     "slug": "members-only",
-    "id": "members-only-2026-08-28"
+    "id": "members-only-2026-08-28",
+    "hasTix": true
+  },
+  {
+    "artist": "Magic Of Manilow",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-03",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2026-09-03",
+    "hasTix": false
+  },
+  {
+    "artist": "Magic Of Manilow",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-04",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2026-09-04",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -263,7 +452,22 @@ const events = [
     "address": "1911 Juniper Ridge Resort, Show Low, AZ 85901",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2026-09-04"
+    "id": "voyager-2026-09-04",
+    "hasTix": false
+  },
+  {
+    "artist": "Magic Of Manilow",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-05",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2026-09-05",
+    "hasTix": false
   },
   {
     "artist": "Honky Tonk Man",
@@ -276,7 +480,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2026-09-05"
+    "id": "honky-tonk-man-2026-09-05",
+    "hasTix": true
   },
   {
     "artist": "Magic Of Manilow",
@@ -289,7 +494,8 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "magic-of-manilow",
-    "id": "magic-of-manilow-2026-09-09"
+    "id": "magic-of-manilow-2026-09-09",
+    "hasTix": true
   },
   {
     "artist": "Ghost In The Machine",
@@ -302,7 +508,22 @@ const events = [
     "address": "17300 N Sun Village Pkwy, Surprise, AZ 85374",
     "platform": "Purple Pass",
     "slug": "ghost-in-the-machine",
-    "id": "ghost-in-the-machine-2026-09-09"
+    "id": "ghost-in-the-machine-2026-09-09",
+    "hasTix": true
+  },
+  {
+    "artist": "Magic Of Manilow",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-10",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2026-09-10",
+    "hasTix": false
   },
   {
     "artist": "The Kings of Queen",
@@ -315,7 +536,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "the-kings-of-queen",
-    "id": "the-kings-of-queen-2026-09-10"
+    "id": "the-kings-of-queen-2026-09-10",
+    "hasTix": true
   },
   {
     "artist": "The Kings of Queen",
@@ -328,7 +550,22 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "the-kings-of-queen",
-    "id": "the-kings-of-queen-2026-09-11"
+    "id": "the-kings-of-queen-2026-09-11",
+    "hasTix": true
+  },
+  {
+    "artist": "Ghost In The Machine",
+    "ticket": "N/A",
+    "date": "2026-09-11",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "ghost-in-the-machine",
+    "id": "ghost-in-the-machine-2026-09-11",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -341,7 +578,8 @@ const events = [
     "address": "33157 Camino Capistrano, San Juan Capistrano, CA 92675",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-09-12"
+    "id": "piano-men-generations-2026-09-12",
+    "hasTix": true
   },
   {
     "artist": "The Kings of Queen",
@@ -354,7 +592,8 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "the-kings-of-queen",
-    "id": "the-kings-of-queen-2026-09-12"
+    "id": "the-kings-of-queen-2026-09-12",
+    "hasTix": true
   },
   {
     "artist": "One Of These Nights",
@@ -367,7 +606,8 @@ const events = [
     "address": "17300 N Sun Village Pkwy, Surprise, AZ 85374",
     "platform": "Purple Pass",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2026-09-12"
+    "id": "one-of-these-nights-2026-09-12",
+    "hasTix": true
   },
   {
     "artist": "Piano Men: Generations",
@@ -380,7 +620,8 @@ const events = [
     "address": " 1010 Ulatis Dr, Vacaville, CA  95687",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-09-13"
+    "id": "piano-men-generations-2026-09-13",
+    "hasTix": true
   },
   {
     "artist": "The Big Easy Live",
@@ -393,7 +634,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "the-big-easy-live",
-    "id": "the-big-easy-live-2026-09-13"
+    "id": "the-big-easy-live-2026-09-13",
+    "hasTix": true
   },
   {
     "artist": "The Big Easy Live",
@@ -406,7 +648,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "the-big-easy-live",
-    "id": "the-big-easy-live-2026-09-14"
+    "id": "the-big-easy-live-2026-09-14",
+    "hasTix": true
   },
   {
     "artist": "Dementia Man - An Existential Journey",
@@ -419,7 +662,8 @@ const events = [
     "address": "College Drive Toms River, NJ 08754, Toms River, NJ , NJ 08754",
     "platform": "",
     "slug": "dementia-man-an-existential-journey",
-    "id": "dementia-man-an-existential-journey-2026-09-16"
+    "id": "dementia-man-an-existential-journey-2026-09-16",
+    "hasTix": true
   },
   {
     "artist": "Fly Like An Eagle",
@@ -432,7 +676,22 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "fly-like-an-eagle",
-    "id": "fly-like-an-eagle-2026-09-16"
+    "id": "fly-like-an-eagle-2026-09-16",
+    "hasTix": true
+  },
+  {
+    "artist": "One Of These Nights",
+    "ticket": "N/A",
+    "date": "2026-09-18",
+    "showtime": "3:00 PM and 7:00 PM",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2026-09-18",
+    "hasTix": false
   },
   {
     "artist": "Sharon Owens",
@@ -445,7 +704,22 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "sharon-owens",
-    "id": "sharon-owens-2026-09-19"
+    "id": "sharon-owens-2026-09-19",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-09-22",
+    "showtime": "7:00",
+    "city": "Dickinson",
+    "state": "ND",
+    "venue": "Dickinson State University - Stickney Auditorium May Hall",
+    "address": "291 Campus Dr, Dickinson, ND 58601",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-09-22",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -458,7 +732,8 @@ const events = [
     "address": "1650 S Casino Dr, Laughlin, NV 89029",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-09-23"
+    "id": "toby-2026-09-23",
+    "hasTix": true
   },
   {
     "artist": "Piano Men: Generations",
@@ -471,7 +746,22 @@ const events = [
     "address": "150 West Main Street, Washington, NC 27889",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-09-24"
+    "id": "piano-men-generations-2026-09-24",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-09-24",
+    "showtime": "7:00",
+    "city": "Rock Springs",
+    "state": "WY",
+    "venue": "Broadway Theater - Rock Springs",
+    "address": "618 Broadway St, Rock Springs, WY 82901",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-09-24",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -484,20 +774,36 @@ const events = [
     "address": "1650 S Casino Dr, Laughlin, NV 89029",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-09-24"
+    "id": "toby-2026-09-24",
+    "hasTix": true
   },
   {
-    "artist": "Dementia Man - An Existential Journey",
-    "ticket": "https://Private Event",
-    "date": "2026-09-24",
-    "showtime": "7:30pm",
-    "city": "North Little Rock",
-    "state": "AR",
-    "venue": "ACANSA Arts Festival of the South",
-    "address": "413A Main Street, North Little Rock, AR 72114",
-    "platform": "",
-    "slug": "dementia-man-an-existential-journey",
-    "id": "dementia-man-an-existential-journey-2026-09-24"
+    "artist": "A Lennon Legacy",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-25",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "a-lennon-legacy",
+    "id": "a-lennon-legacy-2026-09-25",
+    "hasTix": false
+  },
+  {
+    "artist": "Five Way Street",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-25",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "five-way-street",
+    "id": "five-way-street-2026-09-25",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -510,7 +816,36 @@ const events = [
     "address": "1650 S Casino Dr, Laughlin, NV 89029",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-09-25"
+    "id": "toby-2026-09-25",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-09-26",
+    "showtime": "7:00",
+    "city": "Lamar",
+    "state": "CO",
+    "venue": "Lamar High School Auditorium",
+    "address": "1900 S 11th St, Lamar, CO 81052",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-09-26",
+    "hasTix": false
+  },
+  {
+    "artist": "A Lennon Legacy",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-09-26",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "a-lennon-legacy",
+    "id": "a-lennon-legacy-2026-09-26",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -523,7 +858,8 @@ const events = [
     "address": "510 Main St, Clifton Forge, VA 24422",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-09-26"
+    "id": "piano-men-generations-2026-09-26",
+    "hasTix": true
   },
   {
     "artist": "TOBY",
@@ -536,7 +872,22 @@ const events = [
     "address": "1650 S Casino Dr, Laughlin, NV 89029",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-09-26"
+    "id": "toby-2026-09-26",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-09-27",
+    "showtime": "3:00",
+    "city": "Colby",
+    "state": "KS",
+    "venue": "Colby Community College",
+    "address": " 1255 S. Range, Colby, KS 67701",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-09-27",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -549,7 +900,64 @@ const events = [
     "address": "1650 S Casino Dr, Laughlin, NV 89029",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-09-27"
+    "id": "toby-2026-09-27",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-09-29",
+    "showtime": "7:00",
+    "city": "Yankton",
+    "state": "SD",
+    "venue": "Yankton High School Theatre",
+    "address": "1801 Summit St., Yankton, SD 57078",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-09-29",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-01",
+    "showtime": "7:00",
+    "city": "Warroad",
+    "state": "MN",
+    "venue": "Warroad River Place",
+    "address": "103 State Ave, Warroad, MN 56763",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-01",
+    "hasTix": false
+  },
+  {
+    "artist": "TOBY",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-02",
+    "showtime": "6:00pm",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "toby",
+    "id": "toby-2026-10-02",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-02",
+    "showtime": "7:00",
+    "city": "Wadena",
+    "state": "MN",
+    "venue": "Memorial Auditorium - Wadena, MN",
+    "address": "216 Dayton Ave SW, Wadena, MN 56482",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-02",
+    "hasTix": false
   },
   {
     "artist": "Modern Love",
@@ -562,7 +970,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "modern-love",
-    "id": "modern-love-2026-10-02"
+    "id": "modern-love-2026-10-02",
+    "hasTix": false
+  },
+  {
+    "artist": "Ultimate Bon Jovi",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-03",
+    "showtime": "6:00 PM",
+    "city": "Queen Creek",
+    "state": "AZ",
+    "venue": "Encanterra Country Club",
+    "address": "36460 N Encanterra Drive, Queen Creek, AZ 85140",
+    "platform": "",
+    "slug": "ultimate-bon-jovi",
+    "id": "ultimate-bon-jovi-2026-10-03",
+    "hasTix": false
   },
   {
     "artist": "56tees",
@@ -575,7 +998,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "56tees",
-    "id": "56tees-2026-10-03"
+    "id": "56tees-2026-10-03",
+    "hasTix": true
   },
   {
     "artist": "Honky Tonk Man",
@@ -588,7 +1012,22 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2026-10-03"
+    "id": "honky-tonk-man-2026-10-03",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-04",
+    "showtime": "3:00",
+    "city": "Sauk Centre",
+    "state": "MN",
+    "venue": "Sauk Centre Schools Auditorium",
+    "address": "903 State Rd, Sauk Centre, MN 56378",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-04",
+    "hasTix": false
   },
   {
     "artist": "American Highwaymen",
@@ -601,7 +1040,22 @@ const events = [
     "address": "510 Centerville Rd,, Lancaster, PA 17601",
     "platform": "",
     "slug": "american-highwaymen",
-    "id": "american-highwaymen-2026-10-05"
+    "id": "american-highwaymen-2026-10-05",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-05",
+    "showtime": "3:00 & 7:00",
+    "city": "Algona",
+    "state": "IA",
+    "venue": "Ed & Betty Wilcox Performing Arts Center",
+    "address": "715 S Sample St., Algona, IA 50511",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-05",
+    "hasTix": false
   },
   {
     "artist": "American Highwaymen",
@@ -614,7 +1068,22 @@ const events = [
     "address": "510 Centerville Rd,, Lancaster, PA 17601",
     "platform": "",
     "slug": "american-highwaymen",
-    "id": "american-highwaymen-2026-10-06"
+    "id": "american-highwaymen-2026-10-06",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-06",
+    "showtime": "7:00",
+    "city": "Tomah",
+    "state": "WI",
+    "venue": "Tomah Senior High School Auditorium",
+    "address": "901 Lincoln Ave, Tomah, WI 54660",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-06",
+    "hasTix": false
   },
   {
     "artist": "Jeri Sager",
@@ -627,7 +1096,22 @@ const events = [
     "address": "39900 S Clubhouse Dr, Tucson, AZ 85739",
     "platform": "",
     "slug": "jeri-sager",
-    "id": "jeri-sager-2026-10-07"
+    "id": "jeri-sager-2026-10-07",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-07",
+    "showtime": "7:00",
+    "city": "Minocqua",
+    "state": "WI",
+    "venue": "Lakeland Union HS Theater",
+    "address": "9573 Hwy 70 W, Minocqua, WI 54548",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-07",
+    "hasTix": false
   },
   {
     "artist": "Almost Folsom",
@@ -640,7 +1124,92 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "almost-folsom",
-    "id": "almost-folsom-2026-10-08"
+    "id": "almost-folsom-2026-10-08",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-08",
+    "showtime": "7:00",
+    "city": "Antigo",
+    "state": "WI",
+    "venue": "Volm Theater - Antigo High School",
+    "address": "1900 W 10th Ave, Antigo, WI 54409",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-08",
+    "hasTix": false
+  },
+  {
+    "artist": "Fan Halen",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-09",
+    "showtime": "7:00pm",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "fan-halen",
+    "id": "fan-halen-2026-10-09",
+    "hasTix": false
+  },
+  {
+    "artist": "Jeri Sager",
+    "ticket": "N/A",
+    "date": "2026-10-09",
+    "showtime": "7:00 PM",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "jeri-sager",
+    "id": "jeri-sager-2026-10-09",
+    "hasTix": false
+  },
+  {
+    "artist": "Voyager",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-09",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "voyager",
+    "id": "voyager-2026-10-09",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-09",
+    "showtime": "7:00",
+    "city": "Beaver Dam",
+    "state": "WI",
+    "venue": "Beaver Dam High School",
+    "address": "500 Gould St, Beaver Dam, WI 53916",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-09",
+    "hasTix": false
+  },
+  {
+    "artist": "Jeri Sager",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-10",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "jeri-sager",
+    "id": "jeri-sager-2026-10-10",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -653,7 +1222,106 @@ const events = [
     "address": "19501 Redwood Rd, Castro Valley, CA 94546",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2026-10-10"
+    "id": "voyager-2026-10-10",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-11",
+    "showtime": "7:00",
+    "city": "Williston",
+    "state": "ND",
+    "venue": "Bakken Ridge Auditorium",
+    "address": "502 W. Highland Dr, Williston, ND 58801",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-13",
+    "showtime": "7:00",
+    "city": "Butte",
+    "state": "MT",
+    "venue": "The Mother Lode Theatre",
+    "address": "316 W. Park St., Butte, MT 59703",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-13",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-15",
+    "showtime": "7:00",
+    "city": "Great Falls",
+    "state": "MT",
+    "venue": "Great Falls Civic Center - Mansfield Theater",
+    "address": "2 Park Dr S, Great Falls, MT 59403",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-15",
+    "hasTix": false
+  },
+  {
+    "artist": "Fan Halen",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-16",
+    "showtime": "7:00 PM",
+    "city": "Chandler",
+    "state": "AZ",
+    "venue": "Sunbird Golf Resort",
+    "address": "6250 S. Sunbird Blvd, Chandler, AZ 85249",
+    "platform": "",
+    "slug": "fan-halen",
+    "id": "fan-halen-2026-10-16",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-17",
+    "showtime": "3:00",
+    "city": "Belle Fourche",
+    "state": "SD",
+    "venue": "Belle Fourche Area Rec Center",
+    "address": "1111 National St, Belle Fourche, SD 57717",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-17",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-18",
+    "showtime": "3:00",
+    "city": "Huron",
+    "state": "SD",
+    "venue": "James Valley Christian",
+    "address": "1550 Dakota Ave N, Huron, SD 57350",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-18",
+    "hasTix": false
+  },
+  {
+    "artist": "Spouse Whisperer",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-19",
+    "showtime": "7:00 PM",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "spouse-whisperer",
+    "id": "spouse-whisperer-2026-10-19",
+    "hasTix": false
   },
   {
     "artist": "One Of These Nights",
@@ -666,7 +1334,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2026-10-19"
+    "id": "one-of-these-nights-2026-10-19",
+    "hasTix": true
   },
   {
     "artist": "Piano Men: Generations",
@@ -679,7 +1348,36 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-10-20"
+    "id": "piano-men-generations-2026-10-20",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-20",
+    "showtime": "7:00",
+    "city": "Norfolk",
+    "state": "NE",
+    "venue": "Norfolk Senior High School - Johnny Carson Theatre",
+    "address": "801 Riverside Blvd, Norfolk, NE 68701",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-20",
+    "hasTix": false
+  },
+  {
+    "artist": "The K-Tel All Stars",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-21",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2026-10-21",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -692,7 +1390,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-10-21"
+    "id": "piano-men-generations-2026-10-21",
+    "hasTix": true
   },
   {
     "artist": "The K-Tel All Stars",
@@ -705,7 +1404,8 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "the-k-tel-all-stars",
-    "id": "the-k-tel-all-stars-2026-10-22"
+    "id": "the-k-tel-all-stars-2026-10-22",
+    "hasTix": true
   },
   {
     "artist": "Magic Of Manilow",
@@ -718,7 +1418,36 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "magic-of-manilow",
-    "id": "magic-of-manilow-2026-10-22"
+    "id": "magic-of-manilow-2026-10-22",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-22",
+    "showtime": "7:00",
+    "city": "Great Bend",
+    "state": "KS",
+    "venue": "Great Bend Municipal Auditorium",
+    "address": "1214 Stone St, Great Bend, KS 67530",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-22",
+    "hasTix": false
+  },
+  {
+    "artist": "The K-Tel All Stars",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-23",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2026-10-23",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -731,7 +1460,8 @@ const events = [
     "address": "301 East Cook St. | PO Box 866 , Portage, WI 53901",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-10-23"
+    "id": "piano-men-generations-2026-10-23",
+    "hasTix": true
   },
   {
     "artist": "TAD Production Services",
@@ -744,7 +1474,8 @@ const events = [
     "address": "1898 S Keith Ave, Yuma, AZ 85365",
     "platform": "",
     "slug": "tad-production-services",
-    "id": "tad-production-services-2026-10-23"
+    "id": "tad-production-services-2026-10-23",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -757,7 +1488,22 @@ const events = [
     "address": "135 N 2nd St, DeKalb, IL 60115",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-10-24"
+    "id": "piano-men-generations-2026-10-24",
+    "hasTix": true
+  },
+  {
+    "artist": "The K-Tel All Stars",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-10-24",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "the-k-tel-all-stars",
+    "id": "the-k-tel-all-stars-2026-10-24",
+    "hasTix": false
   },
   {
     "artist": "One More Night",
@@ -770,7 +1516,50 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "one-more-night",
-    "id": "one-more-night-2026-10-24"
+    "id": "one-more-night-2026-10-24",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-24",
+    "showtime": "7:00",
+    "city": "Hutchinson",
+    "state": "KS",
+    "venue": "Fox Theatre - Hutchinson",
+    "address": "18 E 1st Ave, Hutchinson, KS 67501",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-25",
+    "showtime": "3:00",
+    "city": "Columbus",
+    "state": "NE",
+    "venue": "Columbus High School Auditorium",
+    "address": "3434 Discoverer Dr, Columbus, NE 68601",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-25",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-26",
+    "showtime": "7:00",
+    "city": "Fond du Lac",
+    "state": "WI",
+    "venue": "Fond du Lac High School - Performing Arts Center",
+    "address": "801 Campus Dr, Fond du Lac, WI 54935",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-26",
+    "hasTix": false
   },
   {
     "artist": "Elvis Unplugged",
@@ -783,7 +1572,36 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "elvis-unplugged",
-    "id": "elvis-unplugged-2026-10-26"
+    "id": "elvis-unplugged-2026-10-26",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-27",
+    "showtime": "7:00",
+    "city": "Cedar Rapids",
+    "state": "IA",
+    "venue": "Paramount Theater - Cedar Rapids",
+    "address": "123 3rd Ave SE, Cedar Rapids, IA 52403",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-27",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-28",
+    "showtime": "7:00",
+    "city": "Ottumwa",
+    "state": "IA",
+    "venue": "Bridge View Center",
+    "address": "102 Church St, Ottumwa, IA 52501",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-28",
+    "hasTix": false
   },
   {
     "artist": "Garth Live",
@@ -796,7 +1614,22 @@ const events = [
     "address": "1828 3rd Avenue, Rock Island, IL 61201",
     "platform": "",
     "slug": "garth-live",
-    "id": "garth-live-2026-10-29"
+    "id": "garth-live-2026-10-29",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-30",
+    "showtime": "7:00",
+    "city": "Bartlesville",
+    "state": "OK",
+    "venue": "Bartlesville Community Center",
+    "address": "300 SE Adams, Bartlesville, OK 74005",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-30",
+    "hasTix": false
   },
   {
     "artist": "Members Only",
@@ -809,7 +1642,36 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "members-only",
-    "id": "members-only-2026-10-31"
+    "id": "members-only-2026-10-31",
+    "hasTix": true
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-10-31",
+    "showtime": "7:00",
+    "city": "Centerville",
+    "state": "IA",
+    "venue": "Simon Estes Auditorium - Centerville High School",
+    "address": "600 CHS Dr, Centerville, IA 52544",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-10-31",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-11-01",
+    "showtime": "7:00",
+    "city": "Fremont",
+    "state": "NE",
+    "venue": "Fremont High School Auditorium",
+    "address": "1750 Lincoln Ave, Fremont, NE 68025",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2026-11-01",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -822,20 +1684,78 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2026-11-02"
+    "id": "piano-men-generations-2026-11-02",
+    "hasTix": true
   },
   {
-    "artist": "Dementia Man - An Existential Journey",
-    "ticket": "https://Private Event",
-    "date": "2026-11-05",
-    "showtime": "10:00am and 4:00pm",
-    "city": "Sarasota",
-    "state": "FL",
-    "venue": "Plymouth Harbor on Sarasota Bay",
-    "address": "700 John Ringling Blvd, Sarasota, FL 34236",
+    "artist": "Summer Of '69",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-03",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "summer-of-69",
+    "id": "summer-of-69-2026-11-03",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2026-11-03",
+    "showtime": "7:00",
+    "city": "Pontiac",
+    "state": "IL",
+    "venue": "Pontiac High School Auditorium",
+    "address": "1100 Indiana , Pontiac, IL 61764",
     "platform": "",
-    "slug": "dementia-man-an-existential-journey",
-    "id": "dementia-man-an-existential-journey-2026-11-05"
+    "slug": "garth-live",
+    "id": "garth-live-2026-11-03",
+    "hasTix": false
+  },
+  {
+    "artist": "Hearts Desire",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-04",
+    "showtime": "3:00pm & 7:00pm",
+    "city": "Casa Grande",
+    "state": "AZ",
+    "venue": "Mission Royale",
+    "address": "11 MIssion Pkwy, Bldg #2, Casa Grande, AZ 85194",
+    "platform": "",
+    "slug": "hearts-desire",
+    "id": "hearts-desire-2026-11-04",
+    "hasTix": false
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-05",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2026-11-05",
+    "hasTix": false
+  },
+  {
+    "artist": "Summer Of '69",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-06",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "summer-of-69",
+    "id": "summer-of-69-2026-11-06",
+    "hasTix": false
   },
   {
     "artist": "A Lennon Legacy",
@@ -848,7 +1768,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "a-lennon-legacy",
-    "id": "a-lennon-legacy-2026-11-06"
+    "id": "a-lennon-legacy-2026-11-06",
+    "hasTix": true
+  },
+  {
+    "artist": "One More Night",
+    "ticket": "N/A",
+    "date": "2026-11-07",
+    "showtime": "7:00 pm",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "one-more-night",
+    "id": "one-more-night-2026-11-07",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -861,7 +1796,22 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2026-11-08"
+    "id": "voyager-2026-11-08",
+    "hasTix": true
+  },
+  {
+    "artist": "Street Loaf",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-10",
+    "showtime": "7:00 PM",
+    "city": "Chandler",
+    "state": "AZ",
+    "venue": "Sunbird Golf Resort",
+    "address": "6250 S. Sunbird Blvd, Chandler, AZ 85249",
+    "platform": "",
+    "slug": "street-loaf",
+    "id": "street-loaf-2026-11-10",
+    "hasTix": false
   },
   {
     "artist": "One Of These Nights",
@@ -874,7 +1824,22 @@ const events = [
     "address": "1250 W Continental Rd, Green Valley, AZ 85622",
     "platform": "",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2026-11-10"
+    "id": "one-of-these-nights-2026-11-10",
+    "hasTix": true
+  },
+  {
+    "artist": "Rebel",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-13",
+    "showtime": "7:00 PM",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "rebel",
+    "id": "rebel-2026-11-13",
+    "hasTix": false
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -887,7 +1852,8 @@ const events = [
     "address": "1898 S Keith Ave, Yuma, AZ 85365",
     "platform": "",
     "slug": "sleigh-bells-swing",
-    "id": "sleigh-bells-swing-2026-11-13"
+    "id": "sleigh-bells-swing-2026-11-13",
+    "hasTix": false
   },
   {
     "artist": "TAD Production Services",
@@ -900,7 +1866,22 @@ const events = [
     "address": "1898 S Keith Ave, Yuma, AZ 85365",
     "platform": "",
     "slug": "tad-production-services",
-    "id": "tad-production-services-2026-11-13"
+    "id": "tad-production-services-2026-11-13",
+    "hasTix": false
+  },
+  {
+    "artist": "The Bad Co. Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-14",
+    "showtime": "5:00 PM",
+    "city": "Queen Creek",
+    "state": "AZ",
+    "venue": "Encanterra Country Club",
+    "address": "36460 N Encanterra Drive, Queen Creek, AZ 85140",
+    "platform": "",
+    "slug": "the-bad-co-experience",
+    "id": "the-bad-co-experience-2026-11-14",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -913,7 +1894,8 @@ const events = [
     "address": "133 N Saguaro Dr, Apache Junction, AZ 85120",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2026-11-14"
+    "id": "voyager-2026-11-14",
+    "hasTix": false
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -926,7 +1908,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "karen-hester-as-dolly-parton",
-    "id": "karen-hester-as-dolly-parton-2026-11-19"
+    "id": "karen-hester-as-dolly-parton-2026-11-19",
+    "hasTix": true
   },
   {
     "artist": "Go Now",
@@ -939,7 +1922,8 @@ const events = [
     "address": "1590 27th Avenue , Vero Beach, FL 32960",
     "platform": "",
     "slug": "go-now",
-    "id": "go-now-2026-11-19"
+    "id": "go-now-2026-11-19",
+    "hasTix": true
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -952,7 +1936,8 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "karen-hester-as-dolly-parton",
-    "id": "karen-hester-as-dolly-parton-2026-11-20"
+    "id": "karen-hester-as-dolly-parton-2026-11-20",
+    "hasTix": true
   },
   {
     "artist": "Rock Revisited",
@@ -965,7 +1950,36 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "rock-revisited",
-    "id": "rock-revisited-2026-11-20"
+    "id": "rock-revisited-2026-11-20",
+    "hasTix": true
+  },
+  {
+    "artist": "Revisiting The Orbison Years",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-21",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "revisiting-the-orbison-years",
+    "id": "revisiting-the-orbison-years-2026-11-21",
+    "hasTix": false
+  },
+  {
+    "artist": "Ivan Pecel",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-21",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "ivan-pecel",
+    "id": "ivan-pecel-2026-11-21",
+    "hasTix": false
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -978,7 +1992,8 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "karen-hester-as-dolly-parton",
-    "id": "karen-hester-as-dolly-parton-2026-11-21"
+    "id": "karen-hester-as-dolly-parton-2026-11-21",
+    "hasTix": true
   },
   {
     "artist": "Go Now",
@@ -991,7 +2006,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "go-now",
-    "id": "go-now-2026-11-21"
+    "id": "go-now-2026-11-21",
+    "hasTix": true
   },
   {
     "artist": "Go Now",
@@ -1004,7 +2020,50 @@ const events = [
     "address": "16439 SE 138th Terrace, Weirsdale FL 32195, Weirsdale , FL 32195",
     "platform": "",
     "slug": "go-now",
-    "id": "go-now-2026-11-22"
+    "id": "go-now-2026-11-22",
+    "hasTix": true
+  },
+  {
+    "artist": "Rock Revisited",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-23",
+    "showtime": "6:00PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2026-11-23",
+    "hasTix": false
+  },
+  {
+    "artist": "Drybar Comedy Night",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-24",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "drybar-comedy-night",
+    "id": "drybar-comedy-night-2026-11-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Broadway Concert Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-11-27",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "broadway-concert-experience",
+    "id": "broadway-concert-experience-2026-11-27",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -1017,7 +2076,22 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "toby",
-    "id": "toby-2026-11-30"
+    "id": "toby-2026-11-30",
+    "hasTix": true
+  },
+  {
+    "artist": "Springsteen: Born To Run",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-02",
+    "showtime": "3:00pm & 7:00pm",
+    "city": "Casa Grande",
+    "state": "AZ",
+    "venue": "Mission Royale",
+    "address": "11 MIssion Pkwy, Bldg #2, Casa Grande, AZ 85194",
+    "platform": "",
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2026-12-02",
+    "hasTix": false
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1030,7 +2104,36 @@ const events = [
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
     "slug": "sleigh-bells-swing",
-    "id": "sleigh-bells-swing-2026-12-02"
+    "id": "sleigh-bells-swing-2026-12-02",
+    "hasTix": false
+  },
+  {
+    "artist": "Abba Holly Jolly Christmas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-07",
+    "showtime": "7:00 PM",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "abba-holly-jolly-christmas",
+    "id": "abba-holly-jolly-christmas-2026-12-07",
+    "hasTix": false
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "N/A",
+    "date": "2026-12-07",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-07",
+    "hasTix": false
   },
   {
     "artist": "Abba Holly Jolly Christmas",
@@ -1043,7 +2146,36 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "abba-holly-jolly-christmas",
-    "id": "abba-holly-jolly-christmas-2026-12-07"
+    "id": "abba-holly-jolly-christmas-2026-12-07-2",
+    "hasTix": true
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "N/A",
+    "date": "2026-12-08",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Sunland Village East",
+    "address": "2145 S. Farnsworth Drive, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-08",
+    "hasTix": false
+  },
+  {
+    "artist": "Rocky Mountain Christmas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-09",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "rocky-mountain-christmas",
+    "id": "rocky-mountain-christmas-2026-12-09",
+    "hasTix": false
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1056,7 +2188,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "sleigh-bells-swing",
-    "id": "sleigh-bells-swing-2026-12-09"
+    "id": "sleigh-bells-swing-2026-12-09",
+    "hasTix": true
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1069,7 +2202,36 @@ const events = [
     "address": "1250 W Continental Rd, Green Valley, AZ 85622",
     "platform": "",
     "slug": "springsteen-born-to-run",
-    "id": "springsteen-born-to-run-2026-12-09"
+    "id": "springsteen-born-to-run-2026-12-09",
+    "hasTix": true
+  },
+  {
+    "artist": "Shotgun Willie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-10",
+    "showtime": "7:00 PM",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Saguaro Center (SCF)",
+    "address": "26285 W Morrow Dr, Buckeye, AZ 85396",
+    "platform": "Purple Pass",
+    "slug": "shotgun-willie",
+    "id": "shotgun-willie-2026-12-10",
+    "hasTix": false
+  },
+  {
+    "artist": "Rocky Mountain Christmas",
+    "ticket": "N/A",
+    "date": "2026-12-10",
+    "showtime": "7:00 pm",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "rocky-mountain-christmas",
+    "id": "rocky-mountain-christmas-2026-12-10",
+    "hasTix": false
   },
   {
     "artist": "Rocky Mountain Christmas",
@@ -1082,7 +2244,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "rocky-mountain-christmas",
-    "id": "rocky-mountain-christmas-2026-12-11"
+    "id": "rocky-mountain-christmas-2026-12-11",
+    "hasTix": true
+  },
+  {
+    "artist": "Rocky Mountain Christmas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-12",
+    "showtime": "7:00pm",
+    "city": "Buckeye",
+    "state": "AZ",
+    "venue": "Sundance Adult Village",
+    "address": "900 S Sundance Pkwy, Buckeye, AZ 85326",
+    "platform": "",
+    "slug": "rocky-mountain-christmas",
+    "id": "rocky-mountain-christmas-2026-12-12",
+    "hasTix": false
   },
   {
     "artist": "3 International Tenors",
@@ -1095,7 +2272,64 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "3-international-tenors",
-    "id": "3-international-tenors-2026-12-12"
+    "id": "3-international-tenors-2026-12-12",
+    "hasTix": true
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-13",
+    "showtime": "7:00 PM",
+    "city": "Chandler",
+    "state": "AZ",
+    "venue": "Sunbird Golf Resort",
+    "address": "6250 S. Sunbird Blvd, Chandler, AZ 85249",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-13",
+    "hasTix": false
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "N/A",
+    "date": "2026-12-14",
+    "showtime": "7:00 PM",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-14",
+    "hasTix": false
+  },
+  {
+    "artist": "Abba Holly Jolly Christmas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-15",
+    "showtime": "7:00 PM",
+    "city": "Gold Canyon",
+    "state": "AZ",
+    "venue": "Arizonian RV Resort",
+    "address": "15976 E Highway 60, Gold Canyon, AZ 85118",
+    "platform": "",
+    "slug": "abba-holly-jolly-christmas",
+    "id": "abba-holly-jolly-christmas-2026-12-15",
+    "hasTix": false
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-18",
+    "showtime": "6:00 PM",
+    "city": "Florence",
+    "state": "AZ",
+    "venue": "Sun City Anthem (AZ)",
+    "address": "3925 N Sun City Blvd, Florence, AZ 85132",
+    "platform": "Purple Pass",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-18",
+    "hasTix": false
   },
   {
     "artist": "Ivan Pecel",
@@ -1108,7 +2342,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "ivan-pecel",
-    "id": "ivan-pecel-2026-12-18"
+    "id": "ivan-pecel-2026-12-18",
+    "hasTix": true
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "NOT APPLICABLE",
+    "date": "2026-12-19",
+    "showtime": "7:00 PM",
+    "city": "Maricopa",
+    "state": "AZ",
+    "venue": "Province Community",
+    "address": "20942 Province Pkwy, Maricopa, AZ 85138",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2026-12-19",
+    "hasTix": false
   },
   {
     "artist": "Country Christmas",
@@ -1121,20 +2370,8 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "country-christmas",
-    "id": "country-christmas-2026-12-19"
-  },
-  {
-    "artist": "Rocky Mountain Christmas",
-    "ticket": "https://Private Event",
-    "date": "2026-12-21",
-    "showtime": "2:00pm & 7:00pm ",
-    "city": "Willow Street",
-    "state": "PA",
-    "venue": "Willow Valley Communities",
-    "address": "900 Willow Valley Lakes Dr., Willow Street, PA 17584",
-    "platform": "",
-    "slug": "rocky-mountain-christmas",
-    "id": "rocky-mountain-christmas-2026-12-21"
+    "id": "country-christmas-2026-12-19",
+    "hasTix": true
   },
   {
     "artist": "Sleigh Bells Swing",
@@ -1147,7 +2384,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "sleigh-bells-swing",
-    "id": "sleigh-bells-swing-2026-12-21"
+    "id": "sleigh-bells-swing-2026-12-21",
+    "hasTix": true
   },
   {
     "artist": "A Lennon Legacy",
@@ -1160,7 +2398,22 @@ const events = [
     "address": "13005 N Oracle Rd #165, Tucson, AZ 85739",
     "platform": "",
     "slug": "a-lennon-legacy",
-    "id": "a-lennon-legacy-2026-12-27"
+    "id": "a-lennon-legacy-2026-12-27",
+    "hasTix": true
+  },
+  {
+    "artist": "Honky Tonk Man",
+    "ticket": "N/A",
+    "date": "2027-01-04",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-01-04",
+    "hasTix": false
   },
   {
     "artist": "One Of These Nights",
@@ -1173,7 +2426,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2027-01-04"
+    "id": "one-of-these-nights-2027-01-04",
+    "hasTix": true
   },
   {
     "artist": "The Kings of Queen",
@@ -1186,7 +2440,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "the-kings-of-queen",
-    "id": "the-kings-of-queen-2027-01-05"
+    "id": "the-kings-of-queen-2027-01-05",
+    "hasTix": true
+  },
+  {
+    "artist": "American Highwaymen",
+    "ticket": "N/A",
+    "date": "2027-01-06",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "american-highwaymen",
+    "id": "american-highwaymen-2027-01-06",
+    "hasTix": false
   },
   {
     "artist": "The Kings of Queen",
@@ -1199,7 +2468,8 @@ const events = [
     "address": "1250 W Continental Rd, Green Valley, AZ 85622",
     "platform": "",
     "slug": "the-kings-of-queen",
-    "id": "the-kings-of-queen-2027-01-07"
+    "id": "the-kings-of-queen-2027-01-07",
+    "hasTix": true
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1212,7 +2482,8 @@ const events = [
     "address": "8221 Glades Road Suite #10, Boca Raton , FL 33434",
     "platform": "",
     "slug": "the-lionel-richie-songbook",
-    "id": "the-lionel-richie-songbook-2027-01-07"
+    "id": "the-lionel-richie-songbook-2027-01-07",
+    "hasTix": true
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1225,20 +2496,22 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "the-lionel-richie-songbook",
-    "id": "the-lionel-richie-songbook-2027-01-08"
+    "id": "the-lionel-richie-songbook-2027-01-08",
+    "hasTix": true
   },
   {
-    "artist": "The Dionne Legacy",
-    "ticket": "https://Private Event",
+    "artist": "TOBY",
+    "ticket": "N/A",
     "date": "2027-01-08",
-    "showtime": "7:00pm",
-    "city": "Winter Haven",
-    "state": "FL",
-    "venue": "The Ritz Winter Haven",
-    "address": "263 West Central Avenue, Winter Haven, FL 33880",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
     "platform": "",
-    "slug": "the-dionne-legacy",
-    "id": "the-dionne-legacy-2027-01-08"
+    "slug": "toby",
+    "id": "toby-2027-01-08",
+    "hasTix": false
   },
   {
     "artist": "The Lionel Richie Songbook",
@@ -1251,7 +2524,22 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "the-lionel-richie-songbook",
-    "id": "the-lionel-richie-songbook-2027-01-09"
+    "id": "the-lionel-richie-songbook-2027-01-09",
+    "hasTix": true
+  },
+  {
+    "artist": "Ronstadt: The Tribute",
+    "ticket": "N/A",
+    "date": "2027-01-09",
+    "showtime": "3:00 PM and 7:00 PM",
+    "city": "Goodyear",
+    "state": "AZ",
+    "venue": "Pebble Creek Renaissance Theatre",
+    "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
+    "platform": "",
+    "slug": "ronstadt-the-tribute",
+    "id": "ronstadt-the-tribute-2027-01-09",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -1264,7 +2552,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "toby",
-    "id": "toby-2027-01-10"
+    "id": "toby-2027-01-10",
+    "hasTix": true
+  },
+  {
+    "artist": "Hot August Night",
+    "ticket": "N/A",
+    "date": "2027-01-11",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-11",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -1277,7 +2580,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "voyager",
-    "id": "voyager-2027-01-11"
+    "id": "voyager-2027-01-11",
+    "hasTix": true
   },
   {
     "artist": "White Winged Dove",
@@ -1290,7 +2594,22 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "white-winged-dove",
-    "id": "white-winged-dove-2027-01-11"
+    "id": "white-winged-dove-2027-01-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Hot August Night",
+    "ticket": "N/A",
+    "date": "2027-01-12",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-12",
+    "hasTix": false
   },
   {
     "artist": "Randy Linder - CCR",
@@ -1303,7 +2622,64 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "randy-linder-ccr",
-    "id": "randy-linder-ccr-2027-01-12"
+    "id": "randy-linder-ccr-2027-01-12",
+    "hasTix": true
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-13",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-13",
+    "hasTix": false
+  },
+  {
+    "artist": "Strait Outta Texas",
+    "ticket": "N/A",
+    "date": "2027-01-13",
+    "showtime": "7:00 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "Voyager RV Resort",
+    "address": "8701 S Kolb Rd, Tucson, AZ 85756",
+    "platform": "",
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-13",
+    "hasTix": false
+  },
+  {
+    "artist": "56tees",
+    "ticket": "N/A",
+    "date": "2027-01-13",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "56tees",
+    "id": "56tees-2027-01-13",
+    "hasTix": false
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-14",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Southern Comfort RV",
+    "address": "1501 S Airport Dr,, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-14",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -1316,7 +2692,8 @@ const events = [
     "address": "3020 E Main St, Mesa, AZ 85213",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2027-01-14"
+    "id": "voyager-2027-01-14",
+    "hasTix": false
   },
   {
     "artist": "Summer Nights",
@@ -1329,7 +2706,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "summer-nights",
-    "id": "summer-nights-2027-01-14"
+    "id": "summer-nights-2027-01-14",
+    "hasTix": true
   },
   {
     "artist": "Total Country",
@@ -1342,7 +2720,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "total-country",
-    "id": "total-country-2027-01-14"
+    "id": "total-country-2027-01-14",
+    "hasTix": true
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-15",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-15",
+    "hasTix": false
   },
   {
     "artist": "Hot August Night",
@@ -1355,7 +2748,36 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "hot-august-night",
-    "id": "hot-august-night-2027-01-15"
+    "id": "hot-august-night-2027-01-15",
+    "hasTix": true
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-16",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-16",
+    "hasTix": false
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-17",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-17",
+    "hasTix": false
   },
   {
     "artist": "Strait Outta Texas",
@@ -1368,7 +2790,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "strait-outta-texas",
-    "id": "strait-outta-texas-2027-01-17"
+    "id": "strait-outta-texas-2027-01-17",
+    "hasTix": true
   },
   {
     "artist": "Nashville Gold",
@@ -1381,7 +2804,36 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "nashville-gold",
-    "id": "nashville-gold-2027-01-17"
+    "id": "nashville-gold-2027-01-17",
+    "hasTix": false
+  },
+  {
+    "artist": "Fly Like An Eagle",
+    "ticket": "N/A",
+    "date": "2027-01-18",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "fly-like-an-eagle",
+    "id": "fly-like-an-eagle-2027-01-18",
+    "hasTix": false
+  },
+  {
+    "artist": "Strait Outta Texas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-18",
+    "showtime": "7:00 pm",
+    "city": "Yuma",
+    "state": "AZ",
+    "venue": "Fortuna De Oro",
+    "address": "13650 N Frontage Road, Yuma, AZ 85367",
+    "platform": "",
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-18",
+    "hasTix": false
   },
   {
     "artist": "Let It Ride",
@@ -1394,7 +2846,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "let-it-ride",
-    "id": "let-it-ride-2027-01-18"
+    "id": "let-it-ride-2027-01-18",
+    "hasTix": true
+  },
+  {
+    "artist": "Springsteen: Born To Run",
+    "ticket": "N/A",
+    "date": "2027-01-19",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-01-19",
+    "hasTix": false
   },
   {
     "artist": "Rebel",
@@ -1407,7 +2874,92 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "rebel",
-    "id": "rebel-2027-01-19"
+    "id": "rebel-2027-01-19",
+    "hasTix": true
+  },
+  {
+    "artist": "The Dionne Legacy",
+    "ticket": "N/A",
+    "date": "2027-01-20",
+    "showtime": "7:00 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "Voyager RV Resort",
+    "address": "8701 S Kolb Rd, Tucson, AZ 85756",
+    "platform": "",
+    "slug": "the-dionne-legacy",
+    "id": "the-dionne-legacy-2027-01-20",
+    "hasTix": false
+  },
+  {
+    "artist": "Strait Outta Texas",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-20",
+    "showtime": "7:00 PM",
+    "city": "Gold Canyon",
+    "state": "AZ",
+    "venue": "Canyon Vistas (Cal-Am)",
+    "address": "6601 E US Hwy 60, Gold Canyon, AZ 85118",
+    "platform": "",
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-20",
+    "hasTix": false
+  },
+  {
+    "artist": "The Lionel Richie Songbook",
+    "ticket": "N/A",
+    "date": "2027-01-20",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "the-lionel-richie-songbook",
+    "id": "the-lionel-richie-songbook-2027-01-20",
+    "hasTix": false
+  },
+  {
+    "artist": "The Dionne Legacy",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-21",
+    "showtime": "4:00pm & 7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "the-dionne-legacy",
+    "id": "the-dionne-legacy-2027-01-21",
+    "hasTix": false
+  },
+  {
+    "artist": "Strait Outta Texas",
+    "ticket": "N/A",
+    "date": "2027-01-21",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Towerpoint RV Resort",
+    "address": "4860 E Main St, Mesa, AZ 85205",
+    "platform": "",
+    "slug": "strait-outta-texas",
+    "id": "strait-outta-texas-2027-01-21",
+    "hasTix": false
+  },
+  {
+    "artist": "Crystal Stark - First Ladies Of Song",
+    "ticket": "N/A",
+    "date": "2027-01-22",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "crystal-stark-first-ladies-of-song",
+    "id": "crystal-stark-first-ladies-of-song-2027-01-22",
+    "hasTix": false
   },
   {
     "artist": "The Dionne Legacy",
@@ -1420,7 +2972,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "the-dionne-legacy",
-    "id": "the-dionne-legacy-2027-01-23"
+    "id": "the-dionne-legacy-2027-01-23",
+    "hasTix": false
+  },
+  {
+    "artist": "Gloria! Turn The Beat",
+    "ticket": "N/A",
+    "date": "2027-01-25",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-25",
+    "hasTix": false
   },
   {
     "artist": "Garth Live",
@@ -1433,7 +3000,8 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "garth-live",
-    "id": "garth-live-2027-01-25"
+    "id": "garth-live-2027-01-25",
+    "hasTix": true
   },
   {
     "artist": "The Dionne Legacy",
@@ -1446,7 +3014,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "the-dionne-legacy",
-    "id": "the-dionne-legacy-2027-01-25"
+    "id": "the-dionne-legacy-2027-01-25",
+    "hasTix": true
   },
   {
     "artist": "Almost Folsom",
@@ -1459,7 +3028,8 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "almost-folsom",
-    "id": "almost-folsom-2027-01-25"
+    "id": "almost-folsom-2027-01-25",
+    "hasTix": false
   },
   {
     "artist": "Garth Live",
@@ -1472,7 +3042,50 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "garth-live",
-    "id": "garth-live-2027-01-26"
+    "id": "garth-live-2027-01-26",
+    "hasTix": true
+  },
+  {
+    "artist": "Forever Everly",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-27",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "forever-everly",
+    "id": "forever-everly-2027-01-27",
+    "hasTix": false
+  },
+  {
+    "artist": "Gloria! Turn The Beat",
+    "ticket": "N/A",
+    "date": "2027-01-27",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Valle Del Oro",
+    "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-27",
+    "hasTix": false
+  },
+  {
+    "artist": "Forever Everly",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-28",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Country Sunshine RV Resort",
+    "address": "1601 S Airport Dr, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "forever-everly",
+    "id": "forever-everly-2027-01-28",
+    "hasTix": false
   },
   {
     "artist": "Ivan Pecel",
@@ -1485,7 +3098,36 @@ const events = [
     "address": "3020 E Main St, Mesa, AZ 85213",
     "platform": "",
     "slug": "ivan-pecel",
-    "id": "ivan-pecel-2027-01-28"
+    "id": "ivan-pecel-2027-01-28",
+    "hasTix": false
+  },
+  {
+    "artist": "Gloria! Turn The Beat",
+    "ticket": "N/A",
+    "date": "2027-01-28",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Mesa Regal RV Resort",
+    "address": "4700 E Main St, Mesa, AZ 85205",
+    "platform": "",
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-01-28",
+    "hasTix": false
+  },
+  {
+    "artist": "Forever Everly",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-29",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "forever-everly",
+    "id": "forever-everly-2027-01-29",
+    "hasTix": false
   },
   {
     "artist": "Almost Folsom",
@@ -1498,7 +3140,36 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "almost-folsom",
-    "id": "almost-folsom-2027-01-29"
+    "id": "almost-folsom-2027-01-29",
+    "hasTix": true
+  },
+  {
+    "artist": "Forever Everly",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-30",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "forever-everly",
+    "id": "forever-everly-2027-01-30",
+    "hasTix": false
+  },
+  {
+    "artist": "Forever Everly",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-01-31",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "forever-everly",
+    "id": "forever-everly-2027-01-31",
+    "hasTix": false
   },
   {
     "artist": "3 International Tenors",
@@ -1511,7 +3182,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "3-international-tenors",
-    "id": "3-international-tenors-2027-01-31"
+    "id": "3-international-tenors-2027-01-31",
+    "hasTix": false
+  },
+  {
+    "artist": "Family Tradition",
+    "ticket": "N/A",
+    "date": "2027-02-01",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "family-tradition",
+    "id": "family-tradition-2027-02-01",
+    "hasTix": false
   },
   {
     "artist": "December '63",
@@ -1524,7 +3210,36 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "december-63",
-    "id": "december-63-2027-02-01"
+    "id": "december-63-2027-02-01",
+    "hasTix": true
+  },
+  {
+    "artist": "Gloria! Turn The Beat",
+    "ticket": "N/A",
+    "date": "2027-02-02",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-02-02",
+    "hasTix": false
+  },
+  {
+    "artist": "The She Gees",
+    "ticket": "N/A",
+    "date": "2027-02-03",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "the-she-gees",
+    "id": "the-she-gees-2027-02-03",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -1537,7 +3252,22 @@ const events = [
     "address": "263 West Central Avenue, Winter Haven, FL 33880",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2027-02-03"
+    "id": "piano-men-generations-2027-02-03",
+    "hasTix": true
+  },
+  {
+    "artist": "Satisfaction",
+    "ticket": "N/A",
+    "date": "2027-02-04",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Towerpoint RV Resort",
+    "address": "4860 E Main St, Mesa, AZ 85205",
+    "platform": "",
+    "slug": "satisfaction",
+    "id": "satisfaction-2027-02-04",
+    "hasTix": false
   },
   {
     "artist": "One Of These Nights",
@@ -1550,7 +3280,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2027-02-05"
+    "id": "one-of-these-nights-2027-02-05",
+    "hasTix": true
+  },
+  {
+    "artist": "AbbaFab",
+    "ticket": "N/A",
+    "date": "2027-02-05",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "abbafab",
+    "id": "abbafab-2027-02-05",
+    "hasTix": false
   },
   {
     "artist": "Judy Carmichael",
@@ -1563,7 +3308,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "judy-carmichael",
-    "id": "judy-carmichael-2027-02-06"
+    "id": "judy-carmichael-2027-02-06",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -1576,7 +3322,8 @@ const events = [
     "address": "1 Indian Ave building 5, Venice, FL 34285",
     "platform": "",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2027-02-07"
+    "id": "piano-men-generations-2027-02-07",
+    "hasTix": true
   },
   {
     "artist": "The K-Tel All Stars",
@@ -1589,7 +3336,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "the-k-tel-all-stars",
-    "id": "the-k-tel-all-stars-2027-02-07"
+    "id": "the-k-tel-all-stars-2027-02-07",
+    "hasTix": true
   },
   {
     "artist": "Garth Live",
@@ -1602,7 +3350,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "garth-live",
-    "id": "garth-live-2027-02-07"
+    "id": "garth-live-2027-02-07",
+    "hasTix": true
+  },
+  {
+    "artist": "Uptown",
+    "ticket": "N/A",
+    "date": "2027-02-08",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "uptown",
+    "id": "uptown-2027-02-08",
+    "hasTix": false
   },
   {
     "artist": "Turn The Page",
@@ -1615,7 +3378,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "turn-the-page",
-    "id": "turn-the-page-2027-02-08"
+    "id": "turn-the-page-2027-02-08",
+    "hasTix": true
   },
   {
     "artist": "Honky Tonk Man",
@@ -1628,7 +3392,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2027-02-08"
+    "id": "honky-tonk-man-2027-02-08",
+    "hasTix": true
   },
   {
     "artist": "Ronstadt: The Tribute",
@@ -1641,7 +3406,8 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "ronstadt-the-tribute",
-    "id": "ronstadt-the-tribute-2027-02-08"
+    "id": "ronstadt-the-tribute-2027-02-08",
+    "hasTix": false
   },
   {
     "artist": "The Big Easy Live",
@@ -1654,7 +3420,8 @@ const events = [
     "address": "1110 N Henness Rd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "the-big-easy-live",
-    "id": "the-big-easy-live-2027-02-09"
+    "id": "the-big-easy-live-2027-02-09",
+    "hasTix": false
   },
   {
     "artist": "Revisiting The Orbison Years",
@@ -1667,7 +3434,64 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "revisiting-the-orbison-years",
-    "id": "revisiting-the-orbison-years-2027-02-09"
+    "id": "revisiting-the-orbison-years-2027-02-09",
+    "hasTix": true
+  },
+  {
+    "artist": "The Shania Twain Experience",
+    "ticket": "N/A",
+    "date": "2027-02-09",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "the-shania-twain-experience",
+    "id": "the-shania-twain-experience-2027-02-09",
+    "hasTix": false
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-10",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-02-10",
+    "hasTix": false
+  },
+  {
+    "artist": "Honky Tonk Man",
+    "ticket": "N/A",
+    "date": "2027-02-10",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-02-10",
+    "hasTix": false
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-11",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Southern Comfort RV",
+    "address": "1501 S Airport Dr,, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-02-11",
+    "hasTix": false
   },
   {
     "artist": "AbbaFab",
@@ -1680,7 +3504,8 @@ const events = [
     "address": "1250 W Continental Rd, Green Valley, AZ 85622",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-02-11"
+    "id": "abbafab-2027-02-11",
+    "hasTix": true
   },
   {
     "artist": "Ultimate Bon Jovi",
@@ -1693,7 +3518,22 @@ const events = [
     "address": "3020 E Main St, Mesa, AZ 85213",
     "platform": "",
     "slug": "ultimate-bon-jovi",
-    "id": "ultimate-bon-jovi-2027-02-11"
+    "id": "ultimate-bon-jovi-2027-02-11",
+    "hasTix": false
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-12",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-02-12",
+    "hasTix": false
   },
   {
     "artist": "Honky Tonk Man",
@@ -1706,7 +3546,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2027-02-12"
+    "id": "honky-tonk-man-2027-02-12",
+    "hasTix": true
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-13",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-02-13",
+    "hasTix": false
   },
   {
     "artist": "Revisiting The Orbison Years",
@@ -1719,7 +3574,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "revisiting-the-orbison-years",
-    "id": "revisiting-the-orbison-years-2027-02-13"
+    "id": "revisiting-the-orbison-years-2027-02-13",
+    "hasTix": false
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-14",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-02-14",
+    "hasTix": false
   },
   {
     "artist": "The Big Easy Live",
@@ -1732,7 +3602,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "the-big-easy-live",
-    "id": "the-big-easy-live-2027-02-14"
+    "id": "the-big-easy-live-2027-02-14",
+    "hasTix": true
+  },
+  {
+    "artist": "Turn The Page",
+    "ticket": "N/A",
+    "date": "2027-02-15",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "turn-the-page",
+    "id": "turn-the-page-2027-02-15",
+    "hasTix": false
   },
   {
     "artist": "Locked Out Of Heaven",
@@ -1745,7 +3630,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "locked-out-of-heaven",
-    "id": "locked-out-of-heaven-2027-02-15"
+    "id": "locked-out-of-heaven-2027-02-15",
+    "hasTix": true
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1758,7 +3644,22 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "springsteen-born-to-run",
-    "id": "springsteen-born-to-run-2027-02-15"
+    "id": "springsteen-born-to-run-2027-02-15",
+    "hasTix": false
+  },
+  {
+    "artist": "Locked Out Of Heaven",
+    "ticket": "N/A",
+    "date": "2027-02-16",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "locked-out-of-heaven",
+    "id": "locked-out-of-heaven-2027-02-16",
+    "hasTix": false
   },
   {
     "artist": "Magic Of Manilow",
@@ -1771,7 +3672,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "magic-of-manilow",
-    "id": "magic-of-manilow-2027-02-16"
+    "id": "magic-of-manilow-2027-02-16",
+    "hasTix": true
+  },
+  {
+    "artist": "Rock Revisited",
+    "ticket": "N/A",
+    "date": "2027-02-17",
+    "showtime": "7:00 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "Voyager RV Resort",
+    "address": "8701 S Kolb Rd, Tucson, AZ 85756",
+    "platform": "",
+    "slug": "rock-revisited",
+    "id": "rock-revisited-2027-02-17",
+    "hasTix": false
   },
   {
     "artist": "Prince Again",
@@ -1784,7 +3700,50 @@ const events = [
     "address": "233 N Val Vista Dr, Mesa, AZ 85213",
     "platform": "",
     "slug": "prince-again",
-    "id": "prince-again-2027-02-17"
+    "id": "prince-again-2027-02-17",
+    "hasTix": false
+  },
+  {
+    "artist": "Members Only",
+    "ticket": "N/A",
+    "date": "2027-02-17",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "members-only",
+    "id": "members-only-2027-02-17",
+    "hasTix": false
+  },
+  {
+    "artist": "Prince Again",
+    "ticket": "N/A",
+    "date": "2027-02-18",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Valle Del Oro",
+    "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "prince-again",
+    "id": "prince-again-2027-02-18",
+    "hasTix": false
+  },
+  {
+    "artist": "Magic Of Manilow",
+    "ticket": "N/A",
+    "date": "2027-02-19",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "magic-of-manilow",
+    "id": "magic-of-manilow-2027-02-19",
+    "hasTix": false
   },
   {
     "artist": "SH3",
@@ -1797,7 +3756,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "sh3",
-    "id": "sh3-2027-02-20"
+    "id": "sh3-2027-02-20",
+    "hasTix": false
   },
   {
     "artist": "Turn The Page",
@@ -1810,7 +3770,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "turn-the-page",
-    "id": "turn-the-page-2027-02-21"
+    "id": "turn-the-page-2027-02-21",
+    "hasTix": true
   },
   {
     "artist": "Magic Of Manilow",
@@ -1823,7 +3784,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "magic-of-manilow",
-    "id": "magic-of-manilow-2027-02-21"
+    "id": "magic-of-manilow-2027-02-21",
+    "hasTix": false
+  },
+  {
+    "artist": "Springsteen: Born To Run",
+    "ticket": "N/A",
+    "date": "2027-02-22",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-02-22",
+    "hasTix": false
   },
   {
     "artist": "AbbaFab",
@@ -1836,7 +3812,8 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-02-22"
+    "id": "abbafab-2027-02-22",
+    "hasTix": true
   },
   {
     "artist": "Honky Tonk Man",
@@ -1849,7 +3826,8 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2027-02-22"
+    "id": "honky-tonk-man-2027-02-22",
+    "hasTix": false
   },
   {
     "artist": "AbbaFab",
@@ -1862,7 +3840,8 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-02-23"
+    "id": "abbafab-2027-02-23",
+    "hasTix": true
   },
   {
     "artist": "Shine On Floyd",
@@ -1875,7 +3854,64 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "shine-on-floyd",
-    "id": "shine-on-floyd-2027-02-23"
+    "id": "shine-on-floyd-2027-02-23",
+    "hasTix": true
+  },
+  {
+    "artist": "Ultimate Carrie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-24",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "ultimate-carrie",
+    "id": "ultimate-carrie-2027-02-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Queen Nation",
+    "ticket": "N/A",
+    "date": "2027-02-24",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "queen-nation",
+    "id": "queen-nation-2027-02-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Ultimate Carrie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-25",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Country Sunshine RV Resort",
+    "address": "1601 S Airport Dr, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "ultimate-carrie",
+    "id": "ultimate-carrie-2027-02-25",
+    "hasTix": false
+  },
+  {
+    "artist": "Ultimate Carrie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-26",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "ultimate-carrie",
+    "id": "ultimate-carrie-2027-02-26",
+    "hasTix": false
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -1888,7 +3924,92 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "springsteen-born-to-run",
-    "id": "springsteen-born-to-run-2027-02-26"
+    "id": "springsteen-born-to-run-2027-02-26",
+    "hasTix": true
+  },
+  {
+    "artist": "Ultimate Carrie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-27",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "ultimate-carrie",
+    "id": "ultimate-carrie-2027-02-27",
+    "hasTix": false
+  },
+  {
+    "artist": "Ultimate Carrie",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-02-28",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "ultimate-carrie",
+    "id": "ultimate-carrie-2027-02-28",
+    "hasTix": false
+  },
+  {
+    "artist": "Garth Live",
+    "ticket": "N/A",
+    "date": "2027-03-01",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "garth-live",
+    "id": "garth-live-2027-03-01",
+    "hasTix": false
+  },
+  {
+    "artist": "Let It Ride",
+    "ticket": "N/A",
+    "date": "2027-03-02",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "let-it-ride",
+    "id": "let-it-ride-2027-03-02",
+    "hasTix": false
+  },
+  {
+    "artist": "Return To Woodstock",
+    "ticket": "N/A",
+    "date": "2027-03-02",
+    "showtime": "3:00pm and 7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Sunland Village East",
+    "address": "2145 S. Farnsworth Drive, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "return-to-woodstock",
+    "id": "return-to-woodstock-2027-03-02",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "N/A",
+    "date": "2027-03-03",
+    "showtime": "7:00 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "Voyager RV Resort",
+    "address": "8701 S Kolb Rd, Tucson, AZ 85756",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-03",
+    "hasTix": false
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1901,7 +4022,8 @@ const events = [
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
     "slug": "gloria-turn-the-beat",
-    "id": "gloria-turn-the-beat-2027-03-03"
+    "id": "gloria-turn-the-beat-2027-03-03",
+    "hasTix": true
   },
   {
     "artist": "Fly Like An Eagle",
@@ -1914,7 +4036,8 @@ const events = [
     "address": "1250 W Continental Rd, Green Valley, AZ 85622",
     "platform": "",
     "slug": "fly-like-an-eagle",
-    "id": "fly-like-an-eagle-2027-03-04"
+    "id": "fly-like-an-eagle-2027-03-04",
+    "hasTix": true
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1927,7 +4050,8 @@ const events = [
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
     "slug": "gloria-turn-the-beat",
-    "id": "gloria-turn-the-beat-2027-03-04"
+    "id": "gloria-turn-the-beat-2027-03-04",
+    "hasTix": true
   },
   {
     "artist": "Voyager",
@@ -1940,7 +4064,22 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "voyager",
-    "id": "voyager-2027-03-05"
+    "id": "voyager-2027-03-05",
+    "hasTix": true
+  },
+  {
+    "artist": "Let It Ride",
+    "ticket": "N/A",
+    "date": "2027-03-05",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "let-it-ride",
+    "id": "let-it-ride-2027-03-05",
+    "hasTix": false
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1953,7 +4092,8 @@ const events = [
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
     "slug": "gloria-turn-the-beat",
-    "id": "gloria-turn-the-beat-2027-03-05"
+    "id": "gloria-turn-the-beat-2027-03-05",
+    "hasTix": true
   },
   {
     "artist": "Chipper Lowell",
@@ -1966,7 +4106,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "chipper-lowell",
-    "id": "chipper-lowell-2027-03-06"
+    "id": "chipper-lowell-2027-03-06",
+    "hasTix": false
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1979,7 +4120,8 @@ const events = [
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
     "slug": "gloria-turn-the-beat",
-    "id": "gloria-turn-the-beat-2027-03-06"
+    "id": "gloria-turn-the-beat-2027-03-06",
+    "hasTix": true
   },
   {
     "artist": "Gloria! Turn The Beat",
@@ -1992,7 +4134,8 @@ const events = [
     "address": "120 Radcliffe St,  Bristol, PA 19007",
     "platform": "",
     "slug": "gloria-turn-the-beat",
-    "id": "gloria-turn-the-beat-2027-03-07"
+    "id": "gloria-turn-the-beat-2027-03-07",
+    "hasTix": true
   },
   {
     "artist": "Margaritas In Paradise",
@@ -2005,7 +4148,8 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "margaritas-in-paradise",
-    "id": "margaritas-in-paradise-2027-03-07"
+    "id": "margaritas-in-paradise-2027-03-07",
+    "hasTix": true
   },
   {
     "artist": "AbbaFab",
@@ -2018,7 +4162,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "abbafab",
-    "id": "abbafab-2027-03-07"
+    "id": "abbafab-2027-03-07",
+    "hasTix": true
+  },
+  {
+    "artist": "Photographs and Memories",
+    "ticket": "N/A",
+    "date": "2027-03-08",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "photographs-and-memories",
+    "id": "photographs-and-memories-2027-03-08",
+    "hasTix": false
   },
   {
     "artist": "Margaritas In Paradise",
@@ -2031,7 +4190,8 @@ const events = [
     "address": "1380 Colonial Blvd, Fort Myers, FL 33907",
     "platform": "",
     "slug": "margaritas-in-paradise",
-    "id": "margaritas-in-paradise-2027-03-08"
+    "id": "margaritas-in-paradise-2027-03-08",
+    "hasTix": true
   },
   {
     "artist": "American Highwaymen",
@@ -2044,7 +4204,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "american-highwaymen",
-    "id": "american-highwaymen-2027-03-08"
+    "id": "american-highwaymen-2027-03-08",
+    "hasTix": false
   },
   {
     "artist": "Turn The Page",
@@ -2057,7 +4218,22 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "turn-the-page",
-    "id": "turn-the-page-2027-03-08"
+    "id": "turn-the-page-2027-03-08",
+    "hasTix": false
+  },
+  {
+    "artist": "Honky Tonk Man",
+    "ticket": "N/A",
+    "date": "2027-03-09",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "honky-tonk-man",
+    "id": "honky-tonk-man-2027-03-09",
+    "hasTix": false
   },
   {
     "artist": "Southern Rock Explosion",
@@ -2070,7 +4246,92 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "southern-rock-explosion",
-    "id": "southern-rock-explosion-2027-03-09"
+    "id": "southern-rock-explosion-2027-03-09",
+    "hasTix": true
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-10",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-10",
+    "hasTix": false
+  },
+  {
+    "artist": "Broadway Concert Experience",
+    "ticket": "N/A",
+    "date": "2027-03-10",
+    "showtime": "7:00 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "Voyager RV Resort",
+    "address": "8701 S Kolb Rd, Tucson, AZ 85756",
+    "platform": "",
+    "slug": "broadway-concert-experience",
+    "id": "broadway-concert-experience-2027-03-10",
+    "hasTix": false
+  },
+  {
+    "artist": "Spouse Whisperer",
+    "ticket": "N/A",
+    "date": "2027-03-10",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "spouse-whisperer",
+    "id": "spouse-whisperer-2027-03-10",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-11",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Southern Comfort RV",
+    "address": "1501 S Airport Dr,, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Gloria! Turn The Beat",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-11",
+    "showtime": "4:00pm & 7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "gloria-turn-the-beat",
+    "id": "gloria-turn-the-beat-2027-03-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Encore: History's Greatest Showmen",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-11",
+    "showtime": "4:00pm & 7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "encore-history-s-greatest-showmen",
+    "id": "encore-history-s-greatest-showmen-2027-03-11",
+    "hasTix": false
   },
   {
     "artist": "Simply The Best",
@@ -2083,7 +4344,92 @@ const events = [
     "address": "3020 E Main St, Mesa, AZ 85213",
     "platform": "",
     "slug": "simply-the-best",
-    "id": "simply-the-best-2027-03-11"
+    "id": "simply-the-best-2027-03-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Turn The Page",
+    "ticket": "N/A",
+    "date": "2027-03-11",
+    "showtime": "7:00 pm",
+    "city": "Sun City West",
+    "state": "AZ",
+    "venue": "Beardsley Park",
+    "address": "12755 W Beardsley Rd, Sun City West, AZ 85375",
+    "platform": "",
+    "slug": "turn-the-page",
+    "id": "turn-the-page-2027-03-11",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-12",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-12",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-13",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-13",
+    "hasTix": false
+  },
+  {
+    "artist": "Southern Rock Explosion",
+    "ticket": "N/A",
+    "date": "2027-03-13",
+    "showtime": "7:00 pm",
+    "city": "Sun City West",
+    "state": "AZ",
+    "venue": "Beardsley Park",
+    "address": "12755 W Beardsley Rd, Sun City West, AZ 85375",
+    "platform": "",
+    "slug": "southern-rock-explosion",
+    "id": "southern-rock-explosion-2027-03-13",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-14",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-14",
+    "hasTix": false
+  },
+  {
+    "artist": "Margaritas In Paradise",
+    "ticket": "N/A",
+    "date": "2027-03-15",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2027-03-15",
+    "hasTix": false
   },
   {
     "artist": "American Highwaymen",
@@ -2096,7 +4442,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "american-highwaymen",
-    "id": "american-highwaymen-2027-03-15"
+    "id": "american-highwaymen-2027-03-15",
+    "hasTix": true
   },
   {
     "artist": "Prince Again",
@@ -2109,7 +4456,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "prince-again",
-    "id": "prince-again-2027-03-15"
+    "id": "prince-again-2027-03-15",
+    "hasTix": true
+  },
+  {
+    "artist": "AbbaFab",
+    "ticket": "N/A",
+    "date": "2027-03-16",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "abbafab",
+    "id": "abbafab-2027-03-16",
+    "hasTix": false
   },
   {
     "artist": "Piano Men: Generations",
@@ -2122,7 +4484,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "piano-men-generations",
-    "id": "piano-men-generations-2027-03-16"
+    "id": "piano-men-generations-2027-03-16",
+    "hasTix": true
+  },
+  {
+    "artist": "The Wynonna Experience",
+    "ticket": "N/A",
+    "date": "2027-03-16",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "the-wynonna-experience",
+    "id": "the-wynonna-experience-2027-03-16",
+    "hasTix": false
   },
   {
     "artist": "Prince Again",
@@ -2135,7 +4512,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "prince-again",
-    "id": "prince-again-2027-03-17"
+    "id": "prince-again-2027-03-17",
+    "hasTix": false
+  },
+  {
+    "artist": "Five Way Street",
+    "ticket": "N/A",
+    "date": "2027-03-18",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Valle Del Oro",
+    "address": "1452 S Ellsworth Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "five-way-street",
+    "id": "five-way-street-2027-03-18",
+    "hasTix": false
   },
   {
     "artist": "Fly Like An Eagle",
@@ -2148,7 +4540,36 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "fly-like-an-eagle",
-    "id": "fly-like-an-eagle-2027-03-19"
+    "id": "fly-like-an-eagle-2027-03-19",
+    "hasTix": true
+  },
+  {
+    "artist": "Five Way Street",
+    "ticket": "N/A",
+    "date": "2027-03-19",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Good Life RV Resort",
+    "address": "3403 E Main St, Mesa, AZ 85213",
+    "platform": "",
+    "slug": "five-way-street",
+    "id": "five-way-street-2027-03-19",
+    "hasTix": false
+  },
+  {
+    "artist": "December '63",
+    "ticket": "N/A",
+    "date": "2027-03-19",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "december-63",
+    "id": "december-63-2027-03-19",
+    "hasTix": false
   },
   {
     "artist": "Gary Lovini",
@@ -2161,7 +4582,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "gary-lovini",
-    "id": "gary-lovini-2027-03-20"
+    "id": "gary-lovini-2027-03-20",
+    "hasTix": false
   },
   {
     "artist": "December '63",
@@ -2174,7 +4596,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "december-63",
-    "id": "december-63-2027-03-21"
+    "id": "december-63-2027-03-21",
+    "hasTix": true
+  },
+  {
+    "artist": "Hearts Desire",
+    "ticket": "N/A",
+    "date": "2027-03-22",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "hearts-desire",
+    "id": "hearts-desire-2027-03-22",
+    "hasTix": false
   },
   {
     "artist": "Magic Of Manilow",
@@ -2187,7 +4624,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "magic-of-manilow",
-    "id": "magic-of-manilow-2027-03-22"
+    "id": "magic-of-manilow-2027-03-22",
+    "hasTix": true
   },
   {
     "artist": "Springsteen: Born To Run",
@@ -2200,7 +4638,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "springsteen-born-to-run",
-    "id": "springsteen-born-to-run-2027-03-22"
+    "id": "springsteen-born-to-run-2027-03-22",
+    "hasTix": true
   },
   {
     "artist": "Garth Live",
@@ -2213,7 +4652,22 @@ const events = [
     "address": "1511 E Florence Blvd, Casa Grande, AZ 85122",
     "platform": "",
     "slug": "garth-live",
-    "id": "garth-live-2027-03-22"
+    "id": "garth-live-2027-03-22",
+    "hasTix": false
+  },
+  {
+    "artist": "One Of These Nights",
+    "ticket": "N/A",
+    "date": "2027-03-23",
+    "showtime": "7:00 pm",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Monte Vista Village Resort",
+    "address": "8865 E. Baseline Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "one-of-these-nights",
+    "id": "one-of-these-nights-2027-03-23",
+    "hasTix": false
   },
   {
     "artist": "Margaritas In Paradise",
@@ -2226,7 +4680,120 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "margaritas-in-paradise",
-    "id": "margaritas-in-paradise-2027-03-23"
+    "id": "margaritas-in-paradise-2027-03-23",
+    "hasTix": true
+  },
+  {
+    "artist": "Matt Johnson",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-24",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Harlingen",
+    "state": "TX",
+    "venue": "Sunshine RV Resort",
+    "address": "1900 Grace Ave, Harlingen, TX 78550",
+    "platform": "",
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2027-03-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Margaritas In Paradise",
+    "ticket": "N/A",
+    "date": "2027-03-24",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2027-03-24",
+    "hasTix": false
+  },
+  {
+    "artist": "Matt Johnson",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-25",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Weslaco",
+    "state": "TX",
+    "venue": "Country Sunshine RV Resort",
+    "address": "1601 S Airport Dr, Weslaco, TX 78596",
+    "platform": "",
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2027-03-25",
+    "hasTix": false
+  },
+  {
+    "artist": "Matt Johnson",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-26",
+    "showtime": "7:00PM",
+    "city": "Alamo",
+    "state": "TX",
+    "venue": "Alamo Palms RV Resort",
+    "address": "1341 W Business Hwy 83, Alamo, TX 78516",
+    "platform": "",
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2027-03-26",
+    "hasTix": false
+  },
+  {
+    "artist": "Members Only",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-26",
+    "showtime": "7:00 PM",
+    "city": "El Mirage",
+    "state": "AZ",
+    "venue": "Pueblo El Mirage RV Resort",
+    "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
+    "platform": "Purple Pass",
+    "slug": "members-only",
+    "id": "members-only-2027-03-26",
+    "hasTix": false
+  },
+  {
+    "artist": "Matt Johnson",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-27",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "San Benito",
+    "state": "TX",
+    "venue": "Fun N Sun RV Resort",
+    "address": "1400 Zillock Rd, San Benito, TX 78586",
+    "platform": "",
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2027-03-27",
+    "hasTix": false
+  },
+  {
+    "artist": "Matt Johnson",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-03-28",
+    "showtime": "3:00 PM & 7:00PM",
+    "city": "Donna",
+    "state": "TX",
+    "venue": "Victoria Palms RV Resort and Hotel",
+    "address": "602 N Victoria Road, Donna, TX 78537",
+    "platform": "",
+    "slug": "matt-johnson",
+    "id": "matt-johnson-2027-03-28",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "N/A",
+    "date": "2027-03-29",
+    "showtime": "7:00 pm",
+    "city": "Sun City",
+    "state": "AZ",
+    "venue": "Paradise RV",
+    "address": "10950 W Union Hills Dd, Sun City, AZ 85373",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-03-29",
+    "hasTix": false
   },
   {
     "artist": "AbbaFab",
@@ -2239,7 +4806,22 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-03-29"
+    "id": "abbafab-2027-03-29",
+    "hasTix": true
+  },
+  {
+    "artist": "Uptown",
+    "ticket": "N/A",
+    "date": "2027-03-31",
+    "showtime": "7:00 PM",
+    "city": "Surprise",
+    "state": "AZ",
+    "venue": "Happy Trails Community Association",
+    "address": "17200 W Bell Rd, Surprise, AZ 85374",
+    "platform": "",
+    "slug": "uptown",
+    "id": "uptown-2027-03-31",
+    "hasTix": false
   },
   {
     "artist": "Million Dollar McGraw",
@@ -2252,7 +4834,8 @@ const events = [
     "address": "11201 N El Mirage Rd, El Mirage, AZ 85335",
     "platform": "Purple Pass",
     "slug": "million-dollar-mcgraw",
-    "id": "million-dollar-mcgraw-2027-04-02"
+    "id": "million-dollar-mcgraw-2027-04-02",
+    "hasTix": true
   },
   {
     "artist": "Vegas McGraw",
@@ -2265,7 +4848,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "vegas-mcgraw",
-    "id": "vegas-mcgraw-2027-04-04"
+    "id": "vegas-mcgraw-2027-04-04",
+    "hasTix": true
   },
   {
     "artist": "One Of These Nights",
@@ -2278,7 +4862,22 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "one-of-these-nights",
-    "id": "one-of-these-nights-2027-04-06"
+    "id": "one-of-these-nights-2027-04-06",
+    "hasTix": true
+  },
+  {
+    "artist": "Springsteen: Born To Run",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-04-08",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "springsteen-born-to-run",
+    "id": "springsteen-born-to-run-2027-04-08",
+    "hasTix": false
   },
   {
     "artist": "TOBY",
@@ -2291,7 +4890,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "toby",
-    "id": "toby-2027-04-11"
+    "id": "toby-2027-04-11",
+    "hasTix": true
   },
   {
     "artist": "The Jack",
@@ -2304,7 +4904,8 @@ const events = [
     "address": "100 Park Ave, Lake Havasu City, AZ 86403",
     "platform": "Purple Pass",
     "slug": "the-jack",
-    "id": "the-jack-2027-04-13"
+    "id": "the-jack-2027-04-13",
+    "hasTix": true
   },
   {
     "artist": "AbbaFab",
@@ -2317,7 +4918,8 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-04-16"
+    "id": "abbafab-2027-04-16",
+    "hasTix": true
   },
   {
     "artist": "AbbaFab",
@@ -2330,7 +4932,8 @@ const events = [
     "address": "16128 US 19, Hudson, FL 34667",
     "platform": "",
     "slug": "abbafab",
-    "id": "abbafab-2027-04-17"
+    "id": "abbafab-2027-04-17",
+    "hasTix": true
   },
   {
     "artist": "Voyager",
@@ -2343,7 +4946,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2027-04-25"
+    "id": "voyager-2027-04-25",
+    "hasTix": false
   },
   {
     "artist": "Honky Tonk Man",
@@ -2356,7 +4960,8 @@ const events = [
     "address": "1545 North Buena Vista Blvd, , The Villages , FL 32162",
     "platform": "",
     "slug": "honky-tonk-man",
-    "id": "honky-tonk-man-2027-05-01"
+    "id": "honky-tonk-man-2027-05-01",
+    "hasTix": true
   },
   {
     "artist": "Mirage",
@@ -2369,7 +4974,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "mirage",
-    "id": "mirage-2027-05-15"
+    "id": "mirage-2027-05-15",
+    "hasTix": false
+  },
+  {
+    "artist": "Hearts Desire",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-06-10",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "hearts-desire",
+    "id": "hearts-desire-2027-06-10",
+    "hasTix": false
   },
   {
     "artist": "Candle In The Wind",
@@ -2382,7 +5002,8 @@ const events = [
     "address": "1911 Juniper Ridge Resort, Show Low, AZ 85901",
     "platform": "",
     "slug": "candle-in-the-wind",
-    "id": "candle-in-the-wind-2027-06-18"
+    "id": "candle-in-the-wind-2027-06-18",
+    "hasTix": false
   },
   {
     "artist": "Almost Folsom",
@@ -2395,7 +5016,22 @@ const events = [
     "address": "1911 Juniper Ridge Resort, Show Low, AZ 85901",
     "platform": "",
     "slug": "almost-folsom",
-    "id": "almost-folsom-2027-07-23"
+    "id": "almost-folsom-2027-07-23",
+    "hasTix": false
+  },
+  {
+    "artist": "Members Only",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-08-12",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "members-only",
+    "id": "members-only-2027-08-12",
+    "hasTix": false
   },
   {
     "artist": "Margaritas In Paradise",
@@ -2408,7 +5044,8 @@ const events = [
     "address": "1911 Juniper Ridge Resort, Show Low, AZ 85901",
     "platform": "",
     "slug": "margaritas-in-paradise",
-    "id": "margaritas-in-paradise-2027-08-20"
+    "id": "margaritas-in-paradise-2027-08-20",
+    "hasTix": false
   },
   {
     "artist": "American Highwaymen",
@@ -2421,7 +5058,8 @@ const events = [
     "address": "7701 W Paradise Ln, Peoria, AZ 85382",
     "platform": "",
     "slug": "american-highwaymen",
-    "id": "american-highwaymen-2027-08-23"
+    "id": "american-highwaymen-2027-08-23",
+    "hasTix": true
   },
   {
     "artist": "VOX Fortura",
@@ -2434,7 +5072,22 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "vox-fortura",
-    "id": "vox-fortura-2027-10-03"
+    "id": "vox-fortura-2027-10-03",
+    "hasTix": false
+  },
+  {
+    "artist": "Piano Men: Generations",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-10-07",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "piano-men-generations",
+    "id": "piano-men-generations-2027-10-07",
+    "hasTix": false
   },
   {
     "artist": "December '63",
@@ -2447,7 +5100,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "december-63",
-    "id": "december-63-2027-10-29"
+    "id": "december-63-2027-10-29",
+    "hasTix": false
   },
   {
     "artist": "Rebel",
@@ -2460,7 +5114,8 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "rebel",
-    "id": "rebel-2027-11-06"
+    "id": "rebel-2027-11-06",
+    "hasTix": false
   },
   {
     "artist": "Aretha",
@@ -2473,7 +5128,36 @@ const events = [
     "address": "16222 W Clubhouse Dr, Goodyear, AZ 85395",
     "platform": "",
     "slug": "aretha",
-    "id": "aretha-2027-11-21"
+    "id": "aretha-2027-11-21",
+    "hasTix": false
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "N/A",
+    "date": "2027-12-06",
+    "showtime": "7:00 pm",
+    "city": "Green Valley",
+    "state": "AZ",
+    "venue": "Quail Creek",
+    "address": "2055 E Quail Crossing Blvd, Green Valley, AZ 85614",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2027-12-06",
+    "hasTix": false
+  },
+  {
+    "artist": "Sleigh Bells Swing",
+    "ticket": "NOT APPLICABLE",
+    "date": "2027-12-16",
+    "showtime": "7:00pm",
+    "city": "Eloy",
+    "state": "AZ",
+    "venue": "Robson Ranch",
+    "address": "5750 N. Robson Blvd, Eloy, AZ 85131",
+    "platform": "",
+    "slug": "sleigh-bells-swing",
+    "id": "sleigh-bells-swing-2027-12-16",
+    "hasTix": false
   },
   {
     "artist": "Disco Inferno",
@@ -2486,7 +5170,8 @@ const events = [
     "address": "1341 W Business Hwy 83, Alamo, TX 78516",
     "platform": "",
     "slug": "disco-inferno",
-    "id": "disco-inferno-2028-01-14"
+    "id": "disco-inferno-2028-01-14",
+    "hasTix": false
   },
   {
     "artist": "Candle In The Wind",
@@ -2499,7 +5184,8 @@ const events = [
     "address": "1341 W Business Hwy 83, Alamo, TX 78516",
     "platform": "",
     "slug": "candle-in-the-wind",
-    "id": "candle-in-the-wind-2028-01-29"
+    "id": "candle-in-the-wind-2028-01-29",
+    "hasTix": false
   },
   {
     "artist": "Voyager",
@@ -2512,7 +5198,8 @@ const events = [
     "address": "1341 W Business Hwy 83, Alamo, TX 78516",
     "platform": "",
     "slug": "voyager",
-    "id": "voyager-2028-02-12"
+    "id": "voyager-2028-02-12",
+    "hasTix": false
   },
   {
     "artist": "Let It Ride",
@@ -2525,21 +5212,20 @@ const events = [
     "address": "1341 W Business Hwy 83, Alamo, TX 78516",
     "platform": "",
     "slug": "let-it-ride",
-    "id": "let-it-ride-2028-02-26"
+    "id": "let-it-ride-2028-02-26",
+    "hasTix": false
   }
 ];
 
 const palette = ['linear-gradient(135deg,#e94560,#f5a623)','linear-gradient(135deg,#6a11cb,#2575fc)','linear-gradient(135deg,#ff512f,#dd2476)','linear-gradient(135deg,#11998e,#38ef7d)','linear-gradient(135deg,#f12711,#f5af19)','linear-gradient(135deg,#8e2de2,#4a00e0)','linear-gradient(135deg,#ee0979,#ff6a00)','linear-gradient(135deg,#4568dc,#b06ab3)','linear-gradient(135deg,#c94b4b,#4b134f)','linear-gradient(135deg,#ff9966,#ff5e62)'];
 function grad(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return palette[h%palette.length];}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-const UNAVAILABLE=new Set(['n/a','na','not available','not applicable']);
-function isUnavailable(t){return !t||UNAVAILABLE.has(String(t).trim().toLowerCase());}
+// Ticket availability is resolved at build time into e.hasTix — see sync.mjs.
 
 function render(){
   const q=document.getElementById('q').value.toLowerCase();
   const st=document.getElementById('state').value;
   const filtered=events.filter(e=>{
-    if(isUnavailable(e.ticket))return false;
     if(st&&e.state!==st)return false;
     if(!q)return true;
     return (e.artist+' '+e.city+' '+(e.venue||'')+' '+(e.address||'')+' '+e.state).toLowerCase().includes(q);
@@ -2549,8 +5235,9 @@ function render(){
   grid.innerHTML=filtered.map(e=>{
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
     const eventUrl='/events/'+esc(e.id)+'/';
-    const hasTix=!isUnavailable(e.ticket);
-    const cta=(hasTix?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>':'')
+    const cta=(e.hasTix
+      ?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>'
+      :'<span class="get disabled">Tickets coming soon</span>')
       +'<a class="details" href="'+eventUrl+'">Details</a>';
     return `<div class="card">
       <a class="card-photo-wrap" href="${eventUrl}">
