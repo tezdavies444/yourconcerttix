@@ -39,6 +39,7 @@ const F_VENUE_LINK    = 'fldWNKIABxBYUyX0A'; // multipleRecordLinks → VENUES (
 const F_VENUE_ADDR    = 'fldv6kMv0wmhrpLql'; // "Venue Location" formula → full address string
 const F_PLATFORM      = 'fldczQJUGFvhg2NrC'; // lookup → multipleSelects
 const F_YCT_LINK      = 'fld2j6LeVomGaGCPP'; // "YCT Link" (url) — public event page URL, written back by this script
+const F_EVENT_HIDE    = 'fldz0pnIWdJYPO5OX'; // "Hide from YCT" (checkbox) — hides this single show
 
 // Public origin of the deployed site. Event pages live at `${SITE_ORIGIN}/events/<id>/`.
 const SITE_ORIGIN = 'https://yourconcerttix.com';
@@ -49,9 +50,11 @@ const F_WEB_IMG  = 'fldmdmT8dvg45MLyn'; // Poster/Portrait (1:1, e.g. 1254x1254)
 const F_BIO      = 'fldZRMHNofVVU5S6J'; // "Copy" — performer bio / show description (longText)
 const F_TAGLINE  = 'fldTq2ehkhKtjfRUU'; // "Tagline" — short subtitle, e.g. "A Tribute to John Lennon"
 const F_PROMO_VIDEO = 'fldPzPlEyiezhUMrB'; // "Promo Video" — YouTube URL (url field)
+const F_BAND_HIDE   = 'fld4cU77BIY6lqjYV'; // "Hide from YCT" (checkbox) — hides this act and all its shows
 
 // Venues field IDs
 const F_VENUE_NAME = 'fldNt6WjlSP0tivQ2'; // primary field "Name" on VENUES (From CP)
+const F_VENUE_HIDE = 'fldF1JKX5DEjp1cN9'; // "Hide from YCT" (checkbox) — hides this venue and all shows at it
 
 const SLUG_FIXES = {
   "Britain's Finest": 'britains-finest',
@@ -59,13 +62,35 @@ const SLUG_FIXES = {
   'THE MOODY BLUES TRIBUTE - GO NOW!': 'the-moody-blues-tribute--go-now',
 };
 
-// Acts to suppress from the public site. Their records stay in Airtable
-// (booking history is preserved) but they are never published to the site.
+// ---- What gets published (three independent gates) ----
+//
+// 1. "Hide from YCT" checkboxes in Airtable — the admin control. Any non-technical
+//    editor can tick one on a show (CURRENT EVENTS), an act (BANDS-SHOWS) or a
+//    venue (VENUES) and it drops off the site on the next sync. No code change.
+// 2. EXCLUDED_PLATFORMS below — a standing policy rule applied by ticketing
+//    platform, so it also covers venues added in the future.
+// 3. EXCLUDED_ARTISTS below — legacy hard-coded list, kept as a backstop.
+//
+// In all three cases the Airtable records are untouched, so booking history and
+// reporting are preserved; only the public site is affected.
+
+// Acts to suppress from the public site. Prefer the "Hide from YCT" checkbox on
+// BANDS-SHOWS for new exclusions — this list needs a developer to change.
 // Matched case-insensitively as a substring of the resolved artist name.
 const EXCLUDED_ARTISTS = ['yachtzilla'];
 function isExcludedArtist(name) {
   const n = (name || '').toLowerCase();
   return EXCLUDED_ARTISTS.some(x => n.includes(x));
+}
+
+// Ticketing platforms we don't publish. A show is dropped only when its venue's
+// Platform is EXCLUSIVELY one of these — a venue selling on both FanGenie and
+// Purple Pass still gets published, because it isn't "FanGenie only".
+// Venues with no Platform set at all are always published.
+const EXCLUDED_PLATFORMS = ['fangenie'];
+function isExcludedPlatformOnly(platforms) {
+  if (!platforms || platforms.length === 0) return false;
+  return platforms.every(p => EXCLUDED_PLATFORMS.includes(String(p).trim().toLowerCase()));
 }
 
 function slugify(name) {
@@ -189,6 +214,22 @@ function firstLookupText(val) {
   return String(val);
 }
 
+// Like firstLookupText, but returns EVERY value instead of just the first.
+// Needed for multipleSelects lookups such as Platform, where a venue can carry
+// several ticketing platforms and "FanGenie only" means the whole set is FanGenie.
+function allLookupNames(val) {
+  const out = [];
+  (function walk(v) {
+    if (v == null) return;
+    if (Array.isArray(v)) { v.forEach(walk); return; }
+    if (typeof v === 'string') { if (v.trim()) out.push(v.trim()); return; }
+    if (typeof v === 'object' && typeof v.name === 'string') {
+      if (v.name.trim()) out.push(v.name.trim());
+    }
+  })(val);
+  return [...new Set(out)];
+}
+
 // ---- Pull events ----
 
 async function pullEvents() {
@@ -197,6 +238,7 @@ async function pullEvents() {
     fields: [
       F_SHOW_INFO, F_TICKET, F_START_DATE, F_ARTIST_LINK, F_ARTIST_LOOK,
       F_SHOWTIME, F_CITY, F_STATE, F_VENUE_LINK, F_VENUE_ADDR, F_PLATFORM,
+      F_EVENT_HIDE,
     ],
     // Use field name for filterByFormula — field IDs aren't supported in formulas.
     filterByFormula: `IS_AFTER({Start Date}, DATEADD(TODAY(), -1, 'days'))`,
@@ -204,7 +246,7 @@ async function pullEvents() {
   });
 
   const events = [];
-  const skipped = { noTicket: 0, past: 0, noArtistLink: 0, noDate: 0 };
+  const skipped = { noTicket: 0, past: 0, noArtistLink: 0, noDate: 0, hiddenEvent: 0 };
 
   for (const r of records) {
     const f = r.fields;
@@ -212,6 +254,7 @@ async function pullEvents() {
     const startDate = f[F_START_DATE];
     const artistLinks = f[F_ARTIST_LINK];
 
+    if (f[F_EVENT_HIDE]) { skipped.hiddenEvent++; continue; }
     if (isUnavailableTicket(ticket)) { skipped.noTicket++; continue; }
     if (!startDate) { skipped.noDate++; continue; }
     if (startDate < today) { skipped.past++; continue; }
@@ -230,6 +273,8 @@ async function pullEvents() {
       city: firstLookupText(f[F_CITY]),
       state: firstLookupText(f[F_STATE]),
       address: f[F_VENUE_ADDR] || '',
+      // Full list — a venue may sell on more than one platform.
+      platforms: allLookupNames(f[F_PLATFORM]),
       platform: firstLookupText(f[F_PLATFORM]),
     });
   }
@@ -248,7 +293,7 @@ async function pullBands(linkIds) {
   for (const chunk of chunks) {
     const formula = `OR(${chunk.map(id => `RECORD_ID()='${id}'`).join(',')})`;
     const records = await airtableListAll(BANDS_TABLE, {
-      fields: [F_NAME, F_WEB_IMG, F_BIO, F_TAGLINE, F_PROMO_VIDEO],
+      fields: [F_NAME, F_WEB_IMG, F_BIO, F_TAGLINE, F_PROMO_VIDEO, F_BAND_HIDE],
       filterByFormula: formula,
     });
     for (const r of records) {
@@ -260,6 +305,7 @@ async function pullBands(linkIds) {
         bio: (r.fields[F_BIO] || '').trim(),
         tagline: (r.fields[F_TAGLINE] || '').trim(),
         promoVideo: (r.fields[F_PROMO_VIDEO] || '').trim(),
+        hidden: !!r.fields[F_BAND_HIDE],
       };
     }
   }
@@ -278,12 +324,15 @@ async function pullVenues(linkIds) {
   for (const chunk of chunks) {
     const formula = `OR(${chunk.map(id => `RECORD_ID()='${id}'`).join(',')})`;
     const records = await airtableListAll(VENUES_TABLE, {
-      fields: [F_VENUE_NAME],
+      fields: [F_VENUE_NAME, F_VENUE_HIDE],
       filterByFormula: formula,
     });
     for (const r of records) {
       const name = r.fields[F_VENUE_NAME];
-      byId[r.id] = (name || '').trim();
+      byId[r.id] = {
+        name: (name || '').trim(),
+        hidden: !!r.fields[F_VENUE_HIDE],
+      };
     }
   }
   return byId;
@@ -726,14 +775,29 @@ async function main() {
   // fall back to the lookup value if we couldn't resolve.
   for (const e of events) {
     const band = bandsById[e.artistLinkId];
+    const venue = (e.venueLinkId && venuesById[e.venueLinkId]) || null;
     e.artist = (band && band.name) || e.artistFromLookup || '';
     e.slug = slugify(e.artist);
-    e.venue = (e.venueLinkId && venuesById[e.venueLinkId]) || '';
+    e.venue = (venue && venue.name) || '';
     e.bio = (band && band.bio) || '';
     e.tagline = (band && band.tagline) || '';
     e.promoVideo = (band && band.promoVideo) || '';
+    e.bandHidden = !!(band && band.hidden);
+    e.venueHidden = !!(venue && venue.hidden);
   }
-  const usableEvents = events.filter(e => e.artist && !isExcludedArtist(e.artist));
+
+  // Apply the publish gates, counting each drop so the sync log explains itself.
+  const dropped = { noArtist: 0, excludedArtist: 0, hiddenBand: 0, hiddenVenue: 0, excludedPlatform: 0 };
+  const usableEvents = events.filter(e => {
+    if (!e.artist)                          { dropped.noArtist++; return false; }
+    if (isExcludedArtist(e.artist))         { dropped.excludedArtist++; return false; }
+    if (e.bandHidden)                       { dropped.hiddenBand++; return false; }
+    if (e.venueHidden)                      { dropped.hiddenVenue++; return false; }
+    if (isExcludedPlatformOnly(e.platforms)) { dropped.excludedPlatform++; return false; }
+    return true;
+  });
+  console.log(`  publish gates dropped ${JSON.stringify(dropped)}`);
+  console.log(`  ${usableEvents.length} events will be published`);
 
   // Give each event a stable, unique URL id (artist slug + date, de-duplicated
   // when the same act plays the same day at more than one venue).
