@@ -125,70 +125,14 @@ function formatLongDate(d) {
   if (isNaN(dt)) return d;
   return `${WEEKDAYS[dt.getDay()]}, ${MONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
 }
-// Two different things can be wrong with a Ticket value, and they get different
-// treatment:
-//
-//   PRIVATE_TICKETS      — the show isn't open to the public. Dropped entirely.
-//   UNAVAILABLE_TICKETS  — a real public show with no purchase link yet. Still
-//                          published, but renders a disabled "Tickets coming
-//                          soon" button instead of a link that goes nowhere.
-//
-// A blank Ticket field is also dropped entirely, which is long-standing
-// behaviour — most rows in the base have no ticket and were never meant to ship.
-// Matched case-insensitively and trimmed, so "N/A", "n/a", "Not Available" all count.
-const PRIVATE_TICKETS = new Set([
-  'private event', 'private', 'private party', 'private function',
-]);
+// Values that mean "no real ticket" — events matching these are excluded entirely.
+// Matched case-insensitively and trimmed, so "N/A", "n/a", "Not Available", etc. all count.
 const UNAVAILABLE_TICKETS = new Set([
   'n/a', 'na', 'not available', 'not applicable',
-  'not yet up for sale', 'not on sale', 'tba', 'tbd', 'none', 'no',
 ]);
-
-// The Airtable "Ticket" field is URL-typed, which silently prefixes whatever an
-// editor types with "https://" — so "N/A" is stored as "https://N/A". Strip that
-// wrapper (plus trailing slashes and a trailing full stop) before matching, or
-// every one of those placeholders sails through the guard as a real link.
-function normalizeTicket(ticket) {
-  return String(ticket)
-    .trim()
-    .replace(/^https?:\/\//i, '')
-    .replace(/[\/\s]+$/, '')
-    .replace(/\.$/, '')
-    .trim()
-    .toLowerCase();
-}
-
-// A ticket value is only usable if it parses as an absolute http(s) URL with a
-// plausible hostname. "https://N/A" parses, but its hostname is "n" — no dot,
-// so it can never resolve. This also catches free text pasted into the field.
-function isUsableTicketUrl(ticket) {
-  let u;
-  try {
-    u = new URL(String(ticket).trim());
-  } catch {
-    return false;
-  }
-  if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
-  const host = u.hostname;
-  if (!host || !host.includes('.')) return false;
-  if (host.startsWith('.') || host.endsWith('.')) return false;
-  return true;
-}
-
-// True when the Ticket field says this show isn't open to the public.
-function isPrivateEvent(ticket) {
-  if (!ticket) return false;
-  return PRIVATE_TICKETS.has(normalizeTicket(ticket));
-}
-
-// True when there's no usable purchase link — either a known placeholder, free
-// text pasted into the field, or nothing at all.
 function isUnavailableTicket(ticket) {
   if (!ticket) return true;
-  if (!String(ticket).trim()) return true;
-  if (UNAVAILABLE_TICKETS.has(normalizeTicket(ticket))) return true;
-  if (isPrivateEvent(ticket)) return true;
-  return !isUsableTicketUrl(ticket);
+  return UNAVAILABLE_TICKETS.has(String(ticket).trim().toLowerCase());
 }
 function hasValidTicket(ticket) {
   return !isUnavailableTicket(ticket);
@@ -302,7 +246,7 @@ async function pullEvents() {
   });
 
   const events = [];
-  const skipped = { noTicket: 0, privateEvent: 0, past: 0, noArtistLink: 0, noDate: 0, hiddenEvent: 0 };
+  const skipped = { noTicket: 0, past: 0, noArtistLink: 0, noDate: 0, hiddenEvent: 0 };
 
   for (const r of records) {
     const f = r.fields;
@@ -311,11 +255,7 @@ async function pullEvents() {
     const artistLinks = f[F_ARTIST_LINK];
 
     if (f[F_EVENT_HIDE]) { skipped.hiddenEvent++; continue; }
-    // A blank Ticket field means the row was never meant to ship; a private
-    // event isn't open to the public. Everything else publishes — shows with an
-    // unusable link just render "Tickets coming soon" rather than a dead button.
-    if (!String(ticket || '').trim()) { skipped.noTicket++; continue; }
-    if (isPrivateEvent(ticket)) { skipped.privateEvent++; continue; }
+    if (isUnavailableTicket(ticket)) { skipped.noTicket++; continue; }
     if (!startDate) { skipped.noDate++; continue; }
     if (startDate < today) { skipped.past++; continue; }
     if (!artistLinks || artistLinks.length === 0) { skipped.noArtistLink++; continue; }
@@ -456,9 +396,6 @@ function renderIndexHtml(events) {
     platform: e.platform,
     slug: e.slug,
     id: e.id,
-    // Resolved server-side so the page JS doesn't need its own copy of the
-    // placeholder/URL rules — one source of truth, no drift.
-    hasTix: hasValidTicket(e.ticket),
   })), null, 2);
 
   return `<!DOCTYPE html>
@@ -522,7 +459,6 @@ header .count { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
 .card-body .cta a { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; }
 .card-body .cta a.get { background: var(--accent); color: white; }
 .card-body .cta a.get:hover { background: #ff5872; }
-.card-body .cta span.get.disabled { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; background: var(--card-border); color: var(--text-muted); cursor: default; }
 .card-body .cta a.details { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
 .card-body .cta a.details:hover { border-color: var(--accent); color: var(--accent); }
 .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
@@ -566,12 +502,14 @@ const events = ${eventsJs};
 const palette = ['linear-gradient(135deg,#e94560,#f5a623)','linear-gradient(135deg,#6a11cb,#2575fc)','linear-gradient(135deg,#ff512f,#dd2476)','linear-gradient(135deg,#11998e,#38ef7d)','linear-gradient(135deg,#f12711,#f5af19)','linear-gradient(135deg,#8e2de2,#4a00e0)','linear-gradient(135deg,#ee0979,#ff6a00)','linear-gradient(135deg,#4568dc,#b06ab3)','linear-gradient(135deg,#c94b4b,#4b134f)','linear-gradient(135deg,#ff9966,#ff5e62)'];
 function grad(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return palette[h%palette.length];}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-// Ticket availability is resolved at build time into e.hasTix — see sync.mjs.
+const UNAVAILABLE=new Set(['n/a','na','not available','not applicable']);
+function isUnavailable(t){return !t||UNAVAILABLE.has(String(t).trim().toLowerCase());}
 
 function render(){
   const q=document.getElementById('q').value.toLowerCase();
   const st=document.getElementById('state').value;
   const filtered=events.filter(e=>{
+    if(isUnavailable(e.ticket))return false;
     if(st&&e.state!==st)return false;
     if(!q)return true;
     return (e.artist+' '+e.city+' '+(e.venue||'')+' '+(e.address||'')+' '+e.state).toLowerCase().includes(q);
@@ -581,9 +519,8 @@ function render(){
   grid.innerHTML=filtered.map(e=>{
     const dateStr=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
     const eventUrl='/events/'+esc(e.id)+'/';
-    const cta=(e.hasTix
-      ?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>'
-      :'<span class="get disabled">Tickets coming soon</span>')
+    const hasTix=!isUnavailable(e.ticket);
+    const cta=(hasTix?'<a class="get" href="'+esc(e.ticket)+'" target="_blank" rel="noopener">Get Tickets</a>':'')
       +'<a class="details" href="'+eventUrl+'">Details</a>';
     return \`<div class="card">
       <a class="card-photo-wrap" href="\${eventUrl}">
