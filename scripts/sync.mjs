@@ -129,10 +129,46 @@ function formatLongDate(d) {
 // Matched case-insensitively and trimmed, so "N/A", "n/a", "Not Available", etc. all count.
 const UNAVAILABLE_TICKETS = new Set([
   'n/a', 'na', 'not available', 'not applicable',
+  'private event', 'private', 'private party', 'private function',
+  'not yet up for sale', 'not on sale', 'tba', 'tbd', 'none', 'no',
 ]);
+
+// The Airtable "Ticket" field is URL-typed, which silently prefixes whatever an
+// editor types with "https://" — so "N/A" is stored as "https://N/A". Strip that
+// wrapper (plus trailing slashes and a trailing full stop) before matching, or
+// those placeholders sail through the guard and render a button linking nowhere.
+function normalizeTicket(ticket) {
+  return String(ticket)
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/[\/\s]+$/, '')
+    .replace(/\.$/, '')
+    .trim()
+    .toLowerCase();
+}
+
+// A ticket value is only usable if it parses as an absolute http(s) URL with a
+// plausible hostname. "https://N/A" parses, but its hostname is "n" — no dot,
+// so it can never resolve. This also catches free text pasted into the field.
+function isUsableTicketUrl(ticket) {
+  let u;
+  try {
+    u = new URL(String(ticket).trim());
+  } catch {
+    return false;
+  }
+  if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+  const host = u.hostname;
+  if (!host || !host.includes('.')) return false;
+  if (host.startsWith('.') || host.endsWith('.')) return false;
+  return true;
+}
+
 function isUnavailableTicket(ticket) {
   if (!ticket) return true;
-  return UNAVAILABLE_TICKETS.has(String(ticket).trim().toLowerCase());
+  if (!String(ticket).trim()) return true;
+  if (UNAVAILABLE_TICKETS.has(normalizeTicket(ticket))) return true;
+  return !isUsableTicketUrl(ticket);
 }
 function hasValidTicket(ticket) {
   return !isUnavailableTicket(ticket);
