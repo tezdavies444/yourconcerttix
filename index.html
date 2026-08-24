@@ -79,7 +79,7 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
 </div>
 <header>
   <h1>Your<span class="accent">Concert</span>Tix</h1>
-  <div class="count">129 upcoming shows</div>
+  <div class="count">147 upcoming shows</div>
 </header>
 <div class="hero">
   <h2>Find Live Shows Near You</h2>
@@ -99,6 +99,7 @@ footer { text-align: center; padding: 24px; color: var(--text-muted); font-size:
     <option value="NV">NV</option>
     <option value="PA">PA</option>
     <option value="VA">VA</option>
+    <option value="WA">WA</option>
     <option value="WI">WI</option>
   </select>
   <button id="clear">Clear</button>
@@ -133,6 +134,19 @@ const events = [
     "platform": "",
     "slug": "honky-tonk-man",
     "id": "honky-tonk-man-2026-09-05"
+  },
+  {
+    "artist": "Margaritas In Paradise",
+    "ticket": "https://www.labordayweekendatstarrpass.com/",
+    "date": "2026-09-05",
+    "showtime": "6:30 PM",
+    "city": "Tucson",
+    "state": "AZ",
+    "venue": "The Club at Starr Pass",
+    "address": "3645 W Starr Pass Blvd, Tucson, AZ 85745",
+    "platform": "",
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2026-09-05"
   },
   {
     "artist": "Magic Of Manilow",
@@ -187,6 +201,32 @@ const events = [
     "id": "the-kings-of-queen-2026-09-11"
   },
   {
+    "artist": "TOBY",
+    "ticket": "https://www.belfrymusictheatre.com/events/2026/26044-toby-keith-tribute-toby/",
+    "date": "2026-09-11",
+    "showtime": "7:00 PM",
+    "city": "Delavan",
+    "state": "WI",
+    "venue": "Belfry Music Theatre",
+    "address": "3601 WI-67, Delavan, WI 53115",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-09-11"
+  },
+  {
+    "artist": "Neon Circus",
+    "ticket": "https://rodeoscottsdale.com/",
+    "date": "2026-09-11",
+    "showtime": "9:00 PM",
+    "city": "Scottsdale",
+    "state": "AZ",
+    "venue": "Rodeo Scottsdale",
+    "address": "16601 N Pima Road, Scottsdale, AZ 85260",
+    "platform": "",
+    "slug": "neon-circus",
+    "id": "neon-circus-2026-09-11"
+  },
+  {
     "artist": "Piano Men: Generations",
     "ticket": "https://www.ticketweb.com/event/piano-men-generations-the-coach-house-tickets/14112024?pl=coach",
     "date": "2026-09-12",
@@ -211,6 +251,19 @@ const events = [
     "platform": "",
     "slug": "the-kings-of-queen",
     "id": "the-kings-of-queen-2026-09-12"
+  },
+  {
+    "artist": "TOBY",
+    "ticket": "https://www.belfrymusictheatre.com/events/2026/26044-toby-keith-tribute-toby/",
+    "date": "2026-09-12",
+    "showtime": "7:00 PM",
+    "city": "Delavan",
+    "state": "WI",
+    "venue": "Belfry Music Theatre",
+    "address": "3601 WI-67, Delavan, WI 53115",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-09-12"
   },
   {
     "artist": "One Of These Nights",
@@ -486,6 +539,32 @@ const events = [
     "id": "voyager-2026-10-10"
   },
   {
+    "artist": "Mirage",
+    "ticket": "https://www.livenation.com/event/17k8v0G6CUDGpbJ/mirage-visions-of-fleetwood-mac",
+    "date": "2026-10-10",
+    "showtime": "8:00 PM",
+    "city": "Laveen Village",
+    "state": "AZ",
+    "venue": "Vee Quiva Casino",
+    "address": "15091 S Komatke Ln, Laveen Village, AZ 85339",
+    "platform": "",
+    "slug": "mirage",
+    "id": "mirage-2026-10-10"
+  },
+  {
+    "artist": "3 International Tenors",
+    "ticket": "https://www.lpac.org/events/",
+    "date": "2026-10-11",
+    "showtime": "7:00 PM",
+    "city": "Lancaster",
+    "state": "CA",
+    "venue": "Lancaster Performing Arts Center",
+    "address": "750 W Lancaster Blvd, Lancaster, CA 93534",
+    "platform": "",
+    "slug": "3-international-tenors",
+    "id": "3-international-tenors-2026-10-11"
+  },
+  {
     "artist": "One Of These Nights",
     "ticket": "https://www.azbroadway.org/shows/tribute-to-the-eagles",
     "date": "2026-10-19",
@@ -590,6 +669,19 @@ const events = [
     "id": "one-more-night-2026-10-24"
   },
   {
+    "artist": "Ultimate Bon Jovi",
+    "ticket": "https://toscanaofdesertridge.com/contact-toscana.html",
+    "date": "2026-10-24",
+    "showtime": "6:00 PM",
+    "city": "Phoenix",
+    "state": "AZ",
+    "venue": "Toscana of Desert Ridge",
+    "address": "5450 E Deer Valley Drive, Phoenix, AZ 85054",
+    "platform": "",
+    "slug": "ultimate-bon-jovi",
+    "id": "ultimate-bon-jovi-2026-10-24"
+  },
+  {
     "artist": "Elvis Unplugged",
     "ticket": "https://www.azbroadway.org/shows/elvis-unplugged",
     "date": "2026-10-26",
@@ -614,6 +706,19 @@ const events = [
     "platform": "",
     "slug": "garth-live",
     "id": "garth-live-2026-10-29"
+  },
+  {
+    "artist": "TOBY",
+    "ticket": "https://horseshoeharvest.com/live-music/",
+    "date": "2026-10-30",
+    "showtime": "10:15 PM",
+    "city": "Queen Creek",
+    "state": "AZ",
+    "venue": "Horseshoe Harvest Hangout",
+    "address": "20464 E Riggs Road, Queen Creek, AZ 85142",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-10-30"
   },
   {
     "artist": "Members Only",
@@ -642,6 +747,19 @@ const events = [
     "id": "piano-men-generations-2026-11-02"
   },
   {
+    "artist": "TOBY",
+    "ticket": "https://maranapumpkinpatch.com/",
+    "date": "2026-11-05",
+    "showtime": "7:00 PM",
+    "city": "Marana",
+    "state": "AZ",
+    "venue": "Marana Pumpkin Patch",
+    "address": "14950 N Trico Rd, Marana, AZ 85653",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-11-05"
+  },
+  {
     "artist": "A Lennon Legacy",
     "ticket": "https://app.fangenie.com/pueblo-el-mirage/a-lennon-legacy/bcCgGOCxUT",
     "date": "2026-11-06",
@@ -653,6 +771,32 @@ const events = [
     "platform": "Purple Pass",
     "slug": "a-lennon-legacy",
     "id": "a-lennon-legacy-2026-11-06"
+  },
+  {
+    "artist": "AbbaFab",
+    "ticket": "https://silverreefcasino.com/promotions/abbafab",
+    "date": "2026-11-07",
+    "showtime": "8:00 PM",
+    "city": "Ferndale",
+    "state": "WA",
+    "venue": "Silver Reef Casino",
+    "address": "4876 Haxton Way, Ferndale, WA 98248",
+    "platform": "",
+    "slug": "abbafab",
+    "id": "abbafab-2026-11-07"
+  },
+  {
+    "artist": "TOBY",
+    "ticket": "https://totempoleplayhouse.org/shows/music-in-the-pines-toby-a-tribute/toby/",
+    "date": "2026-11-07",
+    "showtime": "2:00 & 7:30 pm",
+    "city": "Fayetteville",
+    "state": "PA",
+    "venue": "Totem Pole\n  Playhouse",
+    "address": "PO   Box 603     9555 Golf Course Road, Fayetteville, PA 17222",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-11-07"
   },
   {
     "artist": "Voyager",
@@ -679,6 +823,32 @@ const events = [
     "platform": "",
     "slug": "one-of-these-nights",
     "id": "one-of-these-nights-2026-11-10"
+  },
+  {
+    "artist": "America The Beautiful",
+    "ticket": "https://laspalmasgrand55.com/?gad_source=1&gad_campaignid=70637666&gbraid=0AAAAADz_D4Yd4HEEOQ5BCn8FM56PscKGW&gclid=CjwKCAjwtKrUBhAhEiwAr77ZohznLI6vG1Ktn1cXKhWB-L_dB-6zUWvTX_QObFsQKo1Cgy1Upk5SCRoCX9UQAvD_BwE",
+    "date": "2026-11-14",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Las Palmas Grand",
+    "address": "2550 S Ellsworth Rd, Mesa, AZ 85209",
+    "platform": "",
+    "slug": "america-the-beautiful",
+    "id": "america-the-beautiful-2026-11-14"
+  },
+  {
+    "artist": "Project Presley",
+    "ticket": "https://lwca.com/contact",
+    "date": "2026-11-16",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Leisure World",
+    "address": "908 S Power Rd, Mesa, AZ 85206",
+    "platform": "",
+    "slug": "project-presley",
+    "id": "project-presley-2026-11-16"
   },
   {
     "artist": "Karen Hester as Dolly Parton",
@@ -798,6 +968,19 @@ const events = [
     "id": "toby-2026-11-30"
   },
   {
+    "artist": "TOBY",
+    "ticket": "https://silvertoncasino.com/entertainment/",
+    "date": "2026-12-05",
+    "showtime": "8:15 PM",
+    "city": "Las Vegas",
+    "state": "NV",
+    "venue": "Silverton Casino Lodge",
+    "address": "3333 Blue Diamond Road, Las Vegas, NV 89139",
+    "platform": "",
+    "slug": "toby",
+    "id": "toby-2026-12-05"
+  },
+  {
     "artist": "Abba Holly Jolly Christmas",
     "ticket": "https://www.azbroadway.org/shows/abba-holly-jolly-christmas",
     "date": "2026-12-07",
@@ -848,6 +1031,19 @@ const events = [
     "platform": "Purple Pass",
     "slug": "rocky-mountain-christmas",
     "id": "rocky-mountain-christmas-2026-12-11"
+  },
+  {
+    "artist": "Abba Holly Jolly Christmas",
+    "ticket": "https://playatgila.com/show/abbafab-holly-jolly-christmas/",
+    "date": "2026-12-11",
+    "showtime": "8:00 PM",
+    "city": "Laveen Village",
+    "state": "AZ",
+    "venue": "Vee Quiva Casino",
+    "address": "15091 S Komatke Ln, Laveen Village, AZ 85339",
+    "platform": "",
+    "slug": "abba-holly-jolly-christmas",
+    "id": "abba-holly-jolly-christmas-2026-12-11"
   },
   {
     "artist": "3 International Tenors",
@@ -993,6 +1189,19 @@ const events = [
     "id": "the-lionel-richie-songbook-2027-01-09"
   },
   {
+    "artist": "Hot August Night",
+    "ticket": "https://www.ticketmaster.com/gila-river-resorts-casinos-wild-horse-tickets-chandler/venue/204898",
+    "date": "2027-01-10",
+    "showtime": "3:00 PM",
+    "city": "Chandler",
+    "state": "AZ",
+    "venue": "Wild Horse Pass Casino",
+    "address": "5040 Wild Horse Pass Blvd, Chandler, AZ 85226",
+    "platform": "",
+    "slug": "hot-august-night",
+    "id": "hot-august-night-2027-01-10"
+  },
+  {
     "artist": "TOBY",
     "ticket": "https://app.fangenie.com/lake-havasu-aquatic-center/toby---the-experience/GOZX0A5QIQ",
     "date": "2027-01-10",
@@ -1030,6 +1239,19 @@ const events = [
     "platform": "Purple Pass",
     "slug": "randy-linder-ccr",
     "id": "randy-linder-ccr-2027-01-12"
+  },
+  {
+    "artist": "Not Fade Away",
+    "ticket": "https://carriagemanorresort.com/activities-events/",
+    "date": "2027-01-14",
+    "showtime": "7:00 PM",
+    "city": "Mesa",
+    "state": "AZ",
+    "venue": "Carriage Manor Resort",
+    "address": "7750 E Broadway Rd, Mesa, AZ 85208",
+    "platform": "",
+    "slug": "not-fade-away",
+    "id": "not-fade-away-2027-01-14"
   },
   {
     "artist": "Summer Nights",
@@ -1771,6 +1993,19 @@ const events = [
     "platform": "",
     "slug": "honky-tonk-man",
     "id": "honky-tonk-man-2027-05-01"
+  },
+  {
+    "artist": "Margaritas In Paradise",
+    "ticket": "https://avcommunityconcerts.org/avcca-performances/",
+    "date": "2027-06-06",
+    "showtime": "2:00 PM",
+    "city": "Lancaster",
+    "state": "CA",
+    "venue": "Lancaster Performing Arts Center",
+    "address": "750 W Lancaster Blvd, Lancaster, CA 93534",
+    "platform": "",
+    "slug": "margaritas-in-paradise",
+    "id": "margaritas-in-paradise-2027-06-06"
   },
   {
     "artist": "American Highwaymen",
